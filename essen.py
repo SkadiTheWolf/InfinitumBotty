@@ -127,7 +127,7 @@ essen = [
     'einen Teller Spaghettieis mit Erdbeersoße','ein Blech saftiger Brownies','eine teure Hummerspezialität',
     'Käse in einer Mäusefalle','einen Teller Bouletten und grüne Bohnen','eine Portion Bohnen und Zwiebeln',
     'eine Familienpackung Toffifee','eine Schale Süßigkeiten von letztem Halloween',
-    'eine Croustade','ein ganzes Spanferkel','eine kandierte Zwiebel',
+    'eine Croustade','einen ganzen Atlantic-Gigant Kürbis','eine kandierte Zwiebel',
     'Reisporridge mit Frühlingszwiebeln','einen Reiskocher und eine Packung Reis',
     'einen deckenhohen Stapel Pfannkuchen und eine Flasche Ahornsirup','einen gegrillten Gemüsespieß',
     'ein Panna Cotta mit Aprikosenkompott','eine knusprige Heuschrecke am Spieß',
