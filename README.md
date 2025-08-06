@@ -25,7 +25,7 @@ python ReadInternationalization.py
 # Start the bot using the given config file.
 python Main.py --config ./config.txt
 ``` 
-Using [faust-bot-run.sh](https://github.com/SophieBartmann/Faust-Bot/blob/master/faust-bot-run.sh). This script creates and uses a virtual environment, therefore the optional requirement virtualenv is required
+Using [faust-bot-run.sh](/faust-bot-run.sh). This script creates and uses a virtual environment, therefore the optional requirement virtualenv is required
 ```bash
 # Make the script executable
 chmod u+x ./faust-bot-run.sh
@@ -44,16 +44,12 @@ chmod u+x ./faust-bot-run.sh
 ./script -s
 ```
 
-
 ## Contribution
 Have a look into our issues. Some are explizitly marked as `help wanted` or `For Beginners`. If you're new to programming the last one would be a good point to begin with. Of course you're also free to choose your own issue or task to work on.
 If you have any question you're also welcome to join us in `#faust-bot` on freenode.
 
 Before creating a pull request please test your code. Untested, obviously buggy code will - of course - be rejected.
 Since we're programming in python please hold on [PEP-08](https://www.python.org/dev/peps/pep-0008/).
-
-### Branching
-Currently we use the [main-branch](https://github.com/SophieBartmann/Faust-Bot/edit/master/README.md) for development and the stable version is represented with the [stable-branch](https://github.com/SophieBartmann/Faust-Bot/tree/stable). Please create an own feature-branch if you want to contribute. This will make it easier to merge.
 
 ## Copyright
 ```
