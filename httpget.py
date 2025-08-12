@@ -2,7 +2,8 @@
 import requests
 
 urban = str(input())
-arr  = urban.split(' ')
+arr  = urban.split(' ',1)
+print(arr)
 
 
 if arr[0] == ".urban":
