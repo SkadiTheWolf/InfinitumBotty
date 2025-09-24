@@ -18,7 +18,7 @@ class UrbanObserver(PrivMsgObserverPrototype):
             return
 
         #split incoming message in '.urban' and '<term>'
-        message = data['message'].split(' ', 1)
+        message = data['messageCaseSensitive'].split(' ', 1)
 
         #request content from Urban Dict with <term>
         search = message[1]
