@@ -15,7 +15,7 @@ class UrbanObserver(PrivMsgObserverPrototype):
         if data['message'].find('.urban') == -1:
             return
 
-        q = data['message'].split(' ')
+        q = data['message'].split(' ', 2)
 
         connection.send_back(q, data)
 
