@@ -1,3 +1,5 @@
+import requests
+
 from FaustBot.Modules.PrivMsgObserverPrototype import PrivMsgObserverPrototype
 
 
@@ -15,9 +17,21 @@ class UrbanObserver(PrivMsgObserverPrototype):
         if data['message'].find('.urban') == -1:
             return
 
-        q = data['message'].split(' ', 2)
+        message = data['message'].split(' ', 1)
 
-        connection.send_back(q, data)
+        connection.send_back(message, data)
+
+        search = message[1]
+        contents = requests.get(f'https://unofficialurbandictionaryapi.com/api/search?term={search}&limit=1&page=1&')
+
+        contentStr = str(contents.content)
+        status = int(contents.status_code)
+
+        connection.send_back(status, data)
+
+
+
+
 
         '''w = wikipedia.set_lang('de')
         q = data['message'].split(' ')
