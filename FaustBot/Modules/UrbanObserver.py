@@ -40,8 +40,8 @@ class UrbanObserver(PrivMsgObserverPrototype):
             WordSplit = WordStr.split('":"')
             MeaningSplit = MeaningStr.split('":"')
 
-            connection.send_back(f'{data['nick']} Das gesuchte Wort {WordSplit} hat folgende Bedeutung:',data)
-            connection.send_back(MeaningSplit, data)
+            connection.send_back(f'{data['nick']} Das gesuchte Wort {WordSplit[1]} hat folgende Bedeutung:',data)
+            connection.send_back(MeaningSplit[1], data)
 
 
 
