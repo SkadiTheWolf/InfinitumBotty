@@ -14,13 +14,18 @@ class UrbanObserver(PrivMsgObserverPrototype):
 
         if data['message'].find('.urban') == -1:
             return
+
+        q = data['message'].split(' ')
+
+        connection.send_back(q)
+
         '''w = wikipedia.set_lang('de')
         q = data['message'].split(' ')
         query = ''
         for word in q:
             if word.strip() != '.w':
                 query += word + ' '
-        w = wikipedia.search(query)
+        #w = wikipedia.search(query)
         if w.__len__() == 0:
             connection.send_back(data['nick'] + ', ' +
                                 'ich habe dazu keinen eintrag gefunden!',
