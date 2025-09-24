@@ -17,26 +17,29 @@ class UrbanObserver(PrivMsgObserverPrototype):
         if data['message'].find('.urban') == -1:
             return
 
+        #split incoming message in '.urban' and '<term>'
         message = data['message'].split(' ', 1)
 
-        connection.send_back(message, data)
-
+        #request content from Urban Dict with <term>
         search = message[1]
         contents = requests.get(f'https://unofficialurbandictionaryapi.com/api/search?term={search}&limit=1&page=1&')
 
+        #use build in tools to extract content and status code for further processing
         contentStr = str(contents.content)
         status = int(contents.status_code)
 
-        connection.send_back(status, data)
-
         if status == 200:
+
+            #determin beginning and end of searched word and description
             indexWord = contentStr.index('"word"')
             indexWordEnd = contentStr.index('","meaning"')
             indexMeaning = contentStr.index('"meaning"')
             indexMeaningEnd = contentStr.index('","example"')
 
+            #extracting content
             WordStr = contentStr[indexWord:indexWordEnd]
             MeaningStr = contentStr[indexMeaning:indexMeaningEnd]
+            MeaningStr = MeaningStr.replace('\\n', ' ').replace('\\', '')
             WordSplit = WordStr.split('":"')
             MeaningSplit = MeaningStr.split('":"')
 
