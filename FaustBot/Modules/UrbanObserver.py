@@ -45,3 +45,7 @@ class UrbanObserver(PrivMsgObserverPrototype):
 
             connection.send_back(f'{data['nick']} Das gesuchte Wort {WordSplit[1]} hat folgende Bedeutung:',data)
             connection.send_back(MeaningSplit[1], data)
+
+
+        else:
+            connection.send_back(f'Ich konnte leider keine definition für {message[1]} finden', data)
