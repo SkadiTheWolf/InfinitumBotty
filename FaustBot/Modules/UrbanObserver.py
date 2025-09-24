@@ -29,6 +29,20 @@ class UrbanObserver(PrivMsgObserverPrototype):
 
         connection.send_back(status, data)
 
+        if status == 200:
+            indexWord = contentStr.index('"word"')
+            indexWordEnd = contentStr.index('","meaning"')
+            indexMeaning = contentStr.index('"meaning"')
+            indexMeaningEnd = contentStr.index('","example"')
+
+            WordStr = contentStr[indexWord:indexWordEnd]
+            MeaningStr = contentStr[indexMeaning:indexMeaningEnd]
+            WordSplit = WordStr.split('":"')
+            MeaningSplit = MeaningStr.split('":"')
+
+            connection.send_back(f'{data['nick']} Das gesuchte Wort {WordSplit} hat folgende Bedeutung:',data)
+            connection.send_back(MeaningSplit, data)
+
 
 
 
