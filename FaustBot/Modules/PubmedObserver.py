@@ -49,8 +49,7 @@ class PubmedObserver(PrivMsgObserverPrototype):
                     connection.send_back(f'https://pubmed.ncbi.nlm.nih.gov/{indices}',data)
 
                 except IndexError:
-                    connection.send_back(doiArr[0], data)
-                    connection.send_back(f'https://pubmed.ncbi.nlm.nih.gov/{indices}', data)
+                    connection.send_back("Fehler, bitte mit anderem Suchbegriff versuchen")
 
         else:
             connection.send_back("Dafür hab ich keinen Eintrag gefunden")
