@@ -50,6 +50,7 @@ class PubmedObserver(PrivMsgObserverPrototype):
 
                 except IndexError:
                     connection.send_back("Fehler, bitte mit anderem Suchbegriff versuchen",data)
+                    return
 
         else:
             connection.send_back("Dafür hab ich keinen Eintrag gefunden")
