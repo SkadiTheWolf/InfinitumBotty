@@ -31,7 +31,7 @@ class PubmedObserver(PrivMsgObserverPrototype):
 
         replaced = contentStr.replace('<Id>', '').replace('</Id>\\n', ' ').replace('<IdList>\\n', " ")  #
         split = replaced.split(" ")
-        onlyFive = split[10:15]
+        onlyFive = split[10:13]
 
         if status == 200:
             for indices in onlyFive:
