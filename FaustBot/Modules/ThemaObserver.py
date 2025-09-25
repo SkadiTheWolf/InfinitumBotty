@@ -16,8 +16,12 @@ class ThemaObserver(PrivMsgObserverPrototype):
 
     def update_on_priv_msg(self, data: dict, connection: Connection):
 
+        anfang = ['Gerade geht es um','Das Gespräch handelt von','Wir reden über','Das Thema ist']
+
+        thema = ['Grönland', 'Basketball', 'Handball']
+
         if data['message'].startswith(".thema"):
-            connection.send_back('Hier kommt ein Thema raus', data)
+            connection.send_back(f'{random.choice(anfang)} {random.choice(thema)}', data)
 
 
 
