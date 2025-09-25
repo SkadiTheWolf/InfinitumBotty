@@ -54,27 +54,3 @@ class PubmedObserver(PrivMsgObserverPrototype):
 
         else:
             connection.send_back("Dafür hab ich keinen Eintrag gefunden")
-
-
-
-
-
-            '''#determin beginning and end of searched word and description
-            indexWord = contentStr.index('"word"')
-            indexWordEnd = contentStr.index('","meaning"')
-            indexMeaning = contentStr.index('"meaning"')
-            indexMeaningEnd = contentStr.index('","example"')
-
-            #extracting content
-            WordStr = contentStr[indexWord:indexWordEnd]
-            MeaningStr = contentStr[indexMeaning:indexMeaningEnd]
-            MeaningStr = MeaningStr.replace('\\n', ' ').replace('\\', '')
-            WordSplit = WordStr.split('":"')
-            MeaningSplit = MeaningStr.split('":"')
-
-            connection.send_back(f'{data['nick']} Das gesuchte Wort {WordSplit[1]} hat folgende Bedeutung:',data)
-            connection.send_back(MeaningSplit[1], data)
-
-
-        else:
-            connection.send_back(f'Ich konnte leider keine definition für {message[1]} finden', data)'''
