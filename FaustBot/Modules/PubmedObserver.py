@@ -3,7 +3,7 @@ import requests
 from FaustBot.Modules.PrivMsgObserverPrototype import PrivMsgObserverPrototype
 
 
-class UrbanObserver(PrivMsgObserverPrototype):
+class PubmedObserver(PrivMsgObserverPrototype):
     @staticmethod
     def cmd():
         return [".pubmed"]
