@@ -35,20 +35,25 @@ class PubmedObserver(PrivMsgObserverPrototype):
 
         if status == 200:
             for indices in onlyFive:
+                try:
+                    IdContents = requests.get(
+                        f'https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=pubmed&id={indices}&version=2.0')
+                    IdContentsStr = str(IdContents.content)
+                    Title = IdContentsStr.replace('<Title>', '~').replace('</Title>', '~')
+                    TitleArr = Title.split('~')
+                    connection.send_back(TitleArr[1],data)
 
-                IdContents = requests.get(
-                    f'https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=pubmed&id={indices}&version=2.0')
-                IdContentsStr = str(IdContents.content)
-                Title = IdContentsStr.replace('<Title>', '~').replace('</Title>', '~')
-                TitleArr = Title.split('~')
-                connection.send_back(TitleArr[1],data)
+                    doi = IdContentsStr.replace('<ELocationID>', "~").replace('</ELocationID>', '~')
+                    doiArr = doi.split('~')
+                    connection.send_back(doiArr[1],data)
+                    connection.send_back(f'https://pubmed.ncbi.nlm.nih.gov/{indices}',data)
 
-                doi = IdContentsStr.replace('<ELocationID>', "~").replace('</ELocationID>', '~')
-                doiArr = doi.split('~')
-                connection.send_back(doiArr[1],data)
-                connection.send_back(f'https://pubmed.ncbi.nlm.nih.gov/{indices}',data)
+                except IndexError:
+                    connection.send_back(doiArr[0], data)
+                    connection.send_back(f'https://pubmed.ncbi.nlm.nih.gov/{indices}', data)
 
-
+        else:
+            connection.send_back("Dafür hab ich keinen Eintrag gefunden")
 
 
 
