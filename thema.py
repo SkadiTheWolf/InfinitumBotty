@@ -4,4 +4,6 @@ thema = ['Grönland', 'Basketball', 'Handball', 'den Tatort "Die Bielefeld-Versc
          'das Betriebssystem das wir benutzen', 'Fussball', 'Crocket', 'Langlauf', 'Ski-Slalom',
          'verschiedene Hunderassen', 'Hockey', 'Eishockey', 'Die Antarktis', 'die Arktis', 'Kinderhörspiele',
          'Rezeptideen', 'nichts', 'gar nichts', 'nichts, gähnende Leere', 'nordische Mythologie', 'Fridolin den Fuchs',
-         'Füchse', 'Wölfe', 'Eulen', 'Autismus']
+         'Füchse', 'Wölfe', 'Eulen', 'Autismus', 'dem Wetter gerade', 'normale Hobbies', 'seltsame Hobbies',
+         'Gefühle', 'Züge', 'Busse', 'Emacs', 'Biologie', 'Chemie', 'Mathe', 'die deutsche Sprache',
+         'die englische Sprache', 'die spanische Sprache', 'Schottergärten', 'Piraten', 'Seefahrer', 'Mäuse']
