@@ -10,7 +10,6 @@ from FaustBot.Modules import ActivityObserver, IdentNickServObserver, GiveCookie
     PubmedObserver, ThemaObserver
 from FaustBot.Modules.CustomUserModules import GlossaryModule, ICDObserver, ModmailObserver
 from FaustBot.Modules.ModuleType import ModuleType
-#from FaustBot.Modules.UrbanObserver import UrbanObserver
 
 
 class FaustBot(object):
