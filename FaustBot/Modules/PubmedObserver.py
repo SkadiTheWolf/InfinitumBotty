@@ -10,7 +10,7 @@ class PubmedObserver(PrivMsgObserverPrototype):
 
     @staticmethod
     def help():
-        return (".pubmed <term> - fragt Pub Med zu <term> ab")
+        return (".pubmed <term> - fragt Pub Med zu <term> ab. Achte auf Groß und kleinschreibung und auf Rechtschreibung")
 
     def update_on_priv_msg(self, data, connection):
 
@@ -41,10 +41,13 @@ class PubmedObserver(PrivMsgObserverPrototype):
                     IdContentsStr = str(IdContents.content)
                     Title = IdContentsStr.replace('<Title>', '~').replace('</Title>', '~')
                     TitleArr = Title.split('~')
-                    connection.send_back(TitleArr[1],data)
+                    indexErrorTestTitle = TitleArr[1]
 
                     doi = IdContentsStr.replace('<ELocationID>', "~").replace('</ELocationID>', '~')
                     doiArr = doi.split('~')
+                    indexErrorTestDoi = doiArr[1]
+
+                    connection.send_back(TitleArr[1], data)
                     connection.send_back(doiArr[1],data)
                     connection.send_back(f'https://pubmed.ncbi.nlm.nih.gov/{indices}',data)
                     connection.send_back(' ',data)
