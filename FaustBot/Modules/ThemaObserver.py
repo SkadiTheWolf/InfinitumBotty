@@ -1,9 +1,6 @@
 import random
-from fileinput import close
-
 from FaustBot.Communication.Connection import Connection
 from FaustBot.Modules.PrivMsgObserverPrototype import PrivMsgObserverPrototype
-from essen import essen
 
 
 class ThemaObserver(PrivMsgObserverPrototype):
@@ -20,7 +17,9 @@ class ThemaObserver(PrivMsgObserverPrototype):
 
             anfang = ['Gerade geht es um','Das Gespräch handelt von','Wir reden über','Das Thema ist']
 
-            thema = random.choice(open('FaustBot/Modules/txtfiles/themen.txt').readlines())
+            with open('FaustBot/Modules/txtfiles/themen.txt') as themen:
+                thema = random.choice(themen.readlines())
+                themen.close()
 
             connection.send_back(f'{random.choice(anfang)} {thema}', data)
 
