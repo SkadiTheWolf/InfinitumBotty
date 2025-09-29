@@ -69,3 +69,5 @@ Since we're programming in python please hold on [PEP-08](https://www.python.org
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ```
 The `care_icd10_de.csv` was taken from the [CARE2X - Integrated Hospital Info System Project on Sourceforge](https://sourceforge.net/projects/care2002/).
+
+The `icd11_codes.csv` was taken from [AlexTheAnalyst/HealthCareAnalytics](https://github.com/AlexTheAnalyst/HealthcareAnalytics/blob/main/icd11%20codes.csv) on Github

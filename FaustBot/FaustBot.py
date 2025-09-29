@@ -7,7 +7,7 @@ from FaustBot.Modules import ActivityObserver, IdentNickServObserver, GiveCookie
     IntroductionObserver, HangmanObserver, DuckObserver, AllSeenObserver, JokeObserver,TellObserver, WordRunObserver,\
     GiveIceObserver, GiveDrinkToObserver, Greeter, MathRunObserver, PartyObserver, PrideObserver, SnacksObserver, \
     BlockObserver, LetterObserver, DiceObserver, First_Greeter, CharactersCountObserver, BastelObserver, UrbanObserver, \
-    PubmedObserver, ThemaObserver
+    PubmedObserver, ThemaObserver, ICD11Observer
 from FaustBot.Modules.CustomUserModules import GlossaryModule, ICDObserver, ModmailObserver
 from FaustBot.Modules.ModuleType import ModuleType
 
@@ -31,7 +31,7 @@ class FaustBot(object):
         self.add_module(WhoObserver.WhoObserver(user_list))
         self.add_module(AllSeenObserver.AllSeenObserver(user_list))
         self.add_module(PingAnswerObserver.ModulePing())
-        self.add_module(Kicker.Kicker(user_list, self._config.idle_time))  #only in #autistenchat
+        #self.add_module(Kicker.Kicker(user_list, self._config.idle_time))  #only in #autistenchat
         self.add_module(SeenObserver.SeenObserver())
         self.add_module(TitleObserver.TitleObserver())
         self.add_module(WikiObserver.WikiObserver())
@@ -68,6 +68,7 @@ class FaustBot(object):
         self.add_module(UrbanObserver.UrbanObserver()) # only in #autistenchat-fsk18
         self.add_module(PubmedObserver.PubmedObserver()) #only, maybe in #autistenchat-si
         self.add_module(ThemaObserver.ThemaObserver())
+        self.add_module(ICD11Observer.ICD11Observer())
     def run(self):
         self._setup()
         running = True
