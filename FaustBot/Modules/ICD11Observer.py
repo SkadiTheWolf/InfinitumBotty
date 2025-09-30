@@ -24,7 +24,7 @@ class ICD11Observer(PrivMsgObserverPrototype):
         if data['message'].startswith('.icd11 '):
             #split message
             message = data['messageCaseSensitive']
-            arr = message.split(' ', 2)
+            arr = message.split(' ', 1)
 
             #capitalize icdCode
             code = arr[1].upper()
