@@ -30,9 +30,9 @@ class OeisObserver(PrivMsgObserverPrototype):
             # find oeis ids
             ids = re.findall('"number": [0-9]+', content)
             # choose first five
-            idsOnlyFive = ids[0:5]
+            idsOnlyThree = ids[0:3]
             # cleanup
-            ids_clean = [s.replace('"number": ', '') for s in idsOnlyFive]
+            ids_clean = [s.replace('"number": ', '') for s in idsOnlyThree]
 
 
             # convert numbers in id format from e.g. 27 to A000027
