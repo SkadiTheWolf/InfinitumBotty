@@ -7,7 +7,7 @@ from FaustBot.Modules import ActivityObserver, IdentNickServObserver, GiveCookie
     IntroductionObserver, HangmanObserver, DuckObserver, AllSeenObserver, JokeObserver,TellObserver, WordRunObserver,\
     GiveIceObserver, GiveDrinkToObserver, Greeter, MathRunObserver, PartyObserver, PrideObserver, SnacksObserver, \
     BlockObserver, LetterObserver, DiceObserver, First_Greeter, CharactersCountObserver, BastelObserver, UrbanObserver, \
-    PubmedObserver, ThemaObserver, ICD11Observer, HilfeObserver
+    PubmedObserver, ThemaObserver, ICD11Observer, HilfeObserver, OeisObserver
 from FaustBot.Modules.CustomUserModules import GlossaryModule, ICDObserver, ModmailObserver
 from FaustBot.Modules.ModuleType import ModuleType
 
@@ -70,6 +70,7 @@ class FaustBot(object):
         self.add_module(ThemaObserver.ThemaObserver())
         self.add_module(ICD11Observer.ICD11Observer())
         self.add_module(HilfeObserver.HilfeObserver())
+        self.add_module(OeisObserver.OeisObserver()) #onlz, maybe in #autistenchat-si
     def run(self):
         self._setup()
         running = True
