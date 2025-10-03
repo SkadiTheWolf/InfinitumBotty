@@ -1,3 +1,12 @@
+"""
+
+This module takes a term and Queries Urban Dictionary for results. Prints the first one to the Chat
+
+September 2025, Skadi Wiesemann
+
+"""
+
+
 import requests
 
 from FaustBot.Modules.PrivMsgObserverPrototype import PrivMsgObserverPrototype

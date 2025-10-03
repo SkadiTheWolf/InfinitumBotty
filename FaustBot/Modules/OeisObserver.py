@@ -1,3 +1,12 @@
+"""
+
+This module takes an integer sequence spaced by ' ' or ',' as input and queries https//:oeis.org for entries, prints the
+first 3 in chat.
+
+September 2025, Skadi Wiesemann
+
+"""
+
 import requests
 import re
 

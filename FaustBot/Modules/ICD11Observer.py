@@ -1,3 +1,12 @@
+"""
+
+This module takes a ICD11 Code as input and prints the corresponding Entry
+
+September 2025, Skadi Wiesemann
+
+"""
+
+
 import csv
 
 from FaustBot.Communication.Connection import Connection

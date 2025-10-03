@@ -1,3 +1,12 @@
+"""
+
+This module takes a topic as input and queries the PubMed Database for entries. Prints the first three in chat
+
+September 2025, Skadi Wiesemann
+
+"""
+
+
 import requests
 
 from FaustBot.Modules.PrivMsgObserverPrototype import PrivMsgObserverPrototype

@@ -1,3 +1,11 @@
+"""
+
+This module prints some resources for distressed and suicidal People
+
+September 2025 Skadi Wiesemann
+
+"""
+
 from FaustBot.Communication.Connection import Connection
 from FaustBot.Modules.PrivMsgObserverPrototype import PrivMsgObserverPrototype
 
