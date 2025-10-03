@@ -31,7 +31,7 @@ class FaustBot(object):
         self.add_module(WhoObserver.WhoObserver(user_list))
         self.add_module(AllSeenObserver.AllSeenObserver(user_list))
         self.add_module(PingAnswerObserver.ModulePing())
-        #self.add_module(Kicker.Kicker(user_list, self._config.idle_time))  #only in #autistenchat
+        self.add_module(Kicker.Kicker(user_list, self._config.idle_time))  #only in #autistenchat
         self.add_module(SeenObserver.SeenObserver())
         self.add_module(TitleObserver.TitleObserver())
         self.add_module(WikiObserver.WikiObserver())
