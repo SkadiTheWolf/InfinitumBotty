@@ -1,3 +1,12 @@
+"""
+
+This module prints a random Topic to chat about
+
+September 2025, Skadi Wiesemann
+
+"""
+
+
 import random
 from FaustBot.Communication.Connection import Connection
 from FaustBot.Modules.PrivMsgObserverPrototype import PrivMsgObserverPrototype
