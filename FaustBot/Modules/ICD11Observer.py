@@ -30,11 +30,13 @@ class ICD11Observer(PrivMsgObserverPrototype):
             code = arr[1].upper()
             print(code)
 
+            #when there is no key a attribute error is raised
             try:
                 text = self.icd11_dict.get(code).strip(' ')
             except AttributeError:
                 print('Key Not Found')
 
+            #send back data
             try:
                 connection.send_back(f'{code} - {text}', data)
             except:

@@ -27,9 +27,9 @@ class OeisObserver(PrivMsgObserverPrototype):
             contents = requests.get(f'https://oeis.org/search?q={dings}&fmt=json')
             content = str(contents.content)
 
-            # find oeis ids
+            # find oeis ids (eg. '"number" : 27'
             ids = re.findall('"number": [0-9]+', content)
-            # choose first five
+            # choose first three
             idsOnlyThree = ids[0:3]
             # cleanup
             ids_clean = [s.replace('"number": ', '') for s in idsOnlyThree]
@@ -42,14 +42,19 @@ class OeisObserver(PrivMsgObserverPrototype):
                 a_ids.append(indices)
 
                 # get content for each id
-
                 idContents = requests.get(f'https://oeis.org/{indices}')
                 idContent = str(idContents.content)
-                name = idContent.replace('<div class=seqname>\\n', '~').replace(
-                        '\\n\\n</div>\\n</div>\\n<div class=scorerefs>', '~').split('~')
+
+                #clean up of title
+                name = (idContent.replace('<div class=seqname>\\n', '~').replace(
+                                         '\\n\\n</div>\\n</div>\\n<div class=scorerefs>',
+                                        '~')
+                                        .split('~'))
+
                 name2 = name[1].replace('\\n', '~').split('~')
                 name_final = name2[0].strip(' ')
 
+                #send back data
                 connection.send_back(indices, data)
                 connection.send_back(name_final, data)
                 connection.send_back(f'https://oeis.org/{indices}', data)

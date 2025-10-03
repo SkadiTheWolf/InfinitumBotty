@@ -17,7 +17,7 @@ class PubmedObserver(PrivMsgObserverPrototype):
         if data['messageCaseSensitive'].find('.pubmed') == -1:
             return
 
-        #split incoming message in '.urban' and '<term>'
+        #split incoming message in '.pubmed' and '<term>'
         message = data['messageCaseSensitive'].split(' ', 1)
 
         #request ids from Pubmed with <term>
@@ -28,7 +28,7 @@ class PubmedObserver(PrivMsgObserverPrototype):
         contentStr = str(contents.content)
         status = int(contents.status_code)
 
-
+        #format content for better readability
         replaced = contentStr.replace('<Id>', '').replace('</Id>\\n', ' ').replace('<IdList>\\n', " ")  #
         split = replaced.split(" ")
         onlyFive = split[10:13]
@@ -36,22 +36,28 @@ class PubmedObserver(PrivMsgObserverPrototype):
         if status == 200:
             for indices in onlyFive:
                 try:
+                    #get content with ids
                     IdContents = requests.get(
                         f'https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=pubmed&id={indices}&version=2.0')
                     IdContentsStr = str(IdContents.content)
+
+                    #format xml to extract Title
                     Title = IdContentsStr.replace('<Title>', '~').replace('</Title>', '~')
                     TitleArr = Title.split('~')
                     indexErrorTestTitle = TitleArr[1]
 
+                    #format xml to extract doi
                     doi = IdContentsStr.replace('<ELocationID>', "~").replace('</ELocationID>', '~')
                     doiArr = doi.split('~')
                     indexErrorTestDoi = doiArr[1]
 
+                    #send back data
                     connection.send_back(TitleArr[1], data)
                     connection.send_back(doiArr[1],data)
                     connection.send_back(f'https://pubmed.ncbi.nlm.nih.gov/{indices}',data)
                     connection.send_back(' ',data)
 
+                #when theres only 1 or 2 results, a index error is raised
                 except IndexError:
                     connection.send_back("Fehler, bitte mit anderem Suchbegriff versuchen",data)
                     return
