@@ -18,14 +18,14 @@ Rezeptideen
 nichts
 gar nichts
 nichts, gähnende Leere
-nordischer Mythologie
+nordische Mythologie
 Fridolin dem Fuchs
 Füchse
 Wölfe
 Eule
 Autismus
-normalen Hobbies
-seltsamen Hobbies
+normale Hobbies
+seltsame Hobbies
 Gefühle
 Züge
 Busse
@@ -34,17 +34,21 @@ Vim
 Text-Editor
 Biologie
 Chemie
-Mathe
+Mathematik
 Sprache
 Schottergärten
 Piraten
 Seefahrer
-Mäusen
+Mäuse
 Vögeln
 Fledermäusen
-Problemen mit der sozialen Interaktion und Kommunikation
+Probleme mit der sozialen Interaktion und Kommunikation
 Lieblings-Podcasts
 was wir heute zum Abendessen kochen
 irgendwas
 Gott und die Welt
 Gurken
+Klavierspielen
+Computer Games
+Lieblingswasser
+Lieblingshundeart
