@@ -3,6 +3,7 @@ Basketball
 Handball
 obskure Musik
 obskure Filme
+Arthouse Filme
 das Betriebssystem das wir benutzen
 Fußball
 Crocket
@@ -22,7 +23,7 @@ nordische Mythologie
 Fridolin dem Fuchs
 Füchse
 Wölfe
-Eule
+Eulen
 Autismus
 normale Hobbies
 seltsame Hobbies
@@ -41,7 +42,7 @@ Piraten
 Seefahrer
 Mäuse
 Vögeln
-Fledermäusen
+Fledermäuse
 Probleme mit der sozialen Interaktion und Kommunikation
 Lieblings-Podcasts
 was wir heute zum Abendessen kochen
