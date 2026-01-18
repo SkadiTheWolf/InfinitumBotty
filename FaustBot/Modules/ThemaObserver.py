@@ -24,7 +24,7 @@ class ThemaObserver(PrivMsgObserverPrototype):
     def update_on_priv_msg(self, data: dict, connection: Connection):
         if data['message'].startswith(".thema"):
 
-            anfang = ['Gerade geht es um','Das Gespräch handelt von','Wir reden über','Das Thema ist']
+            anfang = ['Gerade geht es um','Wir reden über','Das Thema ist']
 
             with open('FaustBot/Modules/txtfiles/themen.txt') as themen:
                 thema = random.choice(themen.readlines())
