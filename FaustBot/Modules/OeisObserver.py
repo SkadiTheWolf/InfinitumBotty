@@ -22,7 +22,7 @@ class OeisObserver(PrivMsgObserverPrototype):
 
     @staticmethod
     def help():
-        return ['.oeis - Befrägt oeis.org nach einer Integersequenz']
+        return ['.oeis - Befragt oeis.org nach einer Integersequenz']
 
     def update_on_priv_msg(self, data, connection: Connection):
         if data['message'].startswith('.oeis'):
@@ -35,35 +35,40 @@ class OeisObserver(PrivMsgObserverPrototype):
             # https request
             contents = requests.get(f'https://oeis.org/search?q={dings}&fmt=json')
             content = str(contents.content)
+            status = contents.status_code
 
-            # find oeis ids (eg. '"number" : 27'
-            ids = re.findall('"number": [0-9]+', content)
-            # choose first three
-            idsOnlyThree = ids[0:3]
-            # cleanup
-            ids_clean = [s.replace('"number": ', '') for s in idsOnlyThree]
+            if status == 200:
+                # find oeis ids (eg. '"number" : 27'
+                ids = re.findall('"number": [0-9]+', content)
+                # choose first three
+                idsOnlyThree = ids[0:3]
+                # cleanup
+                ids_clean = [s.replace('"number": ', '') for s in idsOnlyThree]
 
 
-            # convert numbers in id format from e.g. 27 to A000027
-            a_ids = []
-            for indices in ids_clean:
-                indices = 'A{:06d}'.format(int(indices))
-                a_ids.append(indices)
+                # convert numbers in id format from e.g. 27 to A000027
+                a_ids = []
+                for indices in ids_clean:
+                    indices = 'A{:06d}'.format(int(indices))
+                    a_ids.append(indices)
 
-                # get content for each id
-                idContents = requests.get(f'https://oeis.org/{indices}')
-                idContent = str(idContents.content)
+                    # get content for each id
+                    idContents = requests.get(f'https://oeis.org/{indices}')
+                    idContent = str(idContents.content)
 
-                #clean up of title
-                name = (idContent.replace('<div class=seqname>\\n', '~').replace(
-                                         '\\n\\n</div>\\n</div>\\n<div class=scorerefs>',
-                                        '~')
-                                        .split('~'))
+                    #clean up of title
+                    name = (idContent.replace('<div class=seqname>\\n', '~').replace(
+                                             '\\n\\n</div>\\n</div>\\n<div class=scorerefs>',
+                                            '~')
+                                            .split('~'))
 
-                name2 = name[1].replace('\\n', '~').split('~')
-                name_final = name2[0].strip(' ')
+                    name2 = name[1].replace('\\n', '~').split('~')
+                    name_final = name2[0].strip(' ')
 
-                #send back data
-                connection.send_back(indices, data)
-                connection.send_back(name_final, data)
-                connection.send_back(f'https://oeis.org/{indices}', data)
+                    #send back data
+                    connection.send_back(indices, data)
+                    connection.send_back(name_final, data)
+                    connection.send_back(f'https://oeis.org/{indices}', data)
+
+                else:
+                    connection.send_back(f"Fehler: Statuscode: {status}", data)
