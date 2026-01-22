@@ -70,5 +70,5 @@ class OeisObserver(PrivMsgObserverPrototype):
                     connection.send_back(name_final, data)
                     connection.send_back(f'https://oeis.org/{indices}', data)
 
-                else:
-                    connection.send_back(f"Fehler: Statuscode: {status}", data)
+            else:
+                connection.send_back(f"Fehler: Statuscode: {status}", data)
