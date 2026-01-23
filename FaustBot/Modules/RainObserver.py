@@ -102,7 +102,7 @@ class RainObserver(PrivMsgObserverPrototype):
                 weatherCode = dictWeather['weather_code']
                 jetzt = int(datetime.datetime.now().strftime('%H'))
 
-                connection.send_back(f'Das Wetter in {City}, {country} ist im Moment {code[weatherCode[jetzt-1]]} °C', data)
+                connection.send_back(f'Das Wetter in {City}, {country} ist im Moment {code[weatherCode[jetzt-1]]}', data)
 
             else:
                 connection.send_back(f"Fehler: Get Temp: Statuscode:{statusWeather}", data)
