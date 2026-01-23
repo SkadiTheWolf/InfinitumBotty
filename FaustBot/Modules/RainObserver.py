@@ -13,36 +13,7 @@ import json
 from FaustBot.Communication.Connection import Connection
 from FaustBot.Modules.PrivMsgObserverPrototype import PrivMsgObserverPrototype
 
-code = {
-        0: 'Klarer Himmel',
-        1: 'Überwiegend Klarer Himmel',
-        2: 'Parziell Bewölkt',
-        3: 'Bewölkt',
-        45: 'Nebel',
-        48: 'Überfrierender Nebel',
-        51: 'Leichter Nieselregen',
-        53: 'Mittlerer Nieselregen',
-        55: 'Schwerer Nieselregen',
-        56: 'Leichter überfrierender  Nieselregen',
-        57: 'Schwerer überfrierender  Nieselregen',
-        61: 'Leichter Regen',
-        63: 'Mitterer Regen',
-        65: 'Schwerer Regen',
-        66: 'Leichter frierender  Regen',
-        67: 'Schwerer frierender  Regen',
-        71: 'Leichter Schneefall',
-        73: 'Mittlerer Schneefall',
-        75: 'Schwerer Schneefall',
-        77: 'Graupel',
-        80: 'Leichter Regenschauer',
-        81: 'Mittlerer Regenschauer',
-        82: 'Schwerer Regenschauer',
-        85: 'Leichtes Schneegestöber',
-        86: 'Schweres Schneegestöber',
-        95: 'Gewitter',
-        96: 'Gewitter',
-        99: 'Gewitter',
-    }
+
 
 class RainObserver(PrivMsgObserverPrototype):
 
@@ -57,6 +28,38 @@ class RainObserver(PrivMsgObserverPrototype):
 
     def update_on_priv_msg(self, data, connection: Connection):
         # Hoisting of variables
+
+        code = {
+            0: 'Klarer Himmel',
+            1: 'Überwiegend Klarer Himmel',
+            2: 'Parziell Bewölkt',
+            3: 'Bewölkt',
+            45: 'Nebel',
+            48: 'Überfrierender Nebel',
+            51: 'Leichter Nieselregen',
+            53: 'Mittlerer Nieselregen',
+            55: 'Schwerer Nieselregen',
+            56: 'Leichter überfrierender  Nieselregen',
+            57: 'Schwerer überfrierender  Nieselregen',
+            61: 'Leichter Regen',
+            63: 'Mitterer Regen',
+            65: 'Schwerer Regen',
+            66: 'Leichter frierender  Regen',
+            67: 'Schwerer frierender  Regen',
+            71: 'Leichter Schneefall',
+            73: 'Mittlerer Schneefall',
+            75: 'Schwerer Schneefall',
+            77: 'Graupel',
+            80: 'Leichter Regenschauer',
+            81: 'Mittlerer Regenschauer',
+            82: 'Schwerer Regenschauer',
+            85: 'Leichtes Schneegestöber',
+            86: 'Schweres Schneegestöber',
+            95: 'Gewitter',
+            96: 'Gewitter',
+            99: 'Gewitter',
+        }
+
         global lat
         global long
         global City
@@ -99,10 +102,10 @@ class RainObserver(PrivMsgObserverPrototype):
                 weatherCode = dictWeather['weather_code']
                 jetzt = int(datetime.datetime.now().strftime('%H'))
 
-                connection.send_back(f'Das Wetter in {City}, {country} ist im Moment {code[weatherCode[jetzt-1]]} °C', data)
+                connection.send_back(f'Das Wetter in {City}, {country} ist im Moment {code[weatherCode[jetzt-1]]}', data)
 
             else:
-                connection.send_back(f"Fehler: Get Temp: Statuscode:{status}", data)
+                connection.send_back(f"Fehler: Get Temp: Statuscode:{statusWeather}", data)
 
         else:
             connection.send_back(f"Fehler: Get Coords: Statuscode:{status}", data)

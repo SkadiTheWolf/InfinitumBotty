@@ -1,6 +1,7 @@
 import html
 import re
 import urllib
+import json
 from urllib import request
 
 from FaustBot.Communication.Connection import Connection
@@ -47,6 +48,7 @@ class TitleObserver(PrivMsgObserverPrototype):
         if re.search("https?://youtu.be/", url):
             url = url.replace("youtu.be/", "www.youtube.com/watch?v=", 1)
 
+        yt_json_data_re = False
         if re.search("https?://[^/]*youtube.com/shorts/", url):
             title_re = re.compile(
                 '''"reelPlayerHeaderRenderer":{"reelTitleText":{"runs":\[{"text":"([^"]*)"'''
@@ -56,6 +58,7 @@ class TitleObserver(PrivMsgObserverPrototype):
             title_re = re.compile(
                 '''"results":{"contents":\[{"videoPrimaryInfoRenderer":{"title":{"runs":\[{"text":"([^"]*)"'''
             )
+            yt_json_data_re = re.compile("""var ytInitialData = ([^;]*)""")
         else:
             title_re = re.compile("<title[^>]*>(.+?)</title>")
 
@@ -74,13 +77,23 @@ class TitleObserver(PrivMsgObserverPrototype):
 
         content = content_raw.decode(encoding, errors="replace")
 
-        title_matches = title_re.search(content)
-        if title_matches:
-            title = title_matches.group(1)
+        if yt_json_data_re:
+            yt_json_data = json.loads(yt_json_data_re.search(content).group(1))
+            _base = yt_json_data["playerOverlays"]["playerOverlayRenderer"][
+                "videoDetails"
+            ]["playerOverlayVideoDetailsRenderer"]
+            _title = _base["title"]["simpleText"]
+            _creator = _base["subtitle"]["runs"][0]["text"]
+            _views = _base["subtitle"]["runs"][2]["text"]
+            title = f"{_title} - {_creator} - {_views}"
         else:
-            # with open("content.html", "w") as file:
-            #     file.write(content)
-            raise Exception(f"Could not Parse Title for {url}")
+            title_matches = title_re.search(content)
+            if title_matches:
+                title = title_matches.group(1)
+            else:
+                # with open("content.html", "w") as file:
+                #     file.write(content)
+                raise Exception(f"Could not Parse Title for {url}")
 
         title = html.unescape(title)
         title = title.replace("\n", " ").replace("\r", "")
