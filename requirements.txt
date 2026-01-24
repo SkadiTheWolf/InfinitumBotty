@@ -1,5 +1,10 @@
 # FaustBot/Modules/ComicObserver.py: 3
 # FaustBot/Modules/ComicScraper.py: 3
+# FaustBot/Modules/RainObserver.py: 10
+# FaustBot/Modules/UrbanObserver.py: 10
+# FaustBot/Modules/PubmedObserver.py: 10
+# FaustBot/Modules/OeisObsever.py: 10
+# FaustBot/Modules/WeatherObserver.py: 9
 requests == 2.32.5
 
 # FaustBot/Modules/WikiObserver.py: 1
