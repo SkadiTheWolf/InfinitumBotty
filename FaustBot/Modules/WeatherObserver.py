@@ -1,6 +1,6 @@
 """
 
-This module takes an City and Queries open-metero.com for a temperature, Weather Code And Pressure
+This module takes an City and Queries open-meteo.com for a temperature, Weather Code And Pressure
 
 January 2026, Skadi Wiesemann
 
@@ -45,7 +45,6 @@ code = {
 
 class WeatherObserver(PrivMsgObserverPrototype):
 
-
     @staticmethod
     def cmd():
         return ['.wetter']
@@ -55,6 +54,8 @@ class WeatherObserver(PrivMsgObserverPrototype):
         return ['.wetter <Stadt> - Befragt open-meteo.com nach einer Temperatur, Wettercode und Luftdruck am spezifizierten Ort']
 
     def update_on_priv_msg(self, data, connection: Connection):
+
+        print(data['message'])
         # Hoisting of variables
         global lat
         global long
@@ -62,49 +63,51 @@ class WeatherObserver(PrivMsgObserverPrototype):
         global country
         global temperature
 
-        if data['messageCaseSensitive'].find('.wetter') == -1:
+        if data['message'].find('.wetter') == -1:
             return
 
-        # split incoming message in '<City>'
-        message = str(data['messageCaseSensitive'])
-        city = message.replace('.wetter ', '')
-        city = city.replace(' ', '+')
+        if data['message'].startswith('.wetter'):
 
-        # Get Coordinates for Specified City
-        url = f'https://geocoding-api.open-meteo.com/v1/search?name={city}&count=1&language=en&format=json'
-        contents = requests.get(url)
-        status = contents.status_code
+            # split incoming message in '<City>'
+            message = str(data['message'])
+            city = message.replace('.wetter ', '')
+            city = city.replace(' ', '+')
 
-        if status == 200:
-            data1 = json.loads(contents.content)
-            try:
-                dictLoc = data1['results'][0]
-            except KeyError:
-                connection.send_back("Stadt nicht Gefunden", data)
-                return
-            lat = dictLoc['latitude']
-            long = dictLoc['longitude']
-            City = dictLoc['name']
-            country = dictLoc['country_code']
+            # Get Coordinates for Specified City
+            url = f'https://geocoding-api.open-meteo.com/v1/search?name={city}&count=1&language=en&format=json'
+            contents = requests.get(url)
+            status = contents.status_code
 
-            # Get Weather info
-            urlWeather = f'https://api.open-meteo.com/v1/forecast?latitude={lat}&longitude={long}&models=icon_seamless&current=weather_code,temperature_2m,surface_pressure&timezone=Europe%2FBerlin'
-            contentsWeather = requests.get(urlWeather)
-            statusWeather = contentsWeather.status_code
+            if status == 200:
+                data1 = json.loads(contents.content)
+                try:
+                    dictLoc = data1['results'][0]
+                except KeyError:
+                    connection.send_back("Stadt nicht Gefunden", data)
+                    return
+                lat = dictLoc['latitude']
+                long = dictLoc['longitude']
+                City = dictLoc['name']
+                country = dictLoc['country_code']
 
-            if statusWeather == 200:
-                dataWeather = json.loads(contentsWeather.content)
-                dictWeather = dataWeather['current']
-                temperature = dictWeather['temperature_2m']
-                weather_code = dictWeather['weather_code']
-                pressure = dictWeather['surface_pressure']
+                # Get Weather info
+                urlWeather = f'https://api.open-meteo.com/v1/forecast?latitude={lat}&longitude={long}&models=icon_seamless&current=weather_code,temperature_2m,surface_pressure&timezone=Europe%2FBerlin'
+                contentsWeather = requests.get(urlWeather)
+                statusWeather = contentsWeather.status_code
 
-                connection.send_back(f'Die Temperatur in {City}, {country} beträgt im Moment {temperature} °C. Die Witterung ist {code[weather_code]}. Der Luftdruck beträgt {pressure} hPa', data)
+                if statusWeather == 200:
+                    dataWeather = json.loads(contentsWeather.content)
+                    dictWeather = dataWeather['current']
+                    temperature = dictWeather['temperature_2m']
+                    weather_code = dictWeather['weather_code']
+                    pressure = dictWeather['surface_pressure']
+
+                    connection.send_back(f'Die Temperatur in {City}, {country} beträgt im Moment {temperature} °C. Die Witterung ist {code[weather_code]}. Der Luftdruck beträgt {pressure} hPa', data)
+
+                else:
+                    connection.send_back(f"Fehler: Get Temp: Statuscode:{status}", data)
 
             else:
-                connection.send_back(f"Fehler: Get Temp: Statuscode:{status}", data)
-
-        else:
-            connection.send_back(f"Fehler: Get Coords: Statuscode:{status}", data)
+                connection.send_back(f"Fehler: Get Coords: Statuscode:{status}", data)
 
 
