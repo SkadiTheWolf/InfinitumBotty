@@ -308,7 +308,6 @@ class WeatherObserver(PrivMsgObserverPrototype):
 
     def update_on_priv_msg(self, data, connection: Connection):
 
-        print(data['message'])
         # Hoisting of variables
         global lat
         global long
