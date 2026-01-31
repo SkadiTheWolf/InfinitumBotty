@@ -26,7 +26,6 @@ class MathObserver(PrivMsgObserverPrototype):
             formel = data['messageCaseSensitive'].split(' ', 1)
 
             try:
-                print(formel)
                 lösung = ''
                 lösung = subprocess.run(['python', 'FaustBot/Modules/MathSupplementary.py'],capture_output=True, text=True, input=formel[1], timeout=2)
                 connection.send_back(f'Die Lösung für {formel[1]} ist {lösung.stdout}', data)
