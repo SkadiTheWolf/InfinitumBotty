@@ -43,6 +43,9 @@ def check_if_bigger(von, zu):
 
 
 def decimal_to_base(base, zahl):
+    """
+    Convert a decimal number to a BaseX number
+    """
     out = ''
     zahl = int(zahl)
     while zahl > 0:
@@ -53,6 +56,9 @@ def decimal_to_base(base, zahl):
 
 
 def base_to_decimal(base, zahl):
+    """
+    Convert a BaseX Number to a decimal number
+    """
 
     digit, position = 0, 0
     while zahl:
@@ -64,6 +70,9 @@ def base_to_decimal(base, zahl):
 
 
 def base_to_base(von, zu, zahl):
+    """
+    utilize d_t_b and b_t_d to convert a BaseX number in a BaseY number
+    """
 
     out = decimal_to_base(zu, base_to_decimal(von, zahl))
 
@@ -82,9 +91,17 @@ class BaseObserver(PrivMsgObserverPrototype):
 
     def update_on_priv_msg(self, data: dict, connection: Connection):
 
+        if data['message'].find('.base') == -1:
+            return
+
+
         if data['message'].startswith('.base'):
 
             array = data['message'].split(' ', 3)
+
+            """
+            Check every incoming number, if int go on if not return with error message 
+            """
 
             zahlString = array[3]
             err = check_if_int(zahlString)
@@ -111,8 +128,11 @@ class BaseObserver(PrivMsgObserverPrototype):
 
             isBase = check_if_base(von, zahl)
 
+            """
+            return 0 if either number is 0
+            """
             if von == 0 or zu == 0 or zahl == 0:
-                connection.send_back(f'Die {zahlString} in Base{zuString} ist 0', data)
+                connection.send_back(f'Die {zahlString}, Base{vonString} entspricht 0 in Base{zuString}', data)
                 return
 
             if von > 32 or zu > 32:
@@ -142,5 +162,7 @@ class BaseObserver(PrivMsgObserverPrototype):
 
             else:
                 connection.send_back('Unbekannter Fehler', data)
+                return
 
             connection.send_back(f'Die Zahl {zahlString} entspricht {out}', data)
+            return
