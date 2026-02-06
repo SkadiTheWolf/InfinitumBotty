@@ -48,6 +48,14 @@ start() {
       echo "[=== preparing database "
       python ReadInternationalization.py
     fi
+    echo "[=== checking if config.txt exits"
+    if [ -f "config.txt" ]; then
+      echo "[=== config.txt exists"
+    else
+      echo "[=== no config.txt"
+      echo "[== aborting start"
+      exit
+    fi
     echo "[=== starting faust-bot "
     echo "[=== redirecting output to nohup.out "
     nohup python -u Main.py --config config.txt > out.txt &
