@@ -16,6 +16,7 @@ help() {
   echo "  -e  exits/stops the bot"
   echo "  -r  restarts the bot"
   echo "  -u  updates the bots code"
+  echo "  -d  activates tailing of out.txt for quick debugging"
 }
 
 start() {
@@ -93,9 +94,16 @@ clean() {
   rm -rf $VENV
 }
 
+debug() {
+  echo "[== debug sesh activated"
+  stop
+  start
+  tail -f out.txt
+}
+
 OPTIND=1
 
-while getopts "hseruc" opt; do
+while getopts "hserucd" opt; do
   case $opt in
   h)
     help
@@ -116,6 +124,9 @@ while getopts "hseruc" opt; do
     ;;
   c)
     clean
+    ;;
+  d)
+    debug
     ;;
   \?)
     echo "Invalid option: -$OPTARG" >&2
