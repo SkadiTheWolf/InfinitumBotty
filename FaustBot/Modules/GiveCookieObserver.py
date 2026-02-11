@@ -2,8 +2,6 @@ import random
 
 from FaustBot.Communication import Connection
 from FaustBot.Modules.PrivMsgObserverPrototype import PrivMsgObserverPrototype
-from kekse import kekse
-
 
 class GiveCookieObserver(PrivMsgObserverPrototype):
     @staticmethod
@@ -16,6 +14,11 @@ class GiveCookieObserver(PrivMsgObserverPrototype):
 
     def update_on_priv_msg(self, data: dict, connection: Connection):
         if data["message"].startswith(".cookie"):
+
+            with open("FaustBot/Modules/txtfiles/kekse.txt") as kekse:
+                keks = random.choice(kekse.readlines())
+                kekse.close()
+
             connection.send_back(
-                f"\001ACTION schenkt {data['nick']} {random.choice(kekse)}.\001", data
+                f"\001ACTION schenkt {data['nick']} {keks}.\001", data
             )
