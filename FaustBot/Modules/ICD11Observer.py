@@ -8,6 +8,7 @@ September 2025, Skadi Wiesemann
 
 
 import csv
+import random
 
 from FaustBot.Communication.Connection import Connection
 from FaustBot.Modules.PrivMsgObserverPrototype import PrivMsgObserverPrototype
@@ -18,6 +19,7 @@ class ICD11Observer(PrivMsgObserverPrototype):
             row[0]: row[1]
             for row in csv.reader(icd11_codes, delimiter=',')
         }
+    icd11_codes.close()
 
     @staticmethod
     def cmd():
@@ -25,28 +27,37 @@ class ICD11Observer(PrivMsgObserverPrototype):
 
     @staticmethod
     def help():
-        return ['.icd11 - Gibt einen ']
+        return ['.icd11 <Code> - Gibt einen icd11 code aus. Ein leerer Befehl gibt einen zufälligen code aus']
 
     def update_on_priv_msg(self, data, connection: Connection):
 
         #' ' after .icd11 so that .icd11xxx doesnt trigger an IndexError at code = arr[1]
-        if data['message'].startswith('.icd11 '):
+        if data['message'].startswith('.icd11'):
             #split message
             message = data['messageCaseSensitive']
             arr = message.split(' ', 1)
 
+
+            if len(arr) == 1:
+                # Conevert dict keys to a list so random.choice can pick one
+                code = random.choice(list(self.icd11_dict.keys()))
+
+                # Get Description
+                beschreibung = self.icd11_dict.get(code).strip(' ')
+
+                connection.send_back(f'{code} - {beschreibung}', data)
+                return
+
             #capitalize icdCode
             code = arr[1].upper()
-            print(code)
 
             #when there is no key a attribute error is raised
             try:
                 text = self.icd11_dict.get(code).strip(' ')
             except AttributeError:
-                print('Key Not Found')
+                connection.send_back('Code nicht gefunden', data)
+                return
 
             #send back data
-            try:
-                connection.send_back(f'{code} - {text}', data)
-            except:
-                connection.send_back(f'Fehler Versuche es erneut', data)
+            connection.send_back(f'{code} - {text}', data)
+            return
