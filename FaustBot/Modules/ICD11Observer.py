@@ -31,7 +31,7 @@ class ICD11Observer(PrivMsgObserverPrototype):
 
     def update_on_priv_msg(self, data, connection: Connection):
 
-        #' ' after .icd11 so that .icd11xxx doesnt trigger an IndexError at code = arr[1]
+        #' ' after .icd11 so that .icd11xxx doesnt trigger an IndexError at code = arr[1] !!Solved with try: except:
         if data['message'].startswith('.icd11'):
             #split message
             message = data['messageCaseSensitive']
@@ -39,7 +39,7 @@ class ICD11Observer(PrivMsgObserverPrototype):
 
 
             if len(arr) == 1:
-                # Conevert dict keys to a list so random.choice can pick one
+                # Convert dict keys to a list so random.choice can pick one
                 code = random.choice(list(self.icd11_dict.keys()))
 
                 # Get Description
@@ -49,7 +49,11 @@ class ICD11Observer(PrivMsgObserverPrototype):
                 return
 
             #capitalize icdCode
-            code = arr[1].upper()
+            try:
+                code = arr[1].upper()
+            except IndexError:
+                connection.send_back("Leerzeichen vergessen?", data)
+                return
 
             #when there is no key a attribute error is raised
             try:
