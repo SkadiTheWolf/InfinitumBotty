@@ -10,6 +10,7 @@ Designed for non-technical channels
  - pip
  - wikipedia package (can be installed using pip; tested with version 1.4.0)
  - requests package (can be installed using pip; tested with version 2.23.5)
+ - cython package (can be installed using pip; tested with version 3.2.4)
  - virtualenv (optional)
  
 ### Running the Bot
