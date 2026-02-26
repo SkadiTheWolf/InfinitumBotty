@@ -2,7 +2,7 @@
 
 This module ouputs a random quote
 
-September 2025, Skadi Wiesemann
+February 2026, Skadi Wiesemann
 
 """
 
@@ -27,6 +27,16 @@ def get_quote():
 
     return out
 
+def check_for_bad(out):
+    with open('FaustBot/Modules/txtfiles/badquotes.txt', 'rt') as file:
+        badquotes = file.read()
+        for zitat in badquotes.split('\n'):
+            if out == zitat:
+                return True
+            else:
+                continue
+        file.close()
+        return False
 
 class FortuneObserver(PrivMsgObserverPrototype):
 
@@ -40,17 +50,27 @@ class FortuneObserver(PrivMsgObserverPrototype):
 
     def update_on_priv_msg(self, data, connection: Connection):
 
-        #' ' after .icd11 so that .icd11xxx doesnt trigger an IndexError at code = arr[1]
+        global lastQuote
+
         if data['message'].startswith('.fortune'):
 
             out = get_quote()
+            badquote = check_for_bad(out)
             print(len(out))
 
             while len(out) > 400:
-                out = get_quote()
-                print(len(out))
+                while badquote:
+                    out = get_quote()
+                    print(len(out))
 
             connection.send_back(out, data)
+
+            lastQuote = out
+
             return
 
+        if data['message'].startswith('.bad'):
+            with open('FaustBot/Modules/txtfiles/badquotes.txt', 'at') as f:
+                f.write(f'{lastQuote}\n')
+            f.close()
 
