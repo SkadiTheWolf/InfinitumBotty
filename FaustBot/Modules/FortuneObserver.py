@@ -56,12 +56,10 @@ class FortuneObserver(PrivMsgObserverPrototype):
 
             out = get_quote()
             badquote = check_for_bad(out)
-            print(len(out))
 
             while len(out) > 400:
                 while badquote:
                     out = get_quote()
-                    print(len(out))
 
             connection.send_back(out, data)
 
