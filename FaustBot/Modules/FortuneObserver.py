@@ -13,6 +13,14 @@ import os
 from FaustBot.Communication.Connection import Connection
 from FaustBot.Modules.PrivMsgObserverPrototype import PrivMsgObserverPrototype
 
+def convert_to_arr():
+    with open('FaustBot/Modules/txtfiles/badquotes.txt', 'rt') as file:
+        zitate = file.read()
+    file.close()
+    badquotes = zitate.split('\n')
+    print(id(badquotes))
+    return badquotes
+
 def get_quote():
     file = random.choice(os.listdir('FaustBot/Modules/txtfiles/zitate'))
 
@@ -28,15 +36,22 @@ def get_quote():
     return out
 
 def check_for_bad(out):
-    with open('FaustBot/Modules/txtfiles/badquotes.txt', 'rt') as file:
-        badquotes = file.read()
-        for zitat in badquotes.split('\n'):
-            if out == zitat:
-                return True
-            else:
-                continue
-        file.close()
-        return False
+    badquotes = convert_to_arr()
+    print(id(badquotes))
+    for zitat in badquotes:
+        if out == zitat:
+            return True
+        else:
+            continue
+
+    return False
+
+def num_badquotes():
+    badquotes = convert_to_arr()
+    laenge = len(badquotes)
+
+    print(id(badquotes))
+    return laenge
 
 class FortuneObserver(PrivMsgObserverPrototype):
 
@@ -67,8 +82,14 @@ class FortuneObserver(PrivMsgObserverPrototype):
 
             return
 
-        if data['message'].startswith('.bad'):
+        if data['message'].startswith('.bad') and data['message'].find('num') != -1:
+            laenge = num_badquotes()
+            connection.send_back(f'Die Anzahl der Zitate auf der Blacklist betraegt {laenge}', data)
+
+        elif data['message'].startswith('.bad'):
             with open('FaustBot/Modules/txtfiles/badquotes.txt', 'at') as f:
                 f.write(f'{lastQuote}\n')
+                connection.send_back('Zitat zur blacklist hinzugefuegt', data)
             f.close()
+            return
 
