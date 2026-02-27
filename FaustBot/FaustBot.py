@@ -77,6 +77,7 @@ class FaustBot(object):
         self.add_module(BaseObserver.BaseObserver())
         self.add_module(ConvertObserver.ConvertObserver())
         self.add_module(FortuneObserver.FortuneObserver())
+
     def run(self):
         self._setup()
         running = True

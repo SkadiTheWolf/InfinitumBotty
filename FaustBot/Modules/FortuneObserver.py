@@ -18,7 +18,6 @@ def convert_to_arr():
         zitate = file.read()
     file.close()
     badquotes = zitate.split('\n')
-    print(id(badquotes))
     return badquotes
 
 def get_quote():
@@ -37,7 +36,6 @@ def get_quote():
 
 def check_for_bad(out):
     badquotes = convert_to_arr()
-    print(id(badquotes))
     for zitat in badquotes:
         if out == zitat:
             return True
@@ -50,8 +48,8 @@ def num_badquotes():
     badquotes = convert_to_arr()
     laenge = len(badquotes)
 
-    print(id(badquotes))
-    return laenge
+    # - 1 because of trailing newline
+    return laenge - 1
 
 class FortuneObserver(PrivMsgObserverPrototype):
 
@@ -89,7 +87,7 @@ class FortuneObserver(PrivMsgObserverPrototype):
         elif data['message'].startswith('.bad'):
             with open('FaustBot/Modules/txtfiles/badquotes.txt', 'at') as f:
                 f.write(f'{lastQuote}\n')
-                connection.send_back('Zitat zur blacklist hinzugefuegt', data)
+                connection.send_back('Zitat zur Blacklist hinzugefuegt', data)
             f.close()
             return
 
