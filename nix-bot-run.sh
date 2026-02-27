@@ -51,6 +51,13 @@ start() {
       echo "[== aborting start"
       exit
     fi
+    echo "[=== checking if badquotes.txt exists"
+    if [ -f "FaustBot/Modules/txtfiles/badquotes.txt" ]; then
+      echo "[=== badquotes.txt exists, continuing"
+    else
+      touch "FaustBot/Modules/txtfiles/badquotes.txt"
+      echo "[=== badquotes.txt created"
+    fi
     echo "[=== starting faust-bot "
     echo "[=== redirecting output to nohup.out "
     nohup python -u Main.py --config config.txt >out.txt &
