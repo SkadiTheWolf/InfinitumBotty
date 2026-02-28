@@ -12,6 +12,7 @@ import os
 
 from FaustBot.Communication.Connection import Connection
 from FaustBot.Modules.PrivMsgObserverPrototype import PrivMsgObserverPrototype
+from FaustBot.Model.GoodQuotesProvider import GoodQuotesProvider
 
 def convert_to_arr():
     with open('FaustBot/Modules/txtfiles/badquotes.txt', 'rt') as file:
@@ -31,6 +32,7 @@ def get_quote():
     out = ""
     for zitat in random.sample(arr_zitate, k=1):
         out = zitat.replace('\n', ' ')
+        out = out.replace('\t', '')
 
     return out
 
@@ -70,7 +72,7 @@ class FortuneObserver(PrivMsgObserverPrototype):
             out = get_quote()
             badquote = check_for_bad(out)
 
-            while len(out) > 400:
+            while len(out) > 433:
                 while badquote:
                     out = get_quote()
 
@@ -83,6 +85,7 @@ class FortuneObserver(PrivMsgObserverPrototype):
         if data['message'].startswith('.bad') and data['message'].find('num') != -1:
             laenge = num_badquotes()
             connection.send_back(f'Die Anzahl der Zitate auf der Blacklist betraegt {laenge}', data)
+            return
 
         elif data['message'].startswith('.bad'):
             with open('FaustBot/Modules/txtfiles/badquotes.txt', 'at') as f:
@@ -90,4 +93,29 @@ class FortuneObserver(PrivMsgObserverPrototype):
                 connection.send_back('Zitat zur Blacklist hinzugefuegt', data)
             f.close()
             return
+
+        if data['message'] == '.good':
+            quotes_provider = GoodQuotesProvider()
+            votes = quotes_provider.get_votes(lastQuote)
+            existing = quotes_provider.get_quote(lastQuote)
+            if existing:
+                quotes_provider.update_votes(lastQuote)
+                connection.send_back('Hochwaehlis um eins erhoeht', data)
+                return
+            else:
+                quotes_provider.save_or_replace(lastQuote, votes)
+                connection.send_back("Zitat hochgewaehlt", data)
+                return
+
+        if data['message'] == '.topquote':
+            quotes_provider = GoodQuotesProvider()
+            votes, quote = quotes_provider.get_top_quote()
+
+            if votes is not None:
+                connection.send_back(f'Top Zitat mit {votes} Hochwaehlis ist', data)
+                connection.send_back(quote, data)
+                return
+            else:
+                connection.send_back("Noch kein Zitat gespeichert", data)
+                return
 
