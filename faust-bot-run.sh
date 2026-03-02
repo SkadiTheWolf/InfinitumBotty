@@ -23,6 +23,7 @@ help() {
   echo "  -e  exits/stops the bot"
   echo "  -r  restarts the bot"
   echo "  -u  updates the bots code"
+  echo "  -d  activates tailing of out.txt for quick debugging"
 }
 
 start() {
@@ -47,6 +48,21 @@ start() {
       echo "[=== no database "
       echo "[=== preparing database "
       python ReadInternationalization.py
+    fi
+    echo "[=== checking if config.txt exits"
+    if [ -f "config.txt" ]; then
+      echo "[=== config.txt exists"
+    else
+      echo "[=== no config.txt"
+      echo "[== aborting start"
+      exit
+    fi
+     echo "[=== checking if badquotes.txt exists"
+    if [ -f "FaustBot/Modules/txtfiles/badquotes.txt" ]; then
+      echo "[=== badquotes.txt exists, continuing"
+    else
+      touch "FaustBot/Modules/txtfiles/badquotes.txt"
+      echo "[=== badquotes.txt created"
     fi
     echo "[=== starting faust-bot "
     echo "[=== redirecting output to nohup.out "
@@ -92,9 +108,16 @@ clean() {
   rm -rf $VENV
 }
 
+debug() {
+  echo "[== debug sesh activated"
+  stop
+  start
+  tail -f out.txt
+}
+
 OPTIND=1
 
-while getopts "hseruc" opt; do
+while getopts "hserucd" opt; do
   case $opt in
     h)
       help
@@ -115,6 +138,9 @@ while getopts "hseruc" opt; do
       ;;
     c)
       clean
+      ;;
+    d)
+      debug
       ;;
     \?)
       echo "Invalid option: -$OPTARG" >&2

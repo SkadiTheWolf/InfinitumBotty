@@ -10,6 +10,7 @@ Designed for non-technical channels
  - pip
  - wikipedia package (can be installed using pip; tested with version 1.4.0)
  - requests package (can be installed using pip; tested with version 2.23.5)
+ - cython package (can be installed using pip; tested with version 3.2.4)
  - virtualenv (optional)
  
 ### Running the Bot
@@ -47,7 +48,7 @@ chmod u+x ./faust-bot-run.sh
 
 ## Contribution
 Have a look into our issues. Some are explicitly marked as `help wanted` or `For Beginners`. If you're new to programming the last one would be a good point to begin with. Of course you're also free to choose your own issue or task to work on.
-If you have any question you're also welcome to join us in `#faust-bot` on freenode.
+If you have any question you're also welcome to join us in `#faust-bot` on libera.chat.
 
 Before creating a pull request please test your code. Untested, obviously buggy code will - of course - be rejected.
 Since we're programming in python please hold on [PEP-08](https://www.python.org/dev/peps/pep-0008/).
@@ -71,3 +72,5 @@ Since we're programming in python please hold on [PEP-08](https://www.python.org
 The `care_icd10_de.csv` was taken from the [CARE2X - Integrated Hospital Info System Project on Sourceforge](https://sourceforge.net/projects/care2002/).
 
 The `icd11_codes.csv` was taken from [AlexTheAnalyst/HealthCareAnalytics](https://github.com/AlexTheAnalyst/HealthcareAnalytics/blob/main/icd11%20codes.csv) on Github
+
+The quotes were taken from [Debian/Fortune-de](https://salsa.debian.org/debian/fortunes-de/-/tree/master?ref_type=heads) 
