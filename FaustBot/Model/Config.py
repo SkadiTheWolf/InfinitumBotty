@@ -1,5 +1,5 @@
 class Config(object):
-    CONFIG_PATH = 'config_path'
+    CONFIG_PATH = "config_path"
 
     def __init__(self, path):
         """
@@ -18,36 +18,37 @@ class Config(object):
             return None
 
     def __setitem__(self, key: str, value: str):
-        print (key +' '+ value+'\n\r')
+        print(key + " " + value + "\n\r")
         self._config_dict[key] = value
 
     def read_config(self, path: str, append=True):
-        f = open(path, 'r')
+        f = open(path, "r")
         if not append:
             self._config_dict = {}
         for l in f.readlines():
-            kv_pair = l.split(':', 1)
+            kv_pair = l.split(":", 1)
             if len(kv_pair) == 2:
                 self._config_dict[kv_pair[0].strip()] = kv_pair[1].strip()
-        mods = self._config_dict['mods'].split(',')
-        self._config_dict['mods'] = []
+        mods = self._config_dict["mods"].split(",")
+        self._config_dict["mods"] = []
         for mod in mods:
-            self._config_dict['mods'].append(mod.strip())
+            self._config_dict["mods"].append(mod.strip())
         # If no idle_time value is given, we set it to five hours ( == 18000 seconds )
-        if 'idle_time' not in self._config_dict:
-            self._config_dict['idle_time'] = 18000
-        self._config_dict['idle_time'] = int(self._config_dict['idle_time'])
-        if 'blacklist' not in self._config_dict:
-            self._config_dict['blacklist'] = []
+        if "idle_time" not in self._config_dict:
+            self._config_dict["idle_time"] = 18000
+        self._config_dict["idle_time"] = int(self._config_dict["idle_time"])
+        if "blacklist" not in self._config_dict:
+            self._config_dict["blacklist"] = []
         else:
-            blacklist=self._config_dict['blacklist'].split(',')
-            self._config_dict['blacklist'] =  []
+            blacklist = self._config_dict["blacklist"].split(",")
+            self._config_dict["blacklist"] = []
             for module in blacklist:
-                self._config_dict['blacklist'].append(module.strip())
-        if 'greeting' not in self._config_dict:
-            self._config_dict['greeting'] = "Hallo"
-        if 'first_greeting' not in self._config_dict:
-            self._config_dict['first_greeting'] = "Herzlich Willkommen bei uns, "
+                self._config_dict["blacklist"].append(module.strip())
+        if "greeting" not in self._config_dict:
+            self._config_dict["greeting"] = "Hallo"
+        if "first_greeting" not in self._config_dict:
+            self._config_dict["first_greeting"] = "Herzlich Willkommen bei uns, "
+
     @property
     def lang(self):
         return self._config_dict["lang"]
@@ -74,16 +75,16 @@ class Config(object):
 
     @property
     def blacklist(self):
-        return self._config_dict['blacklist']
+        return self._config_dict["blacklist"]
 
     @property
     def pwd(self):
-        return self._config_dict['pwd']
+        return self._config_dict["pwd"]
 
     @property
     def greeting(self):
-        return self._config_dict['greeting']
+        return self._config_dict["greeting"]
 
     @property
     def first_greeting(self):
-        return self._config_dict['first_greeting']
+        return self._config_dict["first_greeting"]

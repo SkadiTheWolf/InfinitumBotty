@@ -2,14 +2,16 @@ import sqlite3
 
 
 class HanDatabaseProvider(object):
-    _CREATE_HANDB_TABLE = 'CREATE TABLE IF NOT EXISTS handb (id INTEGER PRIMARY KEY, \
-                                hanword TEXT)'
-    _GET_RANDOM_WORD = 'SELECT hanword FROM handb ORDER BY RANDOM() LIMIT 1'
-    _INSERT_WORD = 'REPLACE INTO handb(id, hanword) VALUES (?,?)'
-    _DELETE_WORD = 'DELETE FROM handb WHERE hanword = ?'
-    _GET_WORD = 'SELECT id, hanword FROM handb WHERE hanword = ?'
+    _CREATE_HANDB_TABLE = (
+        "CREATE TABLE IF NOT EXISTS handb (id INTEGER PRIMARY KEY, hanword TEXT)"
+    )
+    _GET_RANDOM_WORD = "SELECT hanword FROM handb ORDER BY RANDOM() LIMIT 1"
+    _INSERT_WORD = "REPLACE INTO handb(id, hanword) VALUES (?,?)"
+    _DELETE_WORD = "DELETE FROM handb WHERE hanword = ?"
+    _GET_WORD = "SELECT id, hanword FROM handb WHERE hanword = ?"
+
     def __init__(self):
-        self._database_connection = sqlite3.connect('faust_bot.db')
+        self._database_connection = sqlite3.connect("faust_bot.db")
         cursor = self._database_connection.cursor()
         cursor.execute(HanDatabaseProvider._CREATE_HANDB_TABLE)
         self._database_connection.commit()

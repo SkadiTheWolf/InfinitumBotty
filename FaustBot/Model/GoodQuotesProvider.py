@@ -1,16 +1,16 @@
 import sqlite3
 
-class GoodQuotesProvider(object):
-    _CREATE_TABLE = 'CREATE TABLE IF NOT EXISTS quotes (votes INTEGER, quote TEXT)'
-    _GET_TOP_QUOTE = 'SELECT MAX(votes), * FROM quotes'
-    _GET_QUOTE = 'SELECT * FROM quotes WHERE quote = ?'
-    _GET_VOTES = 'SELECT votes, quote FROM quotes WHERE quote = ?'
-    _SAVE_OR_OVERWRITE = 'REPLACE INTO quotes (votes, quote) VALUES (?, ?)'
-    _UPDATE_VOTES = 'UPDATE quotes SET votes = ? WHERE quote = ?'
 
+class GoodQuotesProvider(object):
+    _CREATE_TABLE = "CREATE TABLE IF NOT EXISTS quotes (votes INTEGER, quote TEXT)"
+    _GET_TOP_QUOTE = "SELECT MAX(votes), * FROM quotes"
+    _GET_QUOTE = "SELECT * FROM quotes WHERE quote = ?"
+    _GET_VOTES = "SELECT votes, quote FROM quotes WHERE quote = ?"
+    _SAVE_OR_OVERWRITE = "REPLACE INTO quotes (votes, quote) VALUES (?, ?)"
+    _UPDATE_VOTES = "UPDATE quotes SET votes = ? WHERE quote = ?"
 
     def __init__(self):
-        self._database_connection = sqlite3.connect('faust_bot.db')
+        self._database_connection = sqlite3.connect("faust_bot.db")
         cursor = self._database_connection.cursor()
         cursor.execute(GoodQuotesProvider._CREATE_TABLE)
         self._database_connection.commit()
@@ -51,7 +51,7 @@ class GoodQuotesProvider(object):
         if existing is None:
             votes = 1
         else:
-            votes = (existing[0])
+            votes = existing[0]
         return votes
 
     def save_or_replace(self, quote: str, votes: int):
@@ -62,7 +62,7 @@ class GoodQuotesProvider(object):
         data = (votes, quote)
         cursor = self._database_connection.cursor()
         if existing:
-            cursor.execute(GoodQuotesProvider._SAVE_OR_OVERWRITE,data)
+            cursor.execute(GoodQuotesProvider._SAVE_OR_OVERWRITE, data)
             self._database_connection.commit()
             return True
         else:

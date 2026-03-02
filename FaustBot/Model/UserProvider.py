@@ -8,11 +8,17 @@ class UserProvider(object):
     """
 
     def __init__(self):
-        self.database_connection = sqlite3.connect('faust_bot.db')
+        self.database_connection = sqlite3.connect("faust_bot.db")
         cursor = self.database_connection.cursor()
-        cursor.execute('''CREATE TABLE IF NOT EXISTS user (id INTEGER  PRIMARY KEY , name TEXT)''')
-        cursor.execute('''CREATE TABLE IF NOT EXISTS user_stats(id INTEGER  PRIMARY KEY, characters INT)''')
-        cursor.execute('''CREATE TABLE IF NOT EXISTS last_seen (id INTEGER  PRIMARY KEY, last_seen REAL)''')
+        cursor.execute(
+            "CREATE TABLE IF NOT EXISTS user (id INTEGER  PRIMARY KEY , name TEXT)"
+        )
+        cursor.execute(
+            "CREATE TABLE IF NOT EXISTS user_stats(id INTEGER  PRIMARY KEY, characters INT)"
+        )
+        cursor.execute(
+            "CREATE TABLE IF NOT EXISTS last_seen (id INTEGER  PRIMARY KEY, last_seen REAL)"
+        )
         self.database_connection.commit()
 
     def get_characters(self, name):
@@ -25,7 +31,9 @@ class UserProvider(object):
         id = self._get_id(name)
         if id is None:
             return 0
-        for characters in cursor.execute("SELECT characters FROM user_stats WHERE id = ?", (id,)):
+        for characters in cursor.execute(
+            "SELECT characters FROM user_stats WHERE id = ?", (id,)
+        ):
             return characters[0]
         return 0
 
@@ -39,7 +47,9 @@ class UserProvider(object):
         id = self._get_id(name)
         if id is None:
             return 0
-        for time in cursor.execute("SELECT last_seen FROM last_seen WHERE id = ?", (id,)):
+        for time in cursor.execute(
+            "SELECT last_seen FROM last_seen WHERE id = ?", (id,)
+        ):
             return time[0]
         return 0
 
@@ -55,10 +65,14 @@ class UserProvider(object):
         if id is None:
             self._create_user(name)
             id = self._get_id(name)
-        for chars in cursor.execute("SELECT characters FROM user_stats WHERE id = ?", (id,)):
+        for chars in cursor.execute(
+            "SELECT characters FROM user_stats WHERE id = ?", (id,)
+        ):
             chars = chars[0]
             chars += number
-            cursor.execute("UPDATE user_stats SET characters = ? WHERE id = ?", (chars, id,))
+            cursor.execute(
+                "UPDATE user_stats SET characters = ? WHERE id = ?", (chars, id,)
+            )
             self.database_connection.commit()
         return None
 
@@ -90,7 +104,9 @@ class UserProvider(object):
     def _get_id(self, name):
         cursor = self.database_connection.cursor()
         try:
-            for id in cursor.execute("SELECT id FROM user WHERE name = ?", (name.lower(),)):
+            for id in cursor.execute(
+                "SELECT id FROM user WHERE name = ?", (name.lower(),)
+            ):
                 return id[0]
         except:
             return None
