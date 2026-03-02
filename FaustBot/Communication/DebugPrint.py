@@ -1,4 +1,4 @@
-__author__ = 'Daniela'
+__author__ = "Daniela"
 
 
 class DebugPrint(object):
