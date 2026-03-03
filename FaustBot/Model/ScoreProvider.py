@@ -2,14 +2,14 @@ import sqlite3
 
 
 class ScoreProvider(object):
-    _CREATE_TABLE = 'CREATE TABLE IF NOT EXISTS score (id INTEGER PRIMARY KEY, \
-                    user TEXT, score INTEGER)'
-    _GET_SCORE = 'SELECT id, score FROM score WHERE user = ?'
-    _SAVE_OR_OVERWRITE = 'REPLACE INTO score (id, user, score) VALUES (?, ?, ?)'
-    _DELETE_SCORE = 'DELETE FROM score WHERE user = ?'
+    _CREATE_TABLE = "CREATE TABLE IF NOT EXISTS score (id INTEGER PRIMARY KEY, \
+                    user TEXT, score INTEGER)"
+    _GET_SCORE = "SELECT id, score FROM score WHERE user = ?"
+    _SAVE_OR_OVERWRITE = "REPLACE INTO score (id, user, score) VALUES (?, ?, ?)"
+    _DELETE_SCORE = "DELETE FROM score WHERE user = ?"
 
     def __init__(self):
-        self._database_connection = sqlite3.connect('faust_bot.db')
+        self._database_connection = sqlite3.connect("faust_bot.db")
         cursor = self._database_connection.cursor()
         cursor.execute(ScoreProvider._CREATE_TABLE)
         self._database_connection.commit()

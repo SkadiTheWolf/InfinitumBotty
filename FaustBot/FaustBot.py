@@ -1,15 +1,61 @@
 from FaustBot.Communication.Connection import Connection
 from FaustBot.Model.Config import Config
 from FaustBot.Model.ConnectionDetails import ConnectionDetails
-from FaustBot.Modules import ActivityObserver, IdentNickServObserver, GiveCookieObserver, LoveAndPeaceObserver, \
-    FreeHugsObserver, WhoObserver, Kicker, ModulePrototype, PingAnswerObserver, SeenObserver, TitleObserver, \
-    UserList, WikiObserver, GiveDrinkObserver, GiveFoodObserver, ComicObserver, HelpObserver, \
-    IntroductionObserver, HangmanObserver, DuckObserver, AllSeenObserver, JokeObserver,TellObserver, WordRunObserver,\
-    GiveIceObserver, GiveDrinkToObserver, Greeter, MathRunObserver, PartyObserver, PrideObserver, SnacksObserver, \
-    BlockObserver, LetterObserver, DiceObserver, First_Greeter, CharactersCountObserver, BastelObserver, UrbanObserver, \
-    PubmedObserver, ThemaObserver, ICD11Observer, HilfeObserver, OeisObserver, WeatherObserver, BaseObserver, MathObserver, \
-    ConvertObserver, FortuneObserver
-from FaustBot.Modules.CustomUserModules import GlossaryModule, ICDObserver, ModmailObserver
+from FaustBot.Modules import (
+    ActivityObserver,
+    AllSeenObserver,
+    BaseObserver,
+    BastelObserver,
+    BlockObserver,
+    CharactersCountObserver,
+    ComicObserver,
+    ConvertObserver,
+    DiceObserver,
+    DuckObserver,
+    First_Greeter,
+    FortuneObserver,
+    FreeHugsObserver,
+    GiveCookieObserver,
+    GiveDrinkObserver,
+    GiveDrinkToObserver,
+    GiveFoodObserver,
+    GiveIceObserver,
+    Greeter,
+    HangmanObserver,
+    HelpObserver,
+    HilfeObserver,
+    ICD11Observer,
+    IdentNickServObserver,
+    IntroductionObserver,
+    JokeObserver,
+    Kicker,
+    LetterObserver,
+    LoveAndPeaceObserver,
+    MathObserver,
+    MathRunObserver,
+    ModulePrototype,
+    OeisObserver,
+    PartyObserver,
+    PingAnswerObserver,
+    PrideObserver,
+    PubmedObserver,
+    SeenObserver,
+    SnacksObserver,
+    TellObserver,
+    ThemaObserver,
+    TitleObserver,
+    UrbanObserver,
+    UserList,
+    WeatherObserver,
+    WhoObserver,
+    WikiObserver,
+    WordRunObserver,
+)
+from FaustBot.Modules.CustomUserModules import (
+    GlossaryModule,
+    ICDObserver,
+    ModmailObserver,
+)
 from FaustBot.Modules.ModuleType import ModuleType
 
 
@@ -32,7 +78,9 @@ class FaustBot(object):
         self.add_module(WhoObserver.WhoObserver(user_list))
         self.add_module(AllSeenObserver.AllSeenObserver(user_list))
         self.add_module(PingAnswerObserver.ModulePing())
-        self.add_module(Kicker.Kicker(user_list, self._config.idle_time))  #only in #autistenchat
+        self.add_module(
+            Kicker.Kicker(user_list, self._config.idle_time)
+        )  # only in #autistenchat
         self.add_module(SeenObserver.SeenObserver())
         self.add_module(TitleObserver.TitleObserver())
         self.add_module(WikiObserver.WikiObserver())
@@ -66,12 +114,12 @@ class FaustBot(object):
         self.add_module(DiceObserver.DiceObserver())
         self.add_module(CharactersCountObserver.CharactersCountObserver())
         self.add_module(BastelObserver.BastelObserver())
-        self.add_module(UrbanObserver.UrbanObserver()) # only in #autistenchat-fsk18
-        self.add_module(PubmedObserver.PubmedObserver()) #only, maybe in #autistenchat-si
+        self.add_module(UrbanObserver.UrbanObserver())  # only in #autistenchat-fsk18
+        self.add_module(PubmedObserver.PubmedObserver())  # only, maybe in #autistenchat-si
         self.add_module(ThemaObserver.ThemaObserver())
         self.add_module(ICD11Observer.ICD11Observer())
         self.add_module(HilfeObserver.HilfeObserver())
-        self.add_module(OeisObserver.OeisObserver()) #only, maybe in #autistenchat-si
+        self.add_module(OeisObserver.OeisObserver())  # only, maybe in #autistenchat-si
         self.add_module(WeatherObserver.WeatherObserver())
         self.add_module(MathObserver.MathObserver())
         self.add_module(BaseObserver.BaseObserver())
@@ -87,7 +135,7 @@ class FaustBot(object):
 
     def add_module(self, module: ModulePrototype):
         if module.__class__.__name__ in self._config.blacklist:
-            print(module.__class__.__name__+ " not loaded because of blacklisting")
+            print(module.__class__.__name__ + " not loaded because of blacklisting")
             return
         for module_type in module.get_module_types():
             observable = self._get_observable_by_module_type(module_type)

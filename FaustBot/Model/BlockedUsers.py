@@ -2,14 +2,15 @@ import sqlite3
 
 
 class BlockProvider(object):
-    _CREATE_TABLE = 'CREATE TABLE IF NOT EXISTS blockedusers (id INTEGER PRIMARY KEY, \
-                    user TEXT)'
-    _IS_BLOCKED = 'SELECT user FROM blockedusers'
-    _BLOCK = 'INSERT INTO blockedusers (id, user) VALUES (?, ?)'
-    _DELETE_BLOCK = 'DELETE FROM blockedusers WHERE user = ?'
+    _CREATE_TABLE = (
+        "CREATE TABLE IF NOT EXISTS blockedusers (id INTEGER PRIMARY KEY,  user TEXT)"
+    )
+    _IS_BLOCKED = "SELECT user FROM blockedusers"
+    _BLOCK = "INSERT INTO blockedusers (id, user) VALUES (?, ?)"
+    _DELETE_BLOCK = "DELETE FROM blockedusers WHERE user = ?"
 
     def __init__(self):
-        self._database_connection = sqlite3.connect('faust_bot.db')
+        self._database_connection = sqlite3.connect("faust_bot.db")
         cursor = self._database_connection.cursor()
         cursor.execute(BlockProvider._CREATE_TABLE)
         self._database_connection.commit()
@@ -19,7 +20,7 @@ class BlockProvider(object):
         cursor.execute(BlockProvider._IS_BLOCKED)
         answer = cursor.fetchall()
         for ans in answer:
-            if user.lower().find(ans[0])!=-1:
+            if user.lower().find(ans[0]) != -1:
                 return True
         return False
 
