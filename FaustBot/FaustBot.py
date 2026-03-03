@@ -31,6 +31,7 @@ from FaustBot.Modules import (
     Kicker,
     LetterObserver,
     LoveAndPeaceObserver,
+    MathObserver,
     MathRunObserver,
     ModulePrototype,
     OeisObserver,
@@ -123,6 +124,7 @@ class FaustBot(object):
         self.add_module(BaseObserver.BaseObserver())
         self.add_module(ConvertObserver.ConvertObserver())
         self.add_module(FortuneObserver.FortuneObserver())
+        self.add_module(MathObserver.MathObserver())
 
     def run(self):
         self._setup()
