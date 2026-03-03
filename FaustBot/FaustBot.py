@@ -31,7 +31,6 @@ from FaustBot.Modules import (
     Kicker,
     LetterObserver,
     LoveAndPeaceObserver,
-    MathObserver,
     MathRunObserver,
     ModulePrototype,
     OeisObserver,
@@ -121,7 +120,6 @@ class FaustBot(object):
         self.add_module(HilfeObserver.HilfeObserver())
         self.add_module(OeisObserver.OeisObserver())  # only, maybe in #autistenchat-si
         self.add_module(WeatherObserver.WeatherObserver())
-        self.add_module(MathObserver.MathObserver())
         self.add_module(BaseObserver.BaseObserver())
         self.add_module(ConvertObserver.ConvertObserver())
         self.add_module(FortuneObserver.FortuneObserver())
