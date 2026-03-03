@@ -6,7 +6,6 @@ in pkgs.mkShell {
             python-pkgs.virtualenv
             python-pkgs.requests
             python-pkgs.wikipedia
-            python-pkgs.cython
             ]))
         ];
     }
