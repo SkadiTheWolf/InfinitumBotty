@@ -78,3 +78,4 @@ test.py
 /shell.nix
 FaustBot/Modules/txtfiles/badquotes.txt
 .envrc
+/.direnv/

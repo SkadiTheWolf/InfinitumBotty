@@ -42,65 +42,115 @@ class MathObserver(PrivMsgObserverPrototype):
             ausdruck = data['message'].split(' ', -1)
 
             if len(ausdruck) == 4:
-                if check_if_int(ausdruck[1]) is not ValueError:
-                    a = int(ausdruck[1])
-                else:
-                    fehler(data, connection, "ValueError")
-                    return
+                # eg .math log 10 10
+                #      0    1   2  3
 
-                if check_if_operand(ausdruck[2]):
-                    operand = ausdruck[2]
-                else:
-                    fehler(data, connection, "Kein Operand")
-                    return
+                if ausdruck[1] == "log":
+                    #try:
+                        loesung = math.log(float(ausdruck[2]), float(ausdruck[3]))
+                    #except ValueError:
+                    #    fehler(data, connection, "ValueError")
+                    #    return
+                    #except ZeroDivisionError:
+                    #    fehler(data, connection, "ZeroDivisionError")
+                    #    return
 
-                if check_if_int(ausdruck[3]) is not ValueError:
-                    b = int(ausdruck[3])
+                if ausdruck[1] == "pow":
+                    try:
+                        loesung = math.pow(float(ausdruck[2]), float(ausdruck[3]))
+                    except ValueError:
+                        fehler(data, connection, "ValueError")
+                        return
+
                 else:
-                    fehler(data, connection, "ValueError")
-                    return
+                    if check_if_int(ausdruck[1]) is not ValueError:
+                        a = int(ausdruck[1])
+                    else:
+                        fehler(data, connection, "ValueError")
+                        return
+
+                    if check_if_operand(ausdruck[2]):
+                        operand = ausdruck[2]
+                    else:
+                        fehler(data, connection, "Kein Operand")
+                        return
+
+                    if check_if_int(ausdruck[3]) is not ValueError:
+                        b = int(ausdruck[3])
+                    else:
+                        fehler(data, connection, "ValueError")
+                        return
 
             elif len(ausdruck) == 2:
                 # Vorbereitung 2
                 operands = ["+", "-", "*", "/"]
-                ausdruck_without_space = [*ausdruck[1]]
-                if check_if_int(ausdruck_without_space[0]) is not ValueError:
-                    a = int(ausdruck_without_space[0])
+                ausdruckWithoutSpace = [*ausdruck[1]]
+                if check_if_int(ausdruckWithoutSpace[0]) is not ValueError:
+                    a = int(ausdruckWithoutSpace[0])
                 else:
                     fehler(data, connection, "ValueError")
                     return
 
-                if check_if_operand(ausdruck_without_space[1]):
-                    operand = ausdruck_without_space[1]
+                if check_if_operand(ausdruckWithoutSpace[1]):
+                    operand = ausdruckWithoutSpace[1]
                 else:
                     fehler(data, connection, "Kein Operand")
                     return
 
-                if check_if_int(ausdruck_without_space[2]) is not ValueError:
-                    b = int(ausdruck_without_space[2])
+                if check_if_int(ausdruckWithoutSpace[2]) is not ValueError:
+                    b = int(ausdruckWithoutSpace[2])
                 else:
                     fehler(data, connection, "ValueError")
                     return
+
+            elif len(ausdruck) == 3:
+                # Vorbereitung 3
+                ausdruckCommand = ausdruck[1]
+                try:
+                    a  = float(ausdruck[2])
+                except ValueError:
+                    fehler(data, connection, "ValueError")
+
+
+                if ausdruckCommand == "sqrt":
+                    loesung = math.sqrt(a)
+
+                if ausdruckCommand == "fact":
+                    loesung = math.factorial(a)
+
+                if ausdruckCommand == "log":
+                    loesung = math.log(a)
+
+
 
             else:
                 fehler(data, connection)
                 return
 
+            try:
             # Addition
-            if operand == "+":
-                loesung = a + b
+                if operand == "+":
+                    loesung = a + b
 
-            elif operand == "-":
-                loesung = a - b
+                elif operand == "-":
+                    loesung = a - b
 
-            elif operand == "*":
-                loesung = a * b
+                elif operand == "*":
+                    loesung = a * b
 
-            elif operand == "/":
-                loesung = a / b
+                elif operand == "/":
+                    try:
+                        loesung = a / b
+                    except ZeroDivisionError:
+                        fehler(data, connection, "ZeroDivisionError")
 
-            else:
+                else:
+                    fehler(data, connection)
+
+                connection.send_back(loesung, data)
+                return
+            except UnboundLocalError:
                 fehler(data, connection)
+                return
 
-            connection.send_back(loesung, data)
-            return
+
