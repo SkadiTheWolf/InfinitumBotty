@@ -82,8 +82,7 @@ class FortuneObserver(PrivMsgObserverPrototype):
 
     @staticmethod
     def help():
-        return ".fortune - Gibt ein zufälliges Zitat aus. .bad setzt das Zitat auf eine Blacklist. .good setzt ein \
-                Zitat auf eine gute Liste, .topquote ruft das am hoechsten bewertete Zitat auf"
+        return ".fortune - Gibt ein zufälliges Zitat aus. .bad setzt das Zitat auf eine Blacklist. .good setzt ein Zitat auf eine gute Liste, .topquote ruft das am hoechsten bewertete Zitat auf"
 
     def update_on_priv_msg(self, data, connection: Connection):
 
