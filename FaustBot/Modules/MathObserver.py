@@ -44,18 +44,17 @@ class MathObserver(PrivMsgObserverPrototype):
             if len(ausdruck) == 4:
                 # eg .math log 10 10
                 #      0    1   2  3
-
+                print(ausdruck)
                 if ausdruck[1] == "log":
-                    #try:
+                    try:
                         loesung = math.log(float(ausdruck[2]), float(ausdruck[3]))
-                    #except ValueError:
-                    #    fehler(data, connection, "ValueError")
-                    #    return
-                    #except ZeroDivisionError:
-                    #    fehler(data, connection, "ZeroDivisionError")
-                    #    return
-
-                if ausdruck[1] == "pow":
+                    except ValueError:
+                        fehler(data, connection, "ValueError")
+                        return
+                    except ZeroDivisionError:
+                        fehler(data, connection, "ZeroDivisionError")
+                        return
+                elif ausdruck[1] == "pow":
                     try:
                         loesung = math.pow(float(ausdruck[2]), float(ausdruck[3]))
                     except ValueError:
@@ -107,28 +106,32 @@ class MathObserver(PrivMsgObserverPrototype):
                 # Vorbereitung 3
                 ausdruckCommand = ausdruck[1]
                 try:
-                    a  = float(ausdruck[2])
+                    a  = int(ausdruck[2])
                 except ValueError:
-                    fehler(data, connection, "ValueError")
+                    try:
+                        a = float(ausdruck[2])
+                    except ValueError:
+                        fehler(data, connection, "ValueError")
+                        return
 
+                if isinstance(a, int):
+                    if ausdruckCommand == "fact":
+                        loesung = math.factorial(a)
 
-                if ausdruckCommand == "sqrt":
-                    loesung = math.sqrt(a)
+                elif isinstance(a, float) or isinstance(a, int):
+                    if ausdruckCommand == "sqrt":
+                        loesung = math.sqrt(a)
 
-                if ausdruckCommand == "fact":
-                    loesung = math.factorial(a)
-
-                if ausdruckCommand == "log":
-                    loesung = math.log(a)
+                    elif ausdruckCommand == "log":
+                        loesung = math.log(a)
 
 
 
             else:
                 fehler(data, connection)
                 return
-
-            try:
-            # Addition
+            if "operand" in vars():
+                # Addition
                 if operand == "+":
                     loesung = a + b
 
@@ -146,11 +149,12 @@ class MathObserver(PrivMsgObserverPrototype):
 
                 else:
                     fehler(data, connection)
+                    return
 
+            try:
                 connection.send_back(loesung, data)
                 return
             except UnboundLocalError:
-                fehler(data, connection)
+                fehler(data, connection, "UnbountLocal loesung")
                 return
-
 
