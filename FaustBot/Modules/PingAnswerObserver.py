@@ -1,5 +1,6 @@
 from FaustBot.Communication.Connection import Connection
 from FaustBot.Modules.PingObserverPrototype import PingObserverPrototype
+from FaustBot import logger
 
 
 class ModulePing(PingObserverPrototype):
@@ -16,6 +17,7 @@ class ModulePing(PingObserverPrototype):
         return None
 
     def update_on_ping(self, data, connection: Connection):
-        # print('Module Ping')
-        msg = 'PONG ' + data['server']
+        logger.debug("Module Ping")
+        msg = "PONG " + data["server"]
         connection.raw_send(msg)
+        logger.debug("Sent PONG")

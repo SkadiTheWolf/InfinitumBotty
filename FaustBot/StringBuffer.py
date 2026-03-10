@@ -4,19 +4,18 @@ class StringBuffer:
 
     def append(self, to_append):
         self._buffer = self._buffer + to_append
-        return self.get()
 
     def get(self):
         ready = list()
         # Python do-while-loop
-        idx = self._buffer.find('\n')
+        idx = self._buffer.find("\n")
         while idx != -1:
             data = self._buffer[0:idx]  #
             data = data.strip()
             if len(data) >= 1:
                 ready.append(data)
-            self._buffer = self._buffer[idx + 1:]
-            idx = self._buffer.find('\n')
+            self._buffer = self._buffer[idx + 1 :]
+            idx = self._buffer.find("\n")
         return ready
 
     @property

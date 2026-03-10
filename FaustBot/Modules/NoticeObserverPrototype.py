@@ -20,4 +20,4 @@ class NoticeObserverPrototype(ModulePrototype):
         super().__init__()
 
     def update_on_notice(self, data, connection: Connection):
-        raise NotImplementedError('Needs to be implemented by csubclasses!')
+        raise NotImplementedError("Needs to be implemented by csubclasses!")

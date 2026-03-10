@@ -5,16 +5,19 @@ from FaustBot.Modules.PingObserverPrototype import PingObserverPrototype
 from random import randint
 from FaustBot.Model.DuckProvider import DucksProvider
 
+
 class DuckObserver(PrivMsgObserverPrototype, PingObserverPrototype):
     @staticmethod
     def cmd():
-        return ['.freunde', '.schiessen', '.starthunt','.stophunt','.ducks']
+        return [".freunde", ".schiessen", ".starthunt", ".stophunt", ".ducks"]
 
     @staticmethod
     def help():
-        return 'Entenjagd. An einem zufälligen Zeitpunkt watschelt eine Ente durch den Chat. ' + \
-            'Diese kann mit .schiessen getötet oder mit .freunde angefreundet werden. Mit .ducks wird abgefragt, wie viele Enten man schon hat. ' + \
-                'Starten und stoppen können nur Moderatoren.'
+        return (
+            "Entenjagd. An einem zufälligen Zeitpunkt watschelt eine Ente durch den Chat. "
+            + "Diese kann mit .schiessen getötet oder mit .freunde angefreundet werden. Mit .ducks wird abgefragt, wie viele Enten man schon hat. "
+            + "Starten und stoppen können nur Moderatoren."
+        )
 
     @staticmethod
     def get_module_types():
@@ -28,69 +31,79 @@ class DuckObserver(PrivMsgObserverPrototype, PingObserverPrototype):
         self.streakname = ""
 
     def update_on_priv_msg(self, data, connection: Connection):
-        messageLower=data['message'].lower()
-        if messageLower.find('.starthunt') != -1:
+        messageLower = data["message"].lower()
+        if messageLower.find(".starthunt") != -1:
             if not self._is_idented_mod(data, connection):
-                connection.send_back("Dir fehlen leider die Rechte zum Starten der Jagd, " + data['nick'] + ".",data)
+                connection.send_back(
+                    f"Dir fehlen leider die Rechte zum Starten der Jagd, {data['nick']}.",
+                    data,
+                )
                 return
             self.active = 1
             connection.send_channel("Jagd eröffnet")
             return
-        if messageLower.find('.stophunt') != -1:
+        if messageLower.find(".stophunt") != -1:
             if not self._is_idented_mod(data, connection):
-                connection.send_back("Dir fehlen leider die Rechte zum Stoppen der Jagd, " + data['nick'] + ".",
-                                     data)
+                connection.send_back(
+                    f"Dir fehlen leider die Rechte zum Stoppen der Jagd, {data['nick']}.",
+                    data,
+                )
                 return
             self.active = 0
             self.duck_alive = 0
             connection.send_channel("Jagd beendet")
             return
-        if messageLower.find('.ducks') != -1:
-            connection.send_channel(self.build_duck_string(data['nick']))
-        if messageLower.find('.freunde') != -1:
+        if messageLower.find(".ducks") != -1:
+            connection.send_channel(self.build_duck_string(data["nick"]))
+        if messageLower.find(".freunde") != -1:
             self.befriend(data, connection)
-        if messageLower.find('.schiessen') != -1:
+        if messageLower.find(".schiessen") != -1:
             self.shoot(data, connection)
 
     def befriend(self, data, connection):
         if self.duck_alive == 1:
             if randint(1, 100) > 97:
-                connection.send_channel(data['nick'] + " probiert eine Ente zu befreunden aber sie will nicht.")
+                connection.send_channel(
+                    f"{data['nick']} probiert eine Ente zu befreunden aber sie will nicht."
+                )
             else:
                 self.duck_alive = 0
-                self.addLivingDuck(data['nick'])
-                connection.send_channel(self.build_duck_string(data['nick']))
-                self.duckAchievments(data['nick'], connection)
+                self.addLivingDuck(data["nick"])
+                connection.send_channel(self.build_duck_string(data["nick"]))
+                self.duckAchievments(data["nick"], connection)
             return
-        if (self.duck_alive == 0 and self.active == 1):
-            connection.send_channel(data['nick']+ " probiert eine nicht existente Ente zu befreunden.")
+        if self.duck_alive == 0 and self.active == 1:
+            connection.send_channel(
+                f"{data['nick']} probiert eine nicht existente Ente zu befreunden."
+            )
         if self.active == 0:
             connection.send_channel("Es läuft derzeit keine Entenjagd.")
+
     def shoot(self, data, connection):
         if self.duck_alive == 1:
-            if randint(1,100) >97:
-                connection.send_channel(data['nick'] + " trifft daneben.")
+            if randint(1, 100) > 97:
+                connection.send_channel(f"{data['nick']} trifft daneben.")
             else:
                 self.duck_alive = 0
-                self.addDeadDuck(data['nick'])
-                connection.send_channel(self.build_duck_string(data['nick']))
-                self.duckAchievments(data['nick'], connection)
+                self.addDeadDuck(data["nick"])
+                connection.send_channel(self.build_duck_string(data["nick"]))
+                self.duckAchievments(data["nick"], connection)
             return
-        if (self.duck_alive == 0 and self.active == 1):
-            connection.send_channel(data['nick']+ " schießt ins Nichts.")
+        if self.duck_alive == 0 and self.active == 1:
+            connection.send_channel(f"{data['nick']} schießt ins Nichts.")
         if self.active == 0:
             connection.send_channel("Es läuft derzeit keine Entenjagd.")
 
     def update_on_ping(self, data, connection: Connection):
         if self.active == 0:
             return
-        if 1 == randint(1,15):
+        if 1 == randint(1, 15):
             if self.duck_alive == 0:
                 connection.send_channel("*. *. *. * <<w°)> *. *. * Quack!")
                 self.duck_alive = 1
 
     def _is_idented_mod(self, data: dict, connection: Connection):
-        return data['nick'] in self._config.mods and connection.is_idented(data['nick'])
+        return data["nick"] in self._config.mods and connection.is_idented(data["nick"])
 
     def getLiving(self, nick: str):
         duck_provider = DucksProvider()
@@ -108,11 +121,11 @@ class DuckObserver(PrivMsgObserverPrototype, PingObserverPrototype):
         else:
             return 0
 
-    def addDeadDuck(self, nick:str):
-        self.writeDucks(nick, self.getLiving(nick), self.getDead(nick)+1)
+    def addDeadDuck(self, nick: str):
+        self.writeDucks(nick, self.getLiving(nick), self.getDead(nick) + 1)
 
-    def addLivingDuck(self,nick:str):
-        self.writeDucks(nick, self.getLiving(nick)+1, self.getDead(nick))
+    def addLivingDuck(self, nick: str):
+        self.writeDucks(nick, self.getLiving(nick) + 1, self.getDead(nick))
 
     def writeDucks(self, nick: str, living: int, dead: int):
         ducks_provider = DucksProvider()
@@ -122,86 +135,122 @@ class DuckObserver(PrivMsgObserverPrototype, PingObserverPrototype):
         duckstring = ""
         livingDucks = self.getLiving(nick)
         deadDucks = self.getDead(nick)
-        if livingDucks ==0 and deadDucks == 0:
+        if livingDucks == 0 and deadDucks == 0:
             return nick + " hat noch nicht an der Entenjagd teilgenommen"
         if livingDucks > 1:
-            duckstring = duckstring + nick + " hat schon " +str(livingDucks)+ " befreundete Enten "
+            duckstring = (
+                f"{duckstring}{nick} hat schon {str(livingDucks)} befreundete Enten "
+            )
         elif livingDucks == 1:
-            duckstring = duckstring + nick + " hat schon eine befreundete Ente "
+            duckstring = f"{duckstring}{nick} hat schon eine befreundete Ente "
         elif livingDucks == 0:
-            duckstring = duckstring +nick +" "
+            duckstring = f"{duckstring}{nick} "
         if deadDucks > 0 and livingDucks > 0:
-            duckstring = duckstring +"und "
+            duckstring = f"{duckstring}und "
         if deadDucks > 0 and livingDucks == 0:
-            duckstring = duckstring +"hat "
+            duckstring = f"{duckstring}hat "
         if deadDucks > 1:
-            duckstring = duckstring + str(deadDucks) + " getötete Enten"
+            duckstring = f"{duckstring}{str(deadDucks)} getötete Enten"
         elif deadDucks == 1:
-            duckstring = duckstring +"eine getötete Ente"
+            duckstring = f"{duckstring}eine getötete Ente"
         elif deadDucks == 0:
-            duckstring = duckstring+""
+            duckstring = duckstring + ""
         return duckstring
 
     def duckAchievments(self, nick, connection):
         dead = self.getDead(nick)
-        living  = self.getLiving(nick)
+        living = self.getLiving(nick)
         if dead == 0:
             if living == 5:
-                connection.send_channel(nick + " hat den Titel 'kleiner Entenfreund' erreicht")
+                connection.send_channel(
+                    f"{nick} hat den Titel 'kleiner Entenfreund' erreicht"
+                )
             elif living == 66:
                 connection.send_channel(nick + " hat den Titel 'Entenfreund' erreicht")
             elif living == 111:
-                connection.send_channel(nick + " hat den Titel 'großer Entenfreund' erreicht")
+                connection.send_channel(
+                    f"{nick} hat den Titel 'großer Entenfreund' erreicht"
+                )
             elif living == 555:
-                connection.send_channel(nick + " hat den Titel 'Kleiner Entenmonarch' erreicht")
+                connection.send_channel(
+                    f"{nick} hat den Titel 'Kleiner Entenmonarch' erreicht"
+                )
             elif living == 1111:
-                connection.send_channel(nick + " hat den Titel 'Entenmonarch' erreicht")
+                connection.send_channel(f"{nick} hat den Titel 'Entenmonarch' erreicht")
             elif living == 2222:
-                connection.send_channel(nick + " hat den Titel 'großer Entenmonarch' erreicht")
+                connection.send_channel(
+                    f"{nick} hat den Titel 'großer Entenmonarch' erreicht"
+                )
             elif living == 3333:
-                connection.send_channel(nick + " hat den Titel 'Enten verehren dich als ihre Gottheit!' erreicht")
+                connection.send_channel(
+                    f"{nick} hat den Titel 'Enten verehren dich als ihre Gottheit!' erreicht"
+                )
 
         if living == 0:
             if dead == 5:
-                connection.send_channel(nick + " hat den Titel 'kleiner Entenmörder' erreicht")
+                connection.send_channel(
+                    f"{nick} hat den Titel 'kleiner Entenmörder' erreicht"
+                )
             elif dead == 66:
-                connection.send_channel(nick + " hat den Titel 'Entenmörder' erreicht")
+                connection.send_channel(f"{nick} hat den Titel 'Entenmörder' erreicht")
             elif dead == 111:
-                connection.send_channel(nick + " hat den Titel 'großer Entenmörder' erreicht")
+                connection.send_channel(
+                    f"{nick} hat den Titel 'großer Entenmörder' erreicht"
+                )
             elif dead == 555:
-                connection.send_channel(nick + " hat den Titel 'kleiner Entenmassenmörder' erreicht")
+                connection.send_channel(
+                    f"{nick} hat den Titel 'kleiner Entenmassenmörder' erreicht"
+                )
             elif dead == 1111:
-                connection.send_channel(nick + " hat den Titel 'Entenmassenmörder' erreicht")
+                connection.send_channel(
+                    f"{nick} hat den Titel 'Entenmassenmörder' erreicht"
+                )
             elif dead == 2222:
-                connection.send_channel(nick + " hat den Titel 'großer Entenmassenmörder' erreicht")
+                connection.send_channel(
+                    f"{nick} hat den Titel 'großer Entenmassenmörder' erreicht"
+                )
             elif dead == 3333:
-                connection.send_channel(nick + " hat den Titel 'du musst Enten wirklich hassen' erreicht")
+                connection.send_channel(
+                    f"{nick} hat den Titel 'du musst Enten wirklich hassen' erreicht"
+                )
 
         if dead > 0 and living > 0:
             if living + dead == 5:
-                connection.send_channel(nick + " hat den Titel 'Enten könnten Angst vor dir haben' erreicht")
-            elif living+ dead == 66:
-                connection.send_channel(nick + " hat den Titel 'Enten, Enten. So viele Enten' erreicht")
+                connection.send_channel(
+                    f"{nick} hat den Titel 'Enten könnten Angst vor dir haben' erreicht"
+                )
+            elif living + dead == 66:
+                connection.send_channel(
+                    f"{nick} hat den Titel 'Enten, Enten. So viele Enten' erreicht"
+                )
             elif living + dead == 111:
-                connection.send_channel(nick + " hat den Titel 'Ich liebe Enten' erreicht")
+                connection.send_channel(
+                    f"{nick} hat den Titel 'Ich liebe Enten' erreicht"
+                )
             elif living + dead == 555:
-                connection.send_channel(nick + " hat den Titel 'Auf dem Grill und als Freund. Enten sind mein Leben' erreicht")
+                connection.send_channel(
+                    f"{nick} hat den Titel 'Auf dem Grill und als Freund. Enten sind mein Leben' erreicht"
+                )
             elif living + dead == 1111:
-                connection.send_channel(nick + " hat den Titel 'Durchgespielt' erreicht")
+                connection.send_channel(
+                    f"{nick} hat den Titel 'Durchgespielt' erreicht"
+                )
             elif living + dead == 2222:
-                connection.send_channel(nick + " hat den Titel 'Immernoch im Spiel' erreicht")
+                connection.send_channel(
+                    f"{nick} hat den Titel 'Immernoch im Spiel' erreicht"
+                )
             elif living + dead == 3333:
-                connection.send_channel(nick + " hat den Titel 'Alter!' erreicht")
+                connection.send_channel(f"{nick} hat den Titel 'Alter!' erreicht")
 
         if nick == self.streakname:
-            self.streak+=1
+            self.streak += 1
         else:
             self.streak = 1
             self.streakname = nick
 
         if self.streak == 3:
-            connection.send_channel(nick + " hat einen Lauf")
+            connection.send_channel(f"{nick} hat einen Lauf")
         elif self.streak == 5:
-            connection.send_channel(nick + " ist nicht aufhaltbar")
+            connection.send_channel(f"{nick} hat nicht aufhaltbar")
         elif self.streak == 15:
-            connection.send_channel(nick + " spielt wohl allein")
+            connection.send_channel(f"{nick} spielt wohl allein")
