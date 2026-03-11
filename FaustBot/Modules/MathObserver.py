@@ -157,4 +157,6 @@ class MathObserver(PrivMsgObserverPrototype):
             except UnboundLocalError:
                 fehler(data, connection, "UnbountLocal loesung")
                 return
+            except ValueError:
+                fehler(data, connection, "Zahl Zu Gross")
 
