@@ -1,5 +1,6 @@
 from FaustBot.Communication import Connection
 from FaustBot.Modules.PrivMsgObserverPrototype import PrivMsgObserverPrototype
+from FaustBot import logger
 
 
 class HelpObserver(PrivMsgObserverPrototype):
@@ -16,13 +17,13 @@ class HelpObserver(PrivMsgObserverPrototype):
         command = ""
         if not msg.startswith(".help"):
             return
-        if len(msg.split(' ')) > 1:
-            command = msg.split(' ')[1]
-            if command == 'all':
+        if len(msg.split(" ")) > 1:
+            command = msg.split(" ")[1]
+            if command == "all":
                 self.show_available_commands(data, connection)
-            else:    
+            else:
                 if not command.startswith("."):
-                    command = '.' + command
+                    command = "." + command
                 self.show_help_for_command(command, data, connection)
         else:
             connection.send_back(self.help(), data)
@@ -33,7 +34,7 @@ class HelpObserver(PrivMsgObserverPrototype):
             cmds = observer.cmd()
             if cmds is not None:
                 all_cmd.extend(cmds)
-        print(all_cmd)
+        logger.info(all_cmd)
         return all_cmd
 
     def show_available_commands(self, data, connection):
@@ -53,8 +54,5 @@ class HelpObserver(PrivMsgObserverPrototype):
         for observer in connection.priv_msg_observable.get_observer():
             if observer.cmd() is not None:
                 if command in observer.cmd():
-                    print(observer.help())
+                    logger.info(observer.help())
                     connection.send_back(observer.help(), data)
-        
-
-       

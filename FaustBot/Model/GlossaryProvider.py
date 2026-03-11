@@ -2,8 +2,10 @@ import sqlite3
 
 
 class GlossaryProvider(object):
-    _CREATE_GLOSSARY_TABLE = "CREATE TABLE IF NOT EXISTS glossary (id INTEGER PRIMARY KEY, \
+    _CREATE_GLOSSARY_TABLE = (
+        "CREATE TABLE IF NOT EXISTS glossary (id INTEGER PRIMARY KEY, \
           abbreviation TEXT, explanation TEXT)"
+    )
     _GET_EXPLANATION = "SELECT id, explanation FROM glossary WHERE abbreviation = ?"
     _SAVE_OR_OVERWRITE = (
         "REPLACE INTO glossary (id, abbreviation, explanation) VALUES (?, ?, ?)"

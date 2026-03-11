@@ -1,6 +1,7 @@
 import _thread
 
 from FaustBot.Communication.Observable import Observable
+from FaustBot import logger
 
 
 class MagicNumberObservable(Observable):
@@ -22,4 +23,4 @@ class MagicNumberObservable(Observable):
             except Exception:
                 import traceback
 
-                print(traceback.format_exc())
+                logger.error(traceback.format_exc())

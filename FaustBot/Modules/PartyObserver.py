@@ -12,6 +12,8 @@ class PartyObserver(PrivMsgObserverPrototype):
         return ".party - bringt Stimmung in den Chat"
 
     def update_on_priv_msg(self, data: dict, connection: Connection):
-        if data['message'].find('.party') == -1:
-            return
-        connection.send_back('\001ACTION schmeißt mit Konfetti aus buntem Esspapier um sich.\001', data)
+        if data["message"].startswith(".party"):
+            connection.send_back(
+                "\001ACTION schmeißt mit Konfetti aus buntem Esspapier um sich.\001",
+                data,
+            )

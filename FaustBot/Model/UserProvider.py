@@ -71,7 +71,11 @@ class UserProvider(object):
             chars = chars[0]
             chars += number
             cursor.execute(
-                "UPDATE user_stats SET characters = ? WHERE id = ?", (chars, id,)
+                "UPDATE user_stats SET characters = ? WHERE id = ?",
+                (
+                    chars,
+                    id,
+                ),
             )
             self.database_connection.commit()
         return None
@@ -88,7 +92,13 @@ class UserProvider(object):
         if id is None:
             self._create_user(name)
             id = self._get_id(name)
-        cursor.execute("UPDATE last_seen SET last_seen = ? WHERE id = ?", (ntime, id,))
+        cursor.execute(
+            "UPDATE last_seen SET last_seen = ? WHERE id = ?",
+            (
+                ntime,
+                id,
+            ),
+        )
         self.database_connection.commit()
 
     def permission(self, user, percent):

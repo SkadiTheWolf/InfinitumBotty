@@ -13,14 +13,15 @@ class BlockObserver(PrivMsgObserverPrototype):
         return None
 
     def update_on_priv_msg(self, data, connection: Connection):
-        if not self._is_idented_mod(data, connection):
-            return
         if data["message"].startswith(".block "):
-            self.block(data, connection)
+            if self._is_idented_mod(data, connection):
+                self.block(data, connection)
         if data["message"].startswith(".unblock"):
-            self.unblock(data, connection)
+            if self._is_idented_mod(data, connection):
+                self.unblock(data, connection)
         if data["message"].startswith(".isblocked"):
-            self.isBlocked(data, connection)
+            if self._is_idented_mod(data, connection):
+                self.isBlocked(data, connection)
 
     def block(self, data, connection):
         blocklist = BlockProvider()

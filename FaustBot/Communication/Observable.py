@@ -1,10 +1,13 @@
+from FaustBot import logger
+
+
 class Observable(object):
     def __init__(self):
         self._observers = []
 
     def add_observer(self, observer):
         self._observers.append(observer)
-        print("appended(" + str(observer.__class__) + ")")
+        logger.info(f"Added Observer: {str(observer.__class__)}")
 
     def get_observer(self):
         return self._observers

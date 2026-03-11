@@ -1,4 +1,5 @@
 import sqlite3
+from FaustBot import logger
 
 
 class i18n(object):
@@ -15,9 +16,13 @@ class i18n(object):
         database_connection = sqlite3.connect("faust_bot.db")
         cursor = database_connection.cursor()
         ltext = ""
-        print(replacements)
+        logger.debug(replacements)
         for longText in cursor.execute(
-            "SELECT longText FROM i18n WHERE lang = ? AND ident = ?", (lang, name,),
+            "SELECT longText FROM i18n WHERE lang = ? AND ident = ?",
+            (
+                lang,
+                name,
+            ),
         ):
             ltext = longText[0]
         for key, value in replacements.items():

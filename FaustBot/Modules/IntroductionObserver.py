@@ -18,39 +18,46 @@ class IntroductionObserver(PrivMsgObserverPrototype):
         return ".me - kann von registrierten Nutzern verwendet werden um eine Vorstellung zu speichern"
 
     def update_on_priv_msg(self, data, connection: Connection):
-        msg = data['messageCaseSensitive']
-        msgForCode = data['message']
+        msg = data["messageCaseSensitive"]
+        msgForCode = data["message"]
         nick = data["nick"]
         if not msgForCode.startswith(".me") and not msgForCode.startswith(".me-"):
             return
         if not self.authenticated(nick, connection):
-            connection.send_back("Für die Nutzung von .me ist es zwingend erforderlich, einen registrierten Nick zu "
-                                 "haben sowie eingeloggt zu sein. Wie dies geht, erfährst du unter "
-                                 "https://libera.chat/guides/registration", data)
+            connection.send_back(
+                "Für die Nutzung von .me ist es zwingend erforderlich, einen registrierten Nick zu "
+                "haben sowie eingeloggt zu sein. Wie dies geht, erfährst du unter "
+                "https://libera.chat/guides/registration",
+                data,
+            )
             return
         intro_provider = IntroductionProvider()
-        msg = msgForCode.split('.me')[1].strip()
+        msg = msgForCode.split(".me")[1].strip()
         if len(msg) == 0:
             intro = intro_provider.get_intro(nick)
             text = ""
             if intro is not None:
                 text = nick + " ist " + intro[1]
             else:
-                text = nick + " für dich gibt es noch keinen Eintrag, vielleicht magst du ja mittels .me <intro> noch " \
-                              "einen hinzufügen? "
+                text = (
+                    nick
+                    + " für dich gibt es noch keinen Eintrag, vielleicht magst du ja mittels .me <intro> noch "
+                    "einen hinzufügen? "
+                )
             connection.send_back(text, data)
-        elif len(msg) == 1 and '-' in msg:
+        elif len(msg) == 1 and "-" in msg:
             intro_provider.delete_intro(nick)
             connection.send_back(nick + " dein Intro wurde gelöscht!", data)
         else:
-            msg = data['messageCaseSensitive'][3:]
+            msg = data["messageCaseSensitive"][3:]
             intro = msg.strip()
             intro_provider.save_or_replace(nick, intro)
             connection.send_back(
-                nick + ": Dein Intro wurde gespeichert! Mittels .me- kannst du deinen Eintrag wieder löschen.", data)
+                f"{nick}: Dein Intro wurde gespeichert! Mittels .me- kannst du deinen Eintrag wieder löschen.",
+                data,
+            )
             text = nick + " ist " + intro_provider.get_intro(nick)[1]
             connection.send_back(text, data)
 
     def authenticated(self, nick: str, connection: Connection):
-        return nick in self.userList.userList and \
-               connection.is_idented(nick)
+        return nick in self.userList.userList and connection.is_idented(nick)

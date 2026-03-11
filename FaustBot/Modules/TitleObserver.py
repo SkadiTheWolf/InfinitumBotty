@@ -6,6 +6,7 @@ from urllib import request
 
 from FaustBot.Communication.Connection import Connection
 from FaustBot.Modules.PrivMsgObserverPrototype import PrivMsgObserverPrototype
+from FaustBot import logger
 
 
 class TitleObserver(PrivMsgObserverPrototype):
@@ -18,18 +19,18 @@ class TitleObserver(PrivMsgObserverPrototype):
         return None
 
     def update_on_priv_msg(self, data, connection: Connection):
-        regex = "(?P<url>https?://[^\s]+)"
+        regex = r"(?P<url>https?://[^\s]+)"
         url = re.search(regex, data["messageCaseSensitive"])
         if url is not None:
             url = url.group()
-            print(url)
+            logger.info(f"TitleObserver: {url}")
             try:
                 title = self.getTitle(url)
-                print(title)
+                logger.info(f"TitleObserver: {title}")
                 title = title[:350]
                 connection.send_back(title, data)
             except Exception as exc:
-                print(exc)
+                logger.error(f"TitleObserver: {exc}")
                 pass
 
     def getTitle(self, url):
@@ -47,16 +48,18 @@ class TitleObserver(PrivMsgObserverPrototype):
             url = url.replace("music.youtube.com/", "www.youtube.com/", 1)
         if re.search("https?://youtu.be/", url):
             url = url.replace("youtu.be/", "www.youtube.com/watch?v=", 1)
+        if re.search("https?://www.youtube.com/shorts/", url):
+            url = url.replace("www.youtube.com/shorts/", "www.youtube.com/watch?v=", 1)
 
         yt_json_data_re = False
         if re.search("https?://[^/]*youtube.com/shorts/", url):
             title_re = re.compile(
-                '''"reelPlayerHeaderRenderer":{"reelTitleText":{"runs":\[{"text":"([^"]*)"'''
+                r'''"reelPlayerHeaderRenderer":{"reelTitleText":{"runs":\[{"text":"([^"]*)"'''
             )
             headers["User-Agent"] = "curl/7.81.0"
         elif re.search("https?://[^/]*youtube.com/", url):
             title_re = re.compile(
-                '''"results":{"contents":\[{"videoPrimaryInfoRenderer":{"title":{"runs":\[{"text":"([^"]*)"'''
+                r'''"results":{"contents":\[{"videoPrimaryInfoRenderer":{"title":{"runs":\[{"text":"([^"]*)"'''
             )
             yt_json_data_re = re.compile("""var ytInitialData = ([^;]*)""")
         else:

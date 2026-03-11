@@ -56,6 +56,7 @@ from FaustBot.Modules.CustomUserModules import (
     ModmailObserver,
 )
 from FaustBot.Modules.ModuleType import ModuleType
+from FaustBot import logger
 
 
 class FaustBot(object):
@@ -114,7 +115,9 @@ class FaustBot(object):
         self.add_module(CharactersCountObserver.CharactersCountObserver())
         self.add_module(BastelObserver.BastelObserver())
         self.add_module(UrbanObserver.UrbanObserver())  # only in #autistenchat-fsk18
-        self.add_module(PubmedObserver.PubmedObserver())  # only, maybe in #autistenchat-si
+        self.add_module(
+            PubmedObserver.PubmedObserver()
+        )  # only, maybe in #autistenchat-si
         self.add_module(ThemaObserver.ThemaObserver())
         self.add_module(ICD11Observer.ICD11Observer())
         self.add_module(HilfeObserver.HilfeObserver())
@@ -133,7 +136,9 @@ class FaustBot(object):
 
     def add_module(self, module: ModulePrototype):
         if module.__class__.__name__ in self._config.blacklist:
-            print(module.__class__.__name__ + " not loaded because of blacklisting")
+            logger.info(
+                f"{module.__class__.__name__} not loaded because of blacklisting"
+            )
             return
         for module_type in module.get_module_types():
             observable = self._get_observable_by_module_type(module_type)
