@@ -1,6 +1,7 @@
 import _thread
 
 from FaustBot.Communication.Observable import Observable
+from FaustBot import logger
 
 
 class PingObservable(Observable):
@@ -8,6 +9,7 @@ class PingObservable(Observable):
         data = {"raw": raw_data, "server": ""}
         if raw_data.find("PING") == 0:
             data["server"] = raw_data.split("PING ")[1]
+            logger.debug("Got PING")
         else:
             return
         # hier kann noch gecheckt werden, ob data wirklich ein server ist, der ping haben will, oder sonstwas

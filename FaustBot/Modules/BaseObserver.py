@@ -42,127 +42,90 @@ def check_if_bigger(von, zu):
         return False
 
 
-def decimal_to_base(base, zahl):
+def decimal_to_base(base, zahl, uppercase):
     """
     Convert a decimal number to a BaseX number
     """
-    out = ''
+    out = ""
     zahl = int(zahl)
     while zahl > 0:
-
-        out = str(zahl% base) + out
+        digit = zahl % base
+        if digit >= 10:
+            digit = chr(digit + 87 - uppercase * 32)
+        else:
+            str(digit)
+        out = f"{digit}{out}"
         zahl //= base
     return out
 
 
-def base_to_decimal(base, zahl):
-    """
-    Convert a BaseX Number to a decimal number
-    """
-
-    digit, position = 0, 0
-    while zahl:
-        digit += (zahl % 10) * (base ** position)
-        zahl //= 10
-        position += 1
-    out = str(digit)
-    return out
-
-
-def base_to_base(von, zu, zahl):
-    """
-    utilize d_t_b and b_t_d to convert a BaseX number in a BaseY number
-    """
-
-    out = decimal_to_base(zu, base_to_decimal(von, zahl))
-
-    return out
+class BaseToBig(Exception):
+    pass
 
 
 class BaseObserver(PrivMsgObserverPrototype):
-
     @staticmethod
     def cmd():
-        return ['.base']
+        return [".base"]
 
     @staticmethod
     def help():
         return ".base <von> <zu> <Zahl> - Rechnet eine Zahl in eine andere Base um"
 
     def update_on_priv_msg(self, data: dict, connection: Connection):
+        if data["message"].startswith(".base "):
+            _uppercase = data["messageCaseSensitive"].startswith(".B")
 
-        if data['message'].find('.base') == -1:
-            return
-
-
-        if data['message'].startswith('.base'):
-
-            array = data['message'].split(' ', 3)
+            array = data["message"].split(" ", 3)
 
             """
             Check every incoming number, if int go on if not return with error message 
             """
 
-            zahlString = array[3]
-            err = check_if_int(zahlString)
-            if err == ValueError:
-                connection.send_back(f'{zahlString} ist keine Ganzzahl', data)
+            try:
+                srcBase = int(array[1])
+                if srcBase > 36 or srcBase < 2:
+                    connection.send_back(
+                        f"von - {array[1]} ist nicht zwischen 2 und 36.", data
+                    )
+                    return
+            except ValueError:
+                connection.send_back(f"{array[1]} ist keine Ganzzahl", data)
                 return
-            zahl = int(zahlString)
 
-            vonString = array[1]
-            err = check_if_int(vonString)
-            if err == ValueError:
-                connection.send_back(f'{vonString} ist keine Ganzzahl', data)
+            try:
+                targetBase = int(array[2])
+                if targetBase > 36 or targetBase < 2:
+                    connection.send_back(
+                        f"zu - {array[2]} ist nicht zwischen 2 und 36.", data
+                    )
+                    return
+            except ValueError:
+                connection.send_back(f"{array[2]} ist keine Ganzzahl", data)
                 return
-            von = int(vonString)
 
-            zuString = array[2]
-            err = check_if_int(zuString)
-            if err == ValueError:
-                connection.send_back(f'{zuString} ist keine Ganzzahl', data)
+            try:
+                zahl = int(array[3], base=srcBase)
+                if zahl == 0 or zahl == 1:
+                    connection.send_back(f"Das schaffst du ohne mich :)", data)
+                    return
+            except ValueError:
+                connection.send_back(
+                    f"{array[3]} ist keine valide Zahl mit Base {srcBase}", data
+                )
                 return
-            zu = int(zuString)
-
-            bigger = check_if_bigger(von, zu)
-
-            isBase = check_if_base(von, zahl)
 
             """
             return 0 if either number is 0
             """
-            if von == 0 or zu == 0 or zahl == 0:
-                connection.send_back(f'Die {zahlString}, Base{vonString} entspricht 0 in Base{zuString}', data)
-                return
 
-            if von > 32 or zu > 32:
-                connection.send_back('Zahlen zu groß', data)
-                return
-
-            if not isBase:
-                connection.send_back(f'Die Zahl {zahlString} ist keine Base{vonString} Zahl', data)
-                return
-
-            if zahl > 1000000:
-                connection.send_back(f'Zahl zu Groß', data)
-                return
-
-            out = ''
-            if zu == 10:
-                out = base_to_decimal(von, zahl)
-
-            elif von == 10:
-                out = decimal_to_base(zu, zahl)
-
-            elif bigger:
-                out = base_to_base(von, zu, zahl)
-
-            elif not bigger:
-                out = base_to_base(von, zu, zahl)
-
+            if srcBase != 10 and targetBase != 10:
+                decimal_note = f" ({zahl} in Dezimal)"
             else:
-                connection.send_back('Unbekannter Fehler', data)
-                return
+                decimal_note = ""
 
-            connection.send_back(f'Die Zahl {zahlString} entspricht {out}', data)
+            connection.send_back(
+                f"Die Zahl {decimal_to_base(zahl=zahl, base=srcBase, uppercase=_uppercase)} zur Basis {srcBase} entspricht {decimal_to_base(zahl=zahl, base=targetBase, uppercase=_uppercase)} zur Basis {targetBase}{decimal_note}.",
+                data,
+            )
             return

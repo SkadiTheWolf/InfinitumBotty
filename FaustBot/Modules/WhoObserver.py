@@ -27,16 +27,16 @@ class WhoObserver(MagicNumberObserverPrototype, PingObserverPrototype):
         return [ModuleType.ON_MAGIC_NUMBER, ModuleType.ON_PING]
 
     def update_on_magic_number(self, data, connection):
-        if data['number'] == '352':  # RPL_WHOREPLY
+        if data["number"] == "352":  # RPL_WHOREPLY
             self.input_who(data, connection)
-        elif data['number'] == '315':  # RPL_ENDOFWHO
-            #make sure other thread runs to its end.
+        elif data["number"] == "315":  # RPL_ENDOFWHO
+            # make sure other thread runs to its end.
             time.sleep(10)
             self.end_who()
 
     def input_who(self, data, connection: Connection):
         # target #channel user host server nick status :0 gecos
-        target, channel, user, host, server, nick, *ign = data['arguments'].split(' ')
+        target, channel, user, host, server, nick, *ign = data["arguments"].split(" ")
         self.pending_whos.append(RemoteUser(nick, user, host))
 
     def end_who(self):
@@ -47,5 +47,5 @@ class WhoObserver(MagicNumberObserverPrototype, PingObserverPrototype):
 
     def update_on_ping(self, data, connection: Connection):
         if self.pings_seen % 90 == 0:  # 90 * 2 min = 3 Stunden
-            connection.raw_send('WHO ' + connection.details.get_channel())
+            connection.raw_send("WHO " + connection.details.get_channel())
             self.pings_seen += 1

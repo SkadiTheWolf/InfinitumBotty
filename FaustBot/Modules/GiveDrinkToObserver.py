@@ -45,38 +45,60 @@ class GiveDrinkToObserver(PrivMsgObserverPrototype):
         requester = data["nick"]
         if receiver.lower() == requester.lower():
             if type == "kaffee":
-                connection.send_back("Fehler 418: Ich bin eine Teekanne",data)
+                connection.send_back("Fehler 418: Ich bin eine Teekanne", data)
             else:
-                connection.send_back("Bitte nutze .drink um dir selbst ein Getränk zu besorgen",data)
+                connection.send_back(
+                    "Bitte nutze .drink um dir selbst ein Getränk zu besorgen", data
+                )
             return
         if type is None:
-            connection.send_back(_schenk(receiver,random.choice(getraenkegoodones),requester),data)
+            connection.send_back(
+                _schenk(receiver, random.choice(getraenkegoodones), requester), data
+            )
             return
         if type in ["drink", "food", "cookie", "snack", "massage", "ice"]:
             if type == "drink":
-                connection.send_back(_schenk(receiver,random.choice(getraenke),requester),data)
+                connection.send_back(
+                    _schenk(receiver, random.choice(getraenke), requester), data
+                )
             elif type == "food":
-                connection.send_back(_servier(receiver,random.choice(essen),requester),data)
+                connection.send_back(
+                    _servier(receiver, random.choice(essen), requester), data
+                )
             elif type == "cookie":
-                connection.send_back(_servier(receiver,random.choice(kekseGoodOnes),requester),data)
+                connection.send_back(
+                    _servier(receiver, random.choice(kekseGoodOnes), requester), data
+                )
             elif type == "snack":
-                connection.send_back(_servier(receiver,random.choice(snacks),requester),data)
+                connection.send_back(
+                    _servier(receiver, random.choice(snacks), requester), data
+                )
             elif type == "ice":
-                connection.send_back(_servier(receiver,random.choice(icecream),requester),data)
+                connection.send_back(
+                    _servier(receiver, random.choice(icecream), requester), data
+                )
             elif type == "massage":
                 connection.send_back(
                     f"\001ACTION knetet {receiver} feste den Rücken durch. {requester} meinte ich solle dir was Gutes tun.\001",
                     data,
                 )
             return
-        matchingGoodDrinks = [drink for drink in getraenkegoodones if type in drink.lower()]
+        matchingGoodDrinks = [
+            drink for drink in getraenkegoodones if type in drink.lower()
+        ]
         if matchingGoodDrinks:
-            connection.send_back(_schenk(receiver,random.choice(matchingGoodDrinks),requester),data)
+            connection.send_back(
+                _schenk(receiver, random.choice(matchingGoodDrinks), requester), data
+            )
             return
 
-        matchingServeables = [serveable for serveable in non_good_serveables if type in serveable.lower()]
+        matchingServeables = [
+            serveable for serveable in non_good_serveables if type in serveable.lower()
+        ]
         if matchingServeables:
-            connection.send_back(_servier(receiver,random.choice(matchingServeables),requester),data)
+            connection.send_back(
+                _servier(receiver, random.choice(matchingServeables), requester), data
+            )
             return
 
         connection.send_back(

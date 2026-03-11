@@ -16,6 +16,7 @@ class AntiSpamLevel(Enum):
     """
     Which action to be done if spam is detected.
     """
+
     OFF = 0  # No action is taken if spam is detected.
     WARN = 1  # Warns the user by messaging him/her without any further steps.
     WARN_KICK = 2  # Warns the user first, then kicks him/her.
@@ -32,6 +33,7 @@ class AntiSpamAggressivity(Enum):
     c: Time between messages of b:
     d: Trustfactor
     """
+
     LOW = (3, 7, 0.5, 15)  # (a, b, c, d)
     MEDIUM = (5, 5, 0.7, 10)
     HIGH = (7, 3, 1.0, 5)
@@ -48,25 +50,25 @@ class AntiSpamEntry(object):
         self.user = ""
         self.warn_count = 0
         self.msg = ""
-        self.timestamp = datetime.now() 
+        self.timestamp = datetime.now()
 
     @property
     def user(self):
         return self.user
 
     @user.setter
-    def user(self, user)
+    def user(self, user):
         self.user = user
-    
+
     @property
     def warn_count(self):
         return self.warn_count
 
     @warn_count.setter
-    def warn_count(self, warn_count)
+    def warn_count(self, warn_count):
         self.warn_count = warn_count
 
-    def inc_warn_count(self)
+    def inc_warn_count(self):
         self.warn_count += 1
 
     @property
@@ -87,7 +89,6 @@ class AntiSpamEntry(object):
 
 
 class AntiSpamObserver(PrivMsgObserverPrototype, JoinObserverPrototype):
-
     @staticmethod
     def cmd():
         raise NotImplementedError("TBD!")
@@ -98,17 +99,18 @@ class AntiSpamObserver(PrivMsgObserverPrototype, JoinObserverPrototype):
 
     @staticmethod
     def get_module_types():
-        return [ModuleType.ON_JOIN,
-                ModuleType.ON_PRIVMSG]
+        return [ModuleType.ON_JOIN, ModuleType.ON_PRIVMSG]
 
-    def __init__(self, config : Config):
+    def __init__(self, config: Config):
         super().__init__()
         self._msg_map = dict()
         self._anti_spam_level = AntiSpamLevel.OFF
         self._anti_spam_aggressivity = AntiSpamAggressivity.LOW
 
     def update_on_priv_msg(self, data, connection: Connection):
-        if _bot_name in  data['channel']:  # TBD! _bot_name should be fetched from the config! 
+        if (
+            _bot_name in data["channel"]
+        ):  # TBD! _bot_name should be fetched from the config!
             self._handle_command(data, connection)
 
         if self._anti_spam_level == AntiSpamLevel.OFF:
@@ -117,14 +119,14 @@ class AntiSpamObserver(PrivMsgObserverPrototype, JoinObserverPrototype):
     def update_on_join(self, data: dict, connection: Connection):
         raise NotImplementedError("TBD!")
 
-    def _is_spam(self, user: str, msg: str)
+    def _is_spam(self, user: str, msg: str):
         pass
 
-    def _handle_command(self, data: dict, connection: Connection)
+    def _handle_command(self, data: dict, connection: Connection):
         pass
 
     def _is_idented_mod(self, data: dict, connection: Connection):
         """
         Check wether the issuer of a module control command is a moderator or not
         """
-        return data['nick'] in self._config.mods and connection.is_idented(data['nick']
+        return data["nick"] in self._config.mods and connection.is_idented(data["nick"])

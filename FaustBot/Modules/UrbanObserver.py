@@ -23,7 +23,6 @@ class UrbanObserver(PrivMsgObserverPrototype):
         return ".urban <term> - fragt Urban Dictionary zu <term> ab"
 
     def update_on_priv_msg(self, data, connection):
-
         if data["messageCaseSensitive"].find(".urban") == -1:
             return
 

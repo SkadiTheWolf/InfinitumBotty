@@ -1,12 +1,13 @@
 import _thread
 
 from FaustBot.Communication.Observable import Observable
+from FaustBot import logger
 
 
 class KickObservable(Observable):
     def input(self, raw_data, connection):
         data = {}
-        print(raw_data)
+        logger.info(raw_data)
         data["raw"] = raw_data
         data["op"] = raw_data.split("!")[0][1:]
         data["channel"] = raw_data.split("KICK ")[1].split(" :")[0].split(" ")[0]

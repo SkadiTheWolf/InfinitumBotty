@@ -26,14 +26,13 @@ def fehler(data, connection: Connection, *args):
 
 
 class MathObserver(PrivMsgObserverPrototype):
-
     @staticmethod
     def cmd():
-        return ['.math']
+        return [".math"]
 
     @staticmethod
     def help():
-        return '.math - Berechnet einen Mathematischen Ausdruck'
+        return ".math <Term> - Berechnet eine Formel"
 
     def update_on_priv_msg(self, data, connection: Connection):
         if data['message'].startswith('.math'):

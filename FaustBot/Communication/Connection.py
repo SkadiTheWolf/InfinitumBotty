@@ -17,6 +17,7 @@ from FaustBot.Communication.PingObservable import PingObservable
 from FaustBot.Communication.PrivmsgObservable import PrivmsgObservable
 from FaustBot.Model.ConnectionDetails import ConnectionDetails
 from FaustBot.StringBuffer import StringBuffer
+from FaustBot import logger
 
 
 class Connection(object):
@@ -73,13 +74,13 @@ class Connection(object):
         except socket.timeout:
             return False
         data = data.decode("UTF-8", errors="replace")
-        # print('received: \n' + data)
-        data_lines = self._receiver_buffer.append(data)
+        # logger.debug('received: \n' + data)
+        self._receiver_buffer.append(data)
         if data is None:
             return False
-        # print('splited: ')
-        for data in data_lines:
-            # print(data)
+        # logger.debug('splited: ')
+        for data in self._receiver_buffer.get():
+            # logger.debug(data)
             data = data.rstrip()
             self.data = data
 
@@ -87,7 +88,7 @@ class Connection(object):
             if not len(splited) >= 2:
                 continue
             command = splited[1]
-            #         print(command)
+            # logger.debug(command)
             if data.split(" ")[0] == "PING":
                 self.ping_observable.input(data, self)
             elif command == "JOIN":
@@ -155,7 +156,7 @@ class Connection(object):
             )
         else:
             self.irc = socker
-        # print(self.irc.recv(512))
+        # logger.debug(self.irc.recv(512))
         self.irc.send(f"NICK {self.details.get_nick()}\r\n".encode())
         self.irc.send("USER botty botty botty :Botty \n".encode())
         if self.details.get_pwd() != "":

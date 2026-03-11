@@ -38,7 +38,7 @@ class BastelObserver(PrivMsgObserverPrototype):
         Returns:
 
         """
-        if data['message'].find('.craft') == -1:
+        if data["message"].find(".craft") == -1:
             return
 
         # Start not more than one process with a longer iteration (15 seconds)
@@ -63,9 +63,10 @@ class BastelObserver(PrivMsgObserverPrototype):
             connection.send_back("\001ACTION poltert herum.", data)
 
             # Determine, what Botty has built (random wikipedia article)
-            wikipedia.set_lang('de')
+            wikipedia.set_lang("de")
             crafted_object = wikipedia.random(1)
             sleep(5)
             connection.send_back(
-                    f"\001ACTION kommt zurück und hat {crafted_object} gebastelt.\001", data)
+                f"\001ACTION kommt zurück und hat {crafted_object} gebastelt.\001", data
+            )
             self.annoyed = 0

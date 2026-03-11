@@ -75,7 +75,6 @@ def num_badquotes():
 
 
 class FortuneObserver(PrivMsgObserverPrototype):
-
     @staticmethod
     def cmd():
         return [".fortune"]
@@ -86,11 +85,9 @@ class FortuneObserver(PrivMsgObserverPrototype):
                 Zitat auf eine gute Liste, .topquote ruft das am hoechsten bewertete Zitat auf"
 
     def update_on_priv_msg(self, data, connection: Connection):
-
         global lastQuote
 
         if data["message"].startswith(".fortune"):
-
             out = get_quote()
             badquote = check_for_bad(out)
 
@@ -105,7 +102,6 @@ class FortuneObserver(PrivMsgObserverPrototype):
             return
 
         if data["message"].startswith(".bad") and data["message"].find("num") != -1:
-
             # check if idented mod
             if data["nick"] in self._config.mods and connection.is_idented(
                 data["nick"]

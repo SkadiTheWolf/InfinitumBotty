@@ -1,3 +1,6 @@
+from FaustBot import logger
+
+
 class Config(object):
     CONFIG_PATH = "config_path"
 
@@ -18,7 +21,7 @@ class Config(object):
             return None
 
     def __setitem__(self, key: str, value: str):
-        print(key + " " + value + "\n\r")
+        logger.info(key + " " + value + "\n\r")
         self._config_dict[key] = value
 
     def read_config(self, path: str, append=True):
