@@ -6,6 +6,7 @@ class ModuleType(Enum):
     ON_KICK = "ON_KICK"
     ON_LEAVE = "ON_LEAVE"
     ON_PING = "ON_PING"
+    ON_PONG = "ON_PONG"
     ON_NICK_CHANGE = "ON_NICK_CHANGE"
     ON_MSG = "ON_MSG"
     ON_NOTICE = "ON_NOTICE"

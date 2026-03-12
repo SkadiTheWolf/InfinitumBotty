@@ -29,6 +29,7 @@ from FaustBot.Modules import (
     IntroductionObserver,
     JokeObserver,
     Kicker,
+    LagObserver,
     LetterObserver,
     LoveAndPeaceObserver,
     MathObserver,
@@ -82,6 +83,7 @@ class FaustBot(object):
         self.add_module(
             Kicker.Kicker(user_list, self._config.idle_time)
         )  # only in #autistenchat
+        self.add_module(LagObserver.LagObserver(self._connection))
         self.add_module(SeenObserver.SeenObserver())
         self.add_module(TitleObserver.TitleObserver())
         self.add_module(WikiObserver.WikiObserver())
@@ -165,6 +167,9 @@ class FaustBot(object):
 
         if module_type == ModuleType.ON_PING:
             return self._connection.ping_observable
+
+        if module_type == ModuleType.ON_PONG:
+            return self._connection.pong_observable
 
         if module_type == ModuleType.ON_NOTICE:
             return self._connection.notice_observable
