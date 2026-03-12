@@ -2,9 +2,9 @@
 from FaustBot.Communication.Connection import Connection
 from FaustBot.Model.UserProvider import UserProvider
 from FaustBot.Modules.JoinObserverPrototype import JoinObserverPrototype
+from FaustBot.Modules.NickChangeObserverPrototype import NickChangeObserverPrototype
+from FaustBot.Modules.PrivMsgObserverPrototype import PrivMsgObserverPrototype
 from FaustBot.Modules.ModuleType import ModuleType
-from ..Modules.NickChangeObserverPrototype import NickChangeObserverPrototype
-from ..Modules.PrivMsgObserverPrototype import PrivMsgObserverPrototype
 
 
 class ActivityObserver(

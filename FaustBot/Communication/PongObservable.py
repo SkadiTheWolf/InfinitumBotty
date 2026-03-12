@@ -26,6 +26,9 @@ class PongObservable(Observable):
     def notify_observers(self, data, connection):
         # logger.debug(data)
         for observer in self._observers:
+            logger.debug(
+                f"Starting Thread for Observer: {observer} with this data: {data}"
+            )
             _thread.start_new_thread(
                 observer.__class__.update_on_pong, (observer, data, connection)
             )
