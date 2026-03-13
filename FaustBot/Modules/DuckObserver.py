@@ -1,11 +1,11 @@
 from FaustBot.Communication.Connection import Connection
 from FaustBot.Modules.PrivMsgObserverPrototype import PrivMsgObserverPrototype
-from FaustBot.Modules.PingObserverPrototype import PingObserverPrototype
+from FaustBot.Modules.PongObserverPrototype import PongObserverPrototype
 from random import randint
 from FaustBot.Model.DuckProvider import DucksProvider
 
 
-class DuckObserver(PrivMsgObserverPrototype, PingObserverPrototype):
+class DuckObserver(PrivMsgObserverPrototype, PongObserverPrototype):
     @staticmethod
     def cmd():
         return [".freunde", ".schiessen", ".starthunt", ".stophunt", ".ducks"]
@@ -89,7 +89,7 @@ class DuckObserver(PrivMsgObserverPrototype, PingObserverPrototype):
         if self.active == 0:
             connection.send_channel("Es läuft derzeit keine Entenjagd.")
 
-    def update_on_ping(self, data, connection: Connection):
+    def update_on_pong(self, data, connection: Connection):
         if self.active == 0:
             return
         if 1 == randint(1, 15):
