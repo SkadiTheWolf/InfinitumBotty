@@ -1,6 +1,5 @@
 from FaustBot.Communication.Connection import Connection
 from FaustBot.Modules.ModulePrototype import ModulePrototype
-from FaustBot.Modules.ModuleType import ModuleType
 
 
 class KickObserverPrototype(ModulePrototype):
@@ -15,10 +14,6 @@ class KickObserverPrototype(ModulePrototype):
     @staticmethod
     def help():
         raise NotImplementedError("Need sto be implemented by subclasses!")
-
-    @staticmethod
-    def get_module_types():
-        return [ModuleType.ON_KICK]
 
     def __init__(self):
         super().__init__()

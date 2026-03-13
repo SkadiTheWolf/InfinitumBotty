@@ -1,4 +1,3 @@
-from FaustBot.Modules.ModuleType import ModuleType
 from FaustBot.Communication.Connection import Connection
 from FaustBot.Modules.PrivMsgObserverPrototype import PrivMsgObserverPrototype
 from FaustBot.Modules.PingObserverPrototype import PingObserverPrototype
@@ -18,10 +17,6 @@ class DuckObserver(PrivMsgObserverPrototype, PingObserverPrototype):
             + "Diese kann mit .schiessen getötet oder mit .freunde angefreundet werden. Mit .ducks wird abgefragt, wie viele Enten man schon hat. "
             + "Starten und stoppen können nur Moderatoren."
         )
-
-    @staticmethod
-    def get_module_types():
-        return [ModuleType.ON_MSG, ModuleType.ON_PING]
 
     def __init__(self):
         super().__init__()

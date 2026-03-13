@@ -1,5 +1,4 @@
 from FaustBot.Communication import Connection
-from FaustBot.Modules.ModuleType import ModuleType
 from FaustBot.Modules.PrivMsgObserverPrototype import PrivMsgObserverPrototype
 from FaustBot.Modules.PongObserverPrototype import PongObserverPrototype
 from time import time, sleep
@@ -24,10 +23,6 @@ class LagObserver(PrivMsgObserverPrototype, PongObserverPrototype):
     @staticmethod
     def help():
         return ".lag - zeige den aktuellen Lag vom Bot zum IRC-Server an"
-
-    @staticmethod
-    def get_module_types():
-        return [ModuleType.ON_MSG, ModuleType.ON_PONG]
 
     def update_on_priv_msg(self, data: dict, connection: Connection):
         if (

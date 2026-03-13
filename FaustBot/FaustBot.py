@@ -57,7 +57,6 @@ from FaustBot.Modules.CustomUserModules import (
     ICDObserver,
     ModmailObserver,
 )
-from FaustBot.Modules.ModuleType import ModuleType
 from FaustBot import logger
 
 

@@ -97,10 +97,6 @@ class AntiSpamObserver(PrivMsgObserverPrototype, JoinObserverPrototype):
     def help():
         raise NotImplementedError("TBD!")
 
-    @staticmethod
-    def get_module_types():
-        return [ModuleType.ON_JOIN, ModuleType.ON_PRIVMSG]
-
     def __init__(self, config: Config):
         super().__init__()
         self._msg_map = dict()

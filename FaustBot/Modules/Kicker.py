@@ -1,6 +1,5 @@
 import random
 import time
-from collections import defaultdict
 
 from FaustBot.Communication.Connection import Connection
 from FaustBot.Model.UserProvider import UserProvider
@@ -11,7 +10,6 @@ from icecreamlist import icecream
 
 from FaustBot.Modules.PingObserverPrototype import PingObserverPrototype
 from FaustBot.Modules.PongObserverPrototype import PongObserverPrototype
-from FaustBot.Modules.ModuleType import ModuleType
 from FaustBot import logger
 
 
@@ -23,10 +21,6 @@ class Kicker(PingObserverPrototype, PongObserverPrototype):
     @staticmethod
     def help():
         return None
-
-    @staticmethod
-    def get_module_types():
-        return [ModuleType.ON_PING, ModuleType.ON_PONG]
 
     def __init__(self, user_list: UserList, idle_warn: int, idle_kick: int):
         logger.debug(
