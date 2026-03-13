@@ -7,7 +7,6 @@ class Observable(object):
 
     def add_observer(self, observer):
         self._observers.append(observer)
-        logger.info(f"Added Observer: {str(observer.__class__)}")
 
     def get_observer(self):
         return self._observers

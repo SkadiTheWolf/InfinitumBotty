@@ -1,6 +1,5 @@
 import random
 import time
-from collections import defaultdict
 
 from FaustBot.Communication.Connection import Connection
 from FaustBot.Model.UserProvider import UserProvider
@@ -9,10 +8,12 @@ from getraenke import getraenke
 from essen import essen
 from icecreamlist import icecream
 
-from ..Modules.PingObserverPrototype import PingObserverPrototype
+from FaustBot.Modules.PingObserverPrototype import PingObserverPrototype
+from FaustBot.Modules.PongObserverPrototype import PongObserverPrototype
+from FaustBot import logger
 
 
-class Kicker(PingObserverPrototype):
+class Kicker(PingObserverPrototype, PongObserverPrototype):
     @staticmethod
     def cmd():
         return None
@@ -21,33 +22,51 @@ class Kicker(PingObserverPrototype):
     def help():
         return None
 
-    def __init__(self, user_list: UserList, idle_time: int):
+    def __init__(self, user_list: UserList, idle_warn: int, idle_kick: int):
+        logger.debug(
+            f"Initialized with idle_warn: {idle_warn} and idle_kick {idle_kick}"
+        )
         super().__init__()
-        self.idle_time = idle_time
+        self.idle_warn = idle_warn
+        self.idle_kick = idle_kick
         self.user_list = user_list
-        self.warned_users = defaultdict(int)
+        self.warned_users = {}
 
     def update_on_ping(self, data, connection: Connection):
         for user in self.user_list.userList.keys():
             offline_time = Kicker.get_offline_time(user)
-            if offline_time < self.idle_time:
-                self.warned_users[user] = 0
+
+            # Skip Statt and 'self'
             host = self.user_list.userList.get(user).host
-            if (
-                offline_time > self.idle_time
-                and not user == connection.details.get_nick()
-                and "freenode/staff" not in host
-                and "freenode/utility-bot" not in host
-            ):
-                if self.warned_users[user] % 30 == 0:
+            if "libera/staff/" in host or user == connection.details.get_nick():
+                continue
+            logger.debug(f"Kicker-Debug: {user} is inactive for {offline_time}s")
+
+            if user in self.warned_users:
+                if offline_time < self.idle_warn:
+                    self.warned_users.pop(user)
+                    logger.debug(
+                        f"Kicker-Debug: {user} is active again, warning-state deleted."
+                    )
+                elif (offline_time - self.warned_users.get(user, 0)) > self.idle_kick:
+                    # connection.send_channel(
+                    #     f"\001ACTION würde jetzt eigentlich {user} kicken weil {offline_time}.\001"
+                    # )
+                    connection.raw_send(
+                        f"KICK {connection.details.get_channel()} {user} :Zu lang geidlet, komm gerne wieder!"
+                    )
+                    self.warned_users.pop(user)
+                    logger.debug(f"Kicker-Debug: {user} has been kicked.")
+            elif user not in self.warned_users:
+                if offline_time > self.idle_warn:
                     connection.send_channel(
                         f"\001ACTION serviert {user} {random.choice(getraenke + essen + icecream)}.\001"
                     )
-                self.warned_users[user] += 1
-                if self.warned_users[user] % 29 == 0:
-                    connection.raw_send(
-                        "KICK {connection.details.get_channel()} {user} :Zu lang geidlet, komm gerne wieder!"
-                    )
+                    self.warned_users.update({user: offline_time})
+                    logger.debug(f"Kicker-Debug: {user} has been warned.")
+
+    def update_on_pong(self, data, connection):
+        self.update_on_ping(data, connection)
 
     @staticmethod
     def get_offline_time(nick):

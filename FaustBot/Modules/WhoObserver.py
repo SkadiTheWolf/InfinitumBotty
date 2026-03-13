@@ -1,13 +1,12 @@
 from FaustBot.Communication import Connection
 from FaustBot.Model.RemoteUser import RemoteUser
 from FaustBot.Modules.MagicNumberObserverPrototype import MagicNumberObserverPrototype
-from FaustBot.Modules.ModuleType import ModuleType
-from FaustBot.Modules.PingObserverPrototype import PingObserverPrototype
+from FaustBot.Modules.PongObserverPrototype import PongObserverPrototype
 from FaustBot.Modules.UserList import UserList
 import time
 
 
-class WhoObserver(MagicNumberObserverPrototype, PingObserverPrototype):
+class WhoObserver(MagicNumberObserverPrototype, PongObserverPrototype):
     @staticmethod
     def cmd():
         return None
@@ -21,10 +20,6 @@ class WhoObserver(MagicNumberObserverPrototype, PingObserverPrototype):
         self.user_list = user_list
         self.pings_seen = 1
         self.pending_whos = []
-
-    @staticmethod
-    def get_module_types():
-        return [ModuleType.ON_MAGIC_NUMBER, ModuleType.ON_PING]
 
     def update_on_magic_number(self, data, connection):
         if data["number"] == "352":  # RPL_WHOREPLY
@@ -45,7 +40,7 @@ class WhoObserver(MagicNumberObserverPrototype, PingObserverPrototype):
             self.user_list.add_user(remuser)
         self.pending_whos = []
 
-    def update_on_ping(self, data, connection: Connection):
+    def update_on_pong(self, data, connection: Connection):
         if self.pings_seen % 90 == 0:  # 90 * 2 min = 3 Stunden
             connection.raw_send("WHO " + connection.details.get_channel())
             self.pings_seen += 1
