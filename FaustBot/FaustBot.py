@@ -29,6 +29,7 @@ from FaustBot.Modules import (
     IntroductionObserver,
     JokeObserver,
     Kicker,
+    LagObserver,
     LetterObserver,
     LoveAndPeaceObserver,
     MathObserver,
@@ -56,7 +57,6 @@ from FaustBot.Modules.CustomUserModules import (
     ICDObserver,
     ModmailObserver,
 )
-from FaustBot.Modules.ModuleType import ModuleType
 from FaustBot import logger
 
 
@@ -80,8 +80,9 @@ class FaustBot(object):
         self.add_module(AllSeenObserver.AllSeenObserver(user_list))
         self.add_module(PingAnswerObserver.ModulePing())
         self.add_module(
-            Kicker.Kicker(user_list, self._config.idle_time)
+            Kicker.Kicker(user_list, self._config.idle_warn, self._config.idle_kick)
         )  # only in #autistenchat
+        self.add_module(LagObserver.LagObserver(self._connection))
         self.add_module(SeenObserver.SeenObserver())
         self.add_module(TitleObserver.TitleObserver())
         self.add_module(WikiObserver.WikiObserver())
@@ -137,37 +138,31 @@ class FaustBot(object):
                 return
 
     def add_module(self, module: ModulePrototype):
+        _module_name = str(module.__class__.__name__)
         if module.__class__.__name__ in self._config.blacklist:
-            logger.info(
-                f"{module.__class__.__name__} not loaded because of blacklisting"
-            )
-            return
-        for module_type in module.get_module_types():
-            observable = self._get_observable_by_module_type(module_type)
-            observable.add_observer(module)
-        module.config = self._config
+            logger.info(f"Module {_module_name} not loaded (blacklisted)")
+        else:
+            self._add_to_observable_by_function_existence(module)
+            module.config = self._config
+            logger.info(f"Module {_module_name} loaded.")
 
-    def _get_observable_by_module_type(self, module_type: str):
-        if module_type == ModuleType.ON_JOIN:
-            return self._connection.join_observable
-
-        if module_type == ModuleType.ON_LEAVE:
-            return self._connection.leave_observable
-
-        if module_type == ModuleType.ON_KICK:
-            return self._connection.kick_observable
-
-        if module_type == ModuleType.ON_MSG:
-            return self._connection.priv_msg_observable
-
-        if module_type == ModuleType.ON_NICK_CHANGE:
-            return self._connection.nick_change_observable
-
-        if module_type == ModuleType.ON_PING:
-            return self._connection.ping_observable
-
-        if module_type == ModuleType.ON_NOTICE:
-            return self._connection.notice_observable
-
-        if module_type == ModuleType.ON_MAGIC_NUMBER:
-            return self._connection.magic_number_observable
+    def _add_to_observable_by_function_existence(self, module):
+        _module_functions = module.__dir__()
+        if "update_on_join" in _module_functions:
+            self._connection.join_observable.add_observer(module)
+        if "update_on_leave" in _module_functions:
+            self._connection.leave_observable.add_observer(module)
+        if "update_on_kick" in _module_functions:
+            self._connection.kick_observable.add_observer(module)
+        if "update_on_priv_msg" in _module_functions:
+            self._connection.priv_msg_observable.add_observer(module)
+        if "update_on_nick_change" in _module_functions:
+            self._connection.nick_change_observable.add_observer(module)
+        if "update_on_ping" in _module_functions:
+            self._connection.ping_observable.add_observer(module)
+        if "update_on_pong" in _module_functions:
+            self._connection.pong_observable.add_observer(module)
+        if "update_on_notice" in _module_functions:
+            self._connection.notice_observable.add_observer(module)
+        if "update_on_magic_number" in _module_functions:
+            self._connection.magic_number_observable.add_observer(module)

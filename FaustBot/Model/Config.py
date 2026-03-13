@@ -37,9 +37,13 @@ class Config(object):
         for mod in mods:
             self._config_dict["mods"].append(mod.strip())
         # If no idle_time value is given, we set it to five hours ( == 18000 seconds )
-        if "idle_time" not in self._config_dict:
-            self._config_dict["idle_time"] = 18000
-        self._config_dict["idle_time"] = int(self._config_dict["idle_time"])
+        if "idle_warn" not in self._config_dict:
+            self._config_dict["idle_warn"] = 7200
+        if "idle_kick" not in self._config_dict:
+            self._config_dict["idle_kick"] = 3600
+        self._config_dict["idle_warn"] = int(self._config_dict["idle_warn"])
+        self._config_dict["idle_kick"] = int(self._config_dict["idle_kick"])
+
         if "blacklist" not in self._config_dict:
             self._config_dict["blacklist"] = []
         else:
@@ -69,12 +73,20 @@ class Config(object):
         self._config_dict["mods"] = value
 
     @property
-    def idle_time(self):
-        return self._config_dict["idle_time"]
+    def idle_warn(self):
+        return self._config_dict["idle_warn"]
 
-    @idle_time.setter
-    def idle_time(self, value: int):
-        self._config_dict["idle_time"] = value
+    @property
+    def idle_kick(self):
+        return self._config_dict["idle_kick"]
+
+    @idle_warn.setter
+    def idle_warn(self, value: int):
+        self._config_dict["idle_warn"] = value
+
+    @idle_kick.setter
+    def idle_kick(self, value: int):
+        self._config_dict["idle_kick"] = value
 
     @property
     def blacklist(self):

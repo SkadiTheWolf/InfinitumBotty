@@ -2,7 +2,7 @@ from FaustBot.Communication.Connection import Connection
 from FaustBot.Modules.ModulePrototype import ModulePrototype
 
 
-class KickObserverPrototype(ModulePrototype):
+class PongObserverPrototype(ModulePrototype):
     """
     The Prototype of a Class who can react to every action
     """
@@ -18,5 +18,5 @@ class KickObserverPrototype(ModulePrototype):
     def __init__(self):
         super().__init__()
 
-    def update_on_kick(self, data, connection: Connection):
+    def update_on_pong(self, data, connection: Connection):
         raise NotImplementedError("Some module doesn't do anything")

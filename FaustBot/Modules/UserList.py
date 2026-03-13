@@ -1,6 +1,5 @@
 from FaustBot.Model.RemoteUser import RemoteUser
 from FaustBot.Modules.JoinObserverPrototype import JoinObserverPrototype
-from FaustBot.Modules.ModuleType import ModuleType
 from FaustBot.Modules.KickObserverPrototype import KickObserverPrototype
 from FaustBot.Modules.LeaveObserverPrototype import LeaveObserverPrototype
 from FaustBot.Modules.NickChangeObserverPrototype import NickChangeObserverPrototype
@@ -24,15 +23,6 @@ class UserList(
     def __init__(self):
         super().__init__()
         self.userList = {}
-
-    @staticmethod
-    def get_module_types():
-        return [
-            ModuleType.ON_JOIN,
-            ModuleType.ON_KICK,
-            ModuleType.ON_LEAVE,
-            ModuleType.ON_NICK_CHANGE,
-        ]
 
     def update_on_kick(self, data, connection):
         if data["nick"] in self.userList:

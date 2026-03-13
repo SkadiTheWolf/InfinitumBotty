@@ -14,6 +14,7 @@ from FaustBot.Communication.MagicNumberObservable import MagicNumberObservable
 from FaustBot.Communication.NickChangeObservable import NickChangeObservable
 from FaustBot.Communication.NoticeObservable import NoticeObservable
 from FaustBot.Communication.PingObservable import PingObservable
+from FaustBot.Communication.PongObservable import PongObservable
 from FaustBot.Communication.PrivmsgObservable import PrivmsgObservable
 from FaustBot.Model.ConnectionDetails import ConnectionDetails
 from FaustBot.StringBuffer import StringBuffer
@@ -61,6 +62,7 @@ class Connection(object):
             self.send_channel(text)
 
     def raw_send(self, message):
+        # logger.error(message)
         self.send_queue.put(f"{message}\r\n".encode())
 
     def receive(self):
@@ -80,7 +82,7 @@ class Connection(object):
             return False
         # logger.debug('splited: ')
         for data in self._receiver_buffer.get():
-            # logger.debug(data)
+            # logger.error(data)
             data = data.rstrip()
             self.data = data
 
@@ -89,8 +91,10 @@ class Connection(object):
                 continue
             command = splited[1]
             # logger.debug(command)
-            if data.split(" ")[0] == "PING":
+            if splited[0] == "PING":
                 self.ping_observable.input(data, self)
+            elif command == "PONG":
+                self.pong_observable.input(data, self)
             elif command == "JOIN":
                 self.join_observable.input(data, self)
             elif command == "PART" or command == "QUIT":
@@ -141,9 +145,8 @@ class Connection(object):
         establish the connection
         """
         use_certfp = os.path.isfile("certfp.pem")
-        self.irc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         socker = socket.create_connection(
-            (self.details.get_server(), self.details.get_port())
+            address=(self.details.get_server(), self.details.get_port()), timeout=300
         )
         if self.details.get_ssl().lower() != "false":
             if use_certfp:
@@ -174,6 +177,7 @@ class Connection(object):
     def __init__(self, set_details: ConnectionDetails):
         self.details = set_details
         self.ping_observable = PingObservable()
+        self.pong_observable = PongObservable()
         self.priv_msg_observable = PrivmsgObservable()
         self.join_observable = JoinObservable()
         self.leave_observable = LeaveObservable()
