@@ -58,14 +58,14 @@ class PubmedObserver(PrivMsgObserverPrototype):
                     # format xml to extract Title
                     Title = IdContentsStr.replace("<Title>", "~").replace("</Title>", "~")
                     TitleArr = Title.split("~")
-                    indexErrorTestTitle = TitleArr[1]
+                    # indexErrorTestTitle = TitleArr[1]
 
                     # format xml to extract doi
                     doi = IdContentsStr.replace("<ELocationID>", "~").replace(
                         "</ELocationID>", "~"
                     )
                     doiArr = doi.split("~")
-                    indexErrorTestDoi = doiArr[1]
+                    # indexErrorTestDoi = doiArr[1]
 
                     # send back data
                     connection.send_back(TitleArr[1], data)

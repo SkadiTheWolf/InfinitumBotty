@@ -2,7 +2,6 @@ import html
 import re
 import urllib
 import json
-from urllib import request
 
 from FaustBot.Communication.Connection import Connection
 from FaustBot.Modules.PrivMsgObserverPrototype import PrivMsgObserverPrototype

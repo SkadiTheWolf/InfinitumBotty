@@ -27,7 +27,7 @@ class ICDObserver(PrivMsgObserverPrototype):
                 for code in codes[:5]:
                     code = code.capitalize()
                     text = self.icd10_dict.get(code, False)
-                    if text == False:
+                    if not text:
                         if "." in code:
                             code += "-"
                         else:

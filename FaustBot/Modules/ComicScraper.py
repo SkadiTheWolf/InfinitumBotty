@@ -1,7 +1,7 @@
 import random
-import urllib
 import requests
-import html
+# import urllib
+# import html
 
 
 # Comic scraper scrapes comics from urls that have no website based random functionality. Comic URLs have to be in comics.py

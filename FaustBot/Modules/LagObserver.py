@@ -3,7 +3,6 @@ from FaustBot.Modules.PrivMsgObserverPrototype import PrivMsgObserverPrototype
 from FaustBot.Modules.PongObserverPrototype import PongObserverPrototype
 from time import time, sleep
 from FaustBot import logger
-from FaustBot.Communication import Connection
 import _thread
 
 
