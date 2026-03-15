@@ -3,10 +3,7 @@ from FaustBot.Modules.PrivMsgObserverPrototype import PrivMsgObserverPrototype
 from FaustBot.Model.ScoreProvider import ScoreProvider
 from FaustBot.Model.HanDatabaseProvider import HanDatabaseProvider
 from FaustBot.Modules.HelpObserver import HelpObserver
-from collections import defaultdict
 from threading import Lock
-import csv
-import random
 import time
 import datetime
 
@@ -27,9 +24,7 @@ class HangmanObserver(PrivMsgObserverPrototype):
 
     @staticmethod
     def help():
-        return (
-            "Hangman Spiel. Details bitte per PM an den Bot mit .spielregeln abfragen."
-        )
+        return "Hangman Spiel. Details bitte per PM an den Bot mit .spielregeln abfragen."
 
     def __init__(self):
         super().__init__()
@@ -85,10 +80,7 @@ class HangmanObserver(PrivMsgObserverPrototype):
             self.rules(data, connection)
         if messageLower.startswith(".look"):
             self.look(data, connection)
-        if (
-            messageLower.startswith(".resetscore")
-            and len(data["message"].split(" ")) < 2
-        ):
+        if messageLower.startswith(".resetscore") and len(data["message"].split(" ")) < 2:
             self.reset(data, connection)
         if messageLower.startswith(".handelete "):
             self.delete_HanWord(data, connection)
@@ -190,9 +182,9 @@ class HangmanObserver(PrivMsgObserverPrototype):
                 self.guesses.append(guess)
         else:
             self.tries_left -= 1
-            punishment_factor = 1
-            if guess in self.guesses:
-                punishment_factor = 2
+            # punishment_factor = 1
+            # if guess in self.guesses:
+            #     punishment_factor = 2
             self.addToScore(data["nick"], -1)
             # (int((word_unique_chars / 20) * punishment_factor * 10))
 
@@ -288,7 +280,7 @@ class HangmanObserver(PrivMsgObserverPrototype):
         _rules = [
             "Wort starten mit '.word Wort' im Query (Privatchat) mit dem Bot",
             "Solospiel starten mit '.han' - Botty sucht dann das Wort aus",
-            "Raten mit '.guess Buchstabe' im Channel"
+            "Raten mit '.guess Buchstabe' im Channel",
             "Geraten werden können einzelne Buchstaben oder das ganze Wort.",
             "Alle dürfen durcheinander raten. Es gibt keine Reihenfolge.",
             "'.hint' gibt alle bereits falsch geratenen Buchstaben und Wörter aus.",

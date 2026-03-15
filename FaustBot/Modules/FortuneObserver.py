@@ -103,9 +103,7 @@ class FortuneObserver(PrivMsgObserverPrototype):
 
         if data["message"].startswith(".bad") and data["message"].find("num") != -1:
             # check if idented mod
-            if data["nick"] in self._config.mods and connection.is_idented(
-                data["nick"]
-            ):
+            if data["nick"] in self._config.mods and connection.is_idented(data["nick"]):
                 laenge = num_badquotes()
                 connection.send_back(
                     f"Die Anzahl der Zitate auf der Blacklist betraegt {laenge}", data

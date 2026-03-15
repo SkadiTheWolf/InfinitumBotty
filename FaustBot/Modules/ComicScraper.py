@@ -15,9 +15,7 @@ class ComicScraper:
         r = requests.get(url)
         comic_id_latest = (
             r.content.decode("utf-8")
-            .split("http://betamonkeys.co.uk/wp-content/stripshow_comics/betamonkeys")[
-                1
-            ]
+            .split("http://betamonkeys.co.uk/wp-content/stripshow_comics/betamonkeys")[1]
             .split(".png")[0]
         )
         random_comic_number = str(random.randint(1, int(comic_id_latest)))
@@ -26,9 +24,7 @@ class ComicScraper:
             + random_comic_number
             + ".png"
         )
-        return (
-            random_comic_url + " Betamonkeys " + random_comic_number + " | Betamonkeys"
-        )
+        return random_comic_url + " Betamonkeys " + random_comic_number + " | Betamonkeys"
 
     # scraper for Nichtlustig
     def scrapeNichtlustig(url):

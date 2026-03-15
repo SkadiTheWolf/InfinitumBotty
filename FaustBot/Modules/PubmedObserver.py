@@ -56,9 +56,7 @@ class PubmedObserver(PrivMsgObserverPrototype):
                     IdContentsStr = str(IdContents.content)
 
                     # format xml to extract Title
-                    Title = IdContentsStr.replace("<Title>", "~").replace(
-                        "</Title>", "~"
-                    )
+                    Title = IdContentsStr.replace("<Title>", "~").replace("</Title>", "~")
                     TitleArr = Title.split("~")
                     indexErrorTestTitle = TitleArr[1]
 
@@ -72,9 +70,7 @@ class PubmedObserver(PrivMsgObserverPrototype):
                     # send back data
                     connection.send_back(TitleArr[1], data)
                     connection.send_back(doiArr[1], data)
-                    connection.send_back(
-                        f"https://pubmed.ncbi.nlm.nih.gov/{indices}", data
-                    )
+                    connection.send_back(f"https://pubmed.ncbi.nlm.nih.gov/{indices}", data)
                     connection.send_back(" ", data)
 
                 # when theres only 1 or 2 results, a index error is raised

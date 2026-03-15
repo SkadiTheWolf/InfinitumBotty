@@ -8,8 +8,7 @@ from FaustBot.Modules.PrivMsgObserverPrototype import PrivMsgObserverPrototype
 class ICDObserver(PrivMsgObserverPrototype):
     with open("care_icd10_de.csv", "r", encoding="utf8") as icd10_codes:
         icd10_dict = {
-            row[0]: row[1]
-            for row in csv.reader(icd10_codes, delimiter=";", quotechar='"')
+            row[0]: row[1] for row in csv.reader(icd10_codes, delimiter=";", quotechar='"')
         }
 
     @staticmethod

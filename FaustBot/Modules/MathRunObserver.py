@@ -87,13 +87,9 @@ class MathRunObserver(PrivMsgObserverPrototype):
     def stop_math(self, data, connection):
         for player in self.players.keys():
             if self.players[player] == 1:
-                connection.send_channel(
-                    f"{player} hat {str(self.players[player])} Punkt."
-                )
+                connection.send_channel(f"{player} hat {str(self.players[player])} Punkt.")
             else:
-                connection.send_channel(
-                    f"{player} hat {str(self.players[player])} Punkte."
-                )
+                connection.send_channel(f"{player} hat {str(self.players[player])} Punkte.")
         connection.send_channel("Mathrun beendet")
         self.players = {}
         self.solutionForGame = 0

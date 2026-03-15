@@ -35,9 +35,7 @@ class UserList(
             # logger.debug(self.userList)
 
     def update_on_join(self, data, connection):
-        self.userList[data["nick"]] = RemoteUser(
-            data["nick"], data["user"], data["host"]
-        )
+        self.userList[data["nick"]] = RemoteUser(data["nick"], data["user"], data["host"])
         # logger.debug(self.userList)
 
     def update_on_nick_change(self, data, connection):

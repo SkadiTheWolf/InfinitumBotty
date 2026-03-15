@@ -82,9 +82,8 @@ class TitleObserver(PrivMsgObserverPrototype):
 
         if yt_json_data_re:
             yt_json_data = json.loads(yt_json_data_re.search(content).group(1))
-            _base = yt_json_data["playerOverlays"]["playerOverlayRenderer"][
-                "videoDetails"
-            ]["playerOverlayVideoDetailsRenderer"]
+            _vid = yt_json_data["playerOverlays"]["playerOverlayRenderer"]["videoDetails"]
+            _base = _vid["playerOverlayVideoDetailsRenderer"]
             _title = _base["title"]["simpleText"]
             _creator = _base["subtitle"]["runs"][0]["text"]
             _views = _base["subtitle"]["runs"][2]["text"]
