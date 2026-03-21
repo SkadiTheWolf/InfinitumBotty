@@ -47,10 +47,8 @@ class UserProvider(object):
         id = self._get_id(name)
         if id is None:
             return 0
-        for time in cursor.execute(
-            "SELECT last_seen FROM last_seen WHERE id = ?", (id,)
-        ):
-            return time[0]
+        for _time in cursor.execute("SELECT last_seen FROM last_seen WHERE id = ?", (id,)):
+            return _time[0]
         return 0
 
     def add_characters(self, name, number):
@@ -114,11 +112,9 @@ class UserProvider(object):
     def _get_id(self, name):
         cursor = self.database_connection.cursor()
         try:
-            for id in cursor.execute(
-                "SELECT id FROM user WHERE name = ?", (name.lower(),)
-            ):
+            for id in cursor.execute("SELECT id FROM user WHERE name = ?", (name.lower(),)):
                 return id[0]
-        except:
+        except Exception:
             return None
 
     def _create_user(self, name):

@@ -23,9 +23,7 @@ class Kicker(PingObserverPrototype, PongObserverPrototype):
         return None
 
     def __init__(self, user_list: UserList, idle_warn: int, idle_kick: int):
-        logger.debug(
-            f"Initialized with idle_warn: {idle_warn} and idle_kick {idle_kick}"
-        )
+        logger.debug(f"Initialized with idle_warn: {idle_warn} and idle_kick {idle_kick}")
         super().__init__()
         self.idle_warn = idle_warn
         self.idle_kick = idle_kick

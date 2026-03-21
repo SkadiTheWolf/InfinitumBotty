@@ -83,9 +83,7 @@ class GiveDrinkToObserver(PrivMsgObserverPrototype):
                     data,
                 )
             return
-        matchingGoodDrinks = [
-            drink for drink in getraenkegoodones if type in drink.lower()
-        ]
+        matchingGoodDrinks = [drink for drink in getraenkegoodones if type in drink.lower()]
         if matchingGoodDrinks:
             connection.send_back(
                 _schenk(receiver, random.choice(matchingGoodDrinks), requester), data

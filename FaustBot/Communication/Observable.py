@@ -1,4 +1,4 @@
-from FaustBot import logger
+# from FaustBot import logger
 
 
 class Observable(object):

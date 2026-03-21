@@ -37,9 +37,7 @@ class UrbanObserver(PrivMsgObserverPrototype):
                 f"Ich konnte leider keine definition für {search} finden", data
             )
 
-        contents = requests.get(
-            f"https://www.urbandictionary.com/define.php?term={search}"
-        )
+        contents = requests.get(f"https://www.urbandictionary.com/define.php?term={search}")
 
         # use build in tools to extract content and status code for further processing
 
@@ -58,10 +56,8 @@ class UrbanObserver(PrivMsgObserverPrototype):
             else:
                 not_found()
 
-            answer = (
-                json_loads(groups[0]).get("mainEntity", {}).get("description", False)
-            )
-            if answer == False:
-                not_found()
-            else:
+            answer = json_loads(groups[0]).get("mainEntity", {}).get("description", False)
+            if answer:
                 connection.send_back(f"{data['nick']}: {search} - {answer}", data)
+            else:
+                not_found()

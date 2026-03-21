@@ -117,9 +117,7 @@ class FaustBot(object):
         self.add_module(CharactersCountObserver.CharactersCountObserver())
         self.add_module(BastelObserver.BastelObserver())
         self.add_module(UrbanObserver.UrbanObserver())  # only in #autistenchat-fsk18
-        self.add_module(
-            PubmedObserver.PubmedObserver()
-        )  # only, maybe in #autistenchat-si
+        self.add_module(PubmedObserver.PubmedObserver())  # only, maybe in #autistenchat-si
         self.add_module(ThemaObserver.ThemaObserver())
         self.add_module(ICD11Observer.ICD11Observer())
         self.add_module(HilfeObserver.HilfeObserver())
