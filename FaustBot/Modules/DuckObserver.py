@@ -219,17 +219,13 @@ class DuckObserver(PrivMsgObserverPrototype, PongObserverPrototype):
                     f"{nick} hat den Titel 'Enten, Enten. So viele Enten' erreicht"
                 )
             elif living + dead == 111:
-                connection.send_channel(
-                    f"{nick} hat den Titel 'Ich liebe Enten' erreicht"
-                )
+                connection.send_channel(f"{nick} hat den Titel 'Ich liebe Enten' erreicht")
             elif living + dead == 555:
                 connection.send_channel(
                     f"{nick} hat den Titel 'Auf dem Grill und als Freund. Enten sind mein Leben' erreicht"
                 )
             elif living + dead == 1111:
-                connection.send_channel(
-                    f"{nick} hat den Titel 'Durchgespielt' erreicht"
-                )
+                connection.send_channel(f"{nick} hat den Titel 'Durchgespielt' erreicht")
             elif living + dead == 2222:
                 connection.send_channel(
                     f"{nick} hat den Titel 'Immernoch im Spiel' erreicht"

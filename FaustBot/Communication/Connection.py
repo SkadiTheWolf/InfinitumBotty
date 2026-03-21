@@ -172,6 +172,7 @@ class Connection(object):
         self.irc.send(f"WHO {self.details.get_channel()}\r\n".encode())
         self.irc.send(f"MODE {self.details.get_nick()} -R\r\n".encode())
 
+        logger.info("Connection Established, starting sender.")
         _thread.start_new_thread(self.sender, ())
 
     def __init__(self, set_details: ConnectionDetails):

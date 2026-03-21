@@ -28,8 +28,8 @@ class Config(object):
         f = open(path, "r")
         if not append:
             self._config_dict = {}
-        for l in f.readlines():
-            kv_pair = l.split(":", 1)
+        for line in f.readlines():
+            kv_pair = line.split(":", 1)
             if len(kv_pair) == 2:
                 self._config_dict[kv_pair[0].strip()] = kv_pair[1].strip()
         mods = self._config_dict["mods"].split(",")

@@ -15,9 +15,7 @@ class SeenObserver(PrivMsgObserverPrototype):
         return ".seen <nick> - um abzufragen wann <nick> zuletzt hier war"
 
     def update_on_priv_msg(self, data, connection: Connection):
-        if data["message"].startswith(".seen ") and self._is_idented_mod(
-            data, connection
-        ):
+        if data["message"].startswith(".seen ") and self._is_idented_mod(data, connection):
             who = data["message"].split(" ")[1]
 
             user_provider = UserProvider()

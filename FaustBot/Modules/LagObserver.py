@@ -3,7 +3,6 @@ from FaustBot.Modules.PrivMsgObserverPrototype import PrivMsgObserverPrototype
 from FaustBot.Modules.PongObserverPrototype import PongObserverPrototype
 from time import time, sleep
 from FaustBot import logger
-from FaustBot.Communication import Connection
 import _thread
 
 
@@ -38,15 +37,15 @@ class LagObserver(PrivMsgObserverPrototype, PongObserverPrototype):
         if data["message"] == ":lag.check":
             pong_time = time()
             delta_time = (pong_time - self.ping_time) * 100000
-            connection.send_channel(f"Current-Lag: {int(delta_time)/100}ms")
+            connection.send_channel(f"Current-Lag: {int(delta_time) / 100}ms")
         elif data["message"] == ":periodic.ping":
-            logger.debug(f"Got Periodic Pong")
+            logger.debug("Got Periodic Pong")
         else:
-            logger.debug(f"Received an unknown Pong ({data["message"]})")
+            logger.debug(f"Received an unknown Pong ({data['message']})")
 
     def periodic_ping(self):
         self._connection.raw_send("PING :periodic.ping")
-        logger.debug(f"Sent Periodic Ping")
+        logger.debug("Sent Periodic Ping")
 
     def setup_timer(self):
         _interval = 55

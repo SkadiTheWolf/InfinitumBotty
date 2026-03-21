@@ -97,11 +97,7 @@ class GlossaryModule(PrivMsgObserverPrototype):
                 data,
             )
             return
-        msg = (
-            data["messageCaseSensitive"]
-            .split(GlossaryModule._ADD_EXPLANATION)[1]
-            .strip()
-        )
+        msg = data["messageCaseSensitive"].split(GlossaryModule._ADD_EXPLANATION)[1].strip()
         split = msg.split(" ", 1)
         glossary_provider = GlossaryProvider()
         glossary_provider.save_or_replace(split[0], split[1])
