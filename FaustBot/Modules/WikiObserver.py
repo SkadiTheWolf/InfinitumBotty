@@ -2,6 +2,7 @@ from wikipedia import wikipedia
 from FaustBot.Modules.PrivMsgObserverPrototype import PrivMsgObserverPrototype
 from FaustBot import logger
 
+wikipedia.set_user_agent("User-Agent: InfinitumBotty/0.1 (https://github.com/ctx77/InfinitumBotty) python-via-wikipedia-module/1.4.0")
 
 class WikiObserver(PrivMsgObserverPrototype):
     @staticmethod

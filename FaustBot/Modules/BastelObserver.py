@@ -3,6 +3,7 @@ from wikipedia import wikipedia
 from FaustBot.Communication import Connection
 from FaustBot.Modules.PrivMsgObserverPrototype import PrivMsgObserverPrototype
 
+wikipedia.set_user_agent("User-Agent: InfinitumBotty/0.1 (https://github.com/ctx77/InfinitumBotty) python-via-wikipedia-module/1.4.0")
 
 class BastelObserver(PrivMsgObserverPrototype):
     def __init__(self):
