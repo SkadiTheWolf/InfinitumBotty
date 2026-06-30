@@ -1,7 +1,7 @@
 import _thread
 import copy
 from faustbot.communication.Observable import Observable
-from faustbot.Model.BlockedUsers import BlockProvider
+from faustbot.model.BlockedUsers import BlockProvider
 
 
 class PrivmsgObservable(Observable):

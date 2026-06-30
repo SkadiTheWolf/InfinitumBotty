@@ -1,5 +1,5 @@
 from faustbot.communication import Connection
-from faustbot.Model.RemoteUser import RemoteUser
+from faustbot.model.RemoteUser import RemoteUser
 from faustbot.Modules.MagicNumberObserverPrototype import MagicNumberObserverPrototype
 from faustbot.Modules.PongObserverPrototype import PongObserverPrototype
 from faustbot.Modules.UserList import UserList

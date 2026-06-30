@@ -1,6 +1,6 @@
 from faustbot.communication.Connection import Connection
 from faustbot.Modules.PrivMsgObserverPrototype import PrivMsgObserverPrototype
-from faustbot.Model.BlockedUsers import BlockProvider
+from faustbot.model.BlockedUsers import BlockProvider
 
 
 class BlockObserver(PrivMsgObserverPrototype):

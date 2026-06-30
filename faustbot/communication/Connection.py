@@ -16,7 +16,7 @@ from faustbot.communication.NoticeObservable import NoticeObservable
 from faustbot.communication.PingObservable import PingObservable
 from faustbot.communication.PongObservable import PongObservable
 from faustbot.communication.PrivmsgObservable import PrivmsgObservable
-from faustbot.Model.ConnectionDetails import ConnectionDetails
+from faustbot.model.ConnectionDetails import ConnectionDetails
 from faustbot.StringBuffer import StringBuffer
 from faustbot import logger
 

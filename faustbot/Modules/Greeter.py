@@ -1,6 +1,6 @@
 from faustbot.communication.Connection import Connection
 from faustbot.Modules.JoinObserverPrototype import JoinObserverPrototype
-from faustbot.Model.UserProvider import UserProvider
+from faustbot.model.UserProvider import UserProvider
 import time
 from collections import defaultdict
 

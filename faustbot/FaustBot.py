@@ -1,6 +1,6 @@
 from faustbot.communication.Connection import Connection
-from faustbot.Model.Config import Config
-from faustbot.Model.ConnectionDetails import ConnectionDetails
+from faustbot.model.Config import Config
+from faustbot.model.ConnectionDetails import ConnectionDetails
 from faustbot.Modules import (
     ActivityObserver,
     AllSeenObserver,

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
-from faustbot.Model.HanDatabaseProvider import HanDatabaseProvider
+from faustbot.model.HanDatabaseProvider import HanDatabaseProvider
 import csv
 
 HanDBProvider = HanDatabaseProvider()

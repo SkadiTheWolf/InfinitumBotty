@@ -1,5 +1,5 @@
 from faustbot.communication.Connection import Connection
-from faustbot.Model.UserProvider import UserProvider
+from faustbot.model.UserProvider import UserProvider
 from faustbot.Modules.JoinObserverPrototype import JoinObserverPrototype
 from faustbot.Modules.NickChangeObserverPrototype import NickChangeObserverPrototype
 from faustbot.Modules.PrivMsgObserverPrototype import PrivMsgObserverPrototype

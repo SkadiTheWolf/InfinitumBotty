@@ -2,7 +2,7 @@ import datetime
 import time
 from collections import defaultdict
 from faustbot.communication.Connection import Connection
-from faustbot.Model.UserProvider import UserProvider
+from faustbot.model.UserProvider import UserProvider
 from faustbot.Modules.PrivMsgObserverPrototype import PrivMsgObserverPrototype
 from faustbot.Modules.UserList import UserList
 from faustbot import logger

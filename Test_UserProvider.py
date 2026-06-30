@@ -1,4 +1,4 @@
-from faustbot.Model.UserProvider import UserProvider
+from faustbot.model.UserProvider import UserProvider
 
 user = UserProvider()
 user.add_characters("Bla", 100)

@@ -1,4 +1,4 @@
-from faustbot.Model.RemoteUser import RemoteUser
+from faustbot.model.RemoteUser import RemoteUser
 from faustbot.Modules.JoinObserverPrototype import JoinObserverPrototype
 from faustbot.Modules.KickObserverPrototype import KickObserverPrototype
 from faustbot.Modules.LeaveObserverPrototype import LeaveObserverPrototype

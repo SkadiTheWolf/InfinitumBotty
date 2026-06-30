@@ -1,7 +1,7 @@
 from faustbot.communication.Connection import Connection
 from faustbot.Modules.PrivMsgObserverPrototype import PrivMsgObserverPrototype
-from faustbot.Model.ScoreProvider import ScoreProvider
-from faustbot.Model.HanDatabaseProvider import HanDatabaseProvider
+from faustbot.model.ScoreProvider import ScoreProvider
+from faustbot.model.HanDatabaseProvider import HanDatabaseProvider
 from faustbot.Modules.HelpObserver import HelpObserver
 from threading import Lock
 import time

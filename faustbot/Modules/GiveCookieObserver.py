@@ -15,7 +15,7 @@ class GiveCookieObserver(PrivMsgObserverPrototype):
 
     def update_on_priv_msg(self, data: dict, connection: Connection):
         if data["message"].startswith(".cookie"):
-            with open("FaustBot/Modules/txtfiles/kekse.txt") as kekse:
+            with open("faustbot/Modules/txtfiles/kekse.txt") as kekse:
                 keks = random.choice(kekse.readlines())
                 kekse.close()
 

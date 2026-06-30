@@ -1,7 +1,7 @@
 from faustbot.communication.Communication import Connection
 from faustbot.Modules.PrivMsgObserverPrototype import PrivMsgObserverPrototype
 from faustbot.Modules.JoinObserverPrototype import JoinObserverPrototype
-from faustbot.Model.Config import Config
+from faustbot.model.Config import Config
 from enum import Enum
 from datetime import datetime
 

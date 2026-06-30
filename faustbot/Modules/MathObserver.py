@@ -28,7 +28,7 @@ class MathObserver(PrivMsgObserverPrototype):
             try:
                 lösung = ""
                 lösung = subprocess.run(
-                    ["python", "FaustBot/Modules/MathSupplementary.py"],
+                    ["python", "faustbot/Modules/MathSupplementary.py"],
                     capture_output=True,
                     text=True,
                     input=formel[1],

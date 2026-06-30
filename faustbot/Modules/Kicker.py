@@ -2,7 +2,7 @@ import random
 import time
 
 from faustbot.communication.Connection import Connection
-from faustbot.Model.UserProvider import UserProvider
+from faustbot.model.UserProvider import UserProvider
 from faustbot.Modules.UserList import UserList
 from faustbot.extras.getraenke import getraenke
 from faustbot.extras.essen import essen

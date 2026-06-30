@@ -11,7 +11,7 @@ import os
 
 from faustbot.communication.Connection import Connection
 from faustbot.Modules.PrivMsgObserverPrototype import PrivMsgObserverPrototype
-from faustbot.Model.GoodQuotesProvider import GoodQuotesProvider
+from faustbot.model.GoodQuotesProvider import GoodQuotesProvider
 
 
 def convert_to_arr():

@@ -15,7 +15,7 @@ class GiveDrinkObserver(PrivMsgObserverPrototype):
 
     def update_on_priv_msg(self, data: dict, connection: Connection):
         if data["message"].startswith(".drink"):
-            with open("FaustBot/Modules/txtfiles/getraenke.txt") as getraenke:
+            with open("faustbot/Modules/txtfiles/getraenke.txt") as getraenke:
                 getraenk = random.choice(getraenke.readlines())
                 getraenke.close()
 

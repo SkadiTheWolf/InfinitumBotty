@@ -2,7 +2,7 @@ from faustbot.communication.Connection import Connection
 from faustbot.Modules.PrivMsgObserverPrototype import PrivMsgObserverPrototype
 from faustbot.Modules.PongObserverPrototype import PongObserverPrototype
 from random import randint
-from faustbot.Model.DuckProvider import DucksProvider
+from faustbot.model.DuckProvider import DucksProvider
 
 
 class DuckObserver(PrivMsgObserverPrototype, PongObserverPrototype):
