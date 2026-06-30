@@ -1,4 +1,4 @@
-from faustbot.Communication import Connection
+from faustbot.communication import Connection
 from faustbot.Model.Introduction import IntroductionProvider
 from faustbot.Modules import UserList
 from faustbot.Modules.PrivMsgObserverPrototype import PrivMsgObserverPrototype

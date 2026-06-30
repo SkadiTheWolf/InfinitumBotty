@@ -1,7 +1,7 @@
 import csv
 import re
 
-from faustbot.Communication.Connection import Connection
+from faustbot.communication.Connection import Connection
 from faustbot.Modules.PrivMsgObserverPrototype import PrivMsgObserverPrototype
 
 

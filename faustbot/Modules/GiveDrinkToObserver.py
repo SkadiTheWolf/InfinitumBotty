@@ -1,6 +1,6 @@
 import random
 
-from faustbot.Communication.Connection import Connection
+from faustbot.communication.Connection import Connection
 from faustbot.Modules.PrivMsgObserverPrototype import PrivMsgObserverPrototype
 from getraenkeOnlyGoodOnes import getraenkegoodones
 from faustbot.extras.getraenke import getraenke

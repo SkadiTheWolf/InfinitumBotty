@@ -1,6 +1,6 @@
 import re
 
-from faustbot.Communication import Connection
+from faustbot.communication import Connection
 from faustbot.Modules.NoticeObserverPrototype import NoticeObserverPrototype
 
 

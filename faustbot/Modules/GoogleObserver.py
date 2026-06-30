@@ -1,4 +1,4 @@
-from faustbot.Communication.Connection import Connection
+from faustbot.communication.Connection import Connection
 from faustbot.Model.i18n import i18n
 from faustbot.Modules.PrivMsgObserverPrototype import PrivMsgObserverPrototype
 from faustbot import logger

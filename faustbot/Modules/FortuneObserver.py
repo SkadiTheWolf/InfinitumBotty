@@ -9,7 +9,7 @@ February 2026, Skadi Wiesemann
 import random
 import os
 
-from faustbot.Communication.Connection import Connection
+from faustbot.communication.Connection import Connection
 from faustbot.Modules.PrivMsgObserverPrototype import PrivMsgObserverPrototype
 from faustbot.Model.GoodQuotesProvider import GoodQuotesProvider
 

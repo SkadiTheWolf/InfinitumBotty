@@ -3,7 +3,7 @@ import urllib
 import requests
 import html
 
-from faustbot.Communication.Connection import Connection
+from faustbot.communication.Connection import Connection
 from faustbot.Modules.PrivMsgObserverPrototype import PrivMsgObserverPrototype
 from faustbot.Modules.TitleObserver import TitleObserver
 from faustbot.Modules.ComicScraper import ComicScraper

@@ -1,4 +1,4 @@
-from faustbot.Communication.Communication import Connection
+from faustbot.communication.Communication import Connection
 from faustbot.Modules.PrivMsgObserverPrototype import PrivMsgObserverPrototype
 from faustbot.Modules.JoinObserverPrototype import JoinObserverPrototype
 from faustbot.Model.Config import Config

@@ -6,7 +6,7 @@ September 2025 Skadi Wiesemann
 
 """
 
-from faustbot.Communication.Connection import Connection
+from faustbot.communication.Connection import Connection
 from faustbot.Modules.PrivMsgObserverPrototype import PrivMsgObserverPrototype
 
 

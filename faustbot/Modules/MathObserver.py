@@ -8,7 +8,7 @@ January 2026, Skadi Wiesemann
 
 import subprocess
 
-from faustbot.Communication.Connection import Connection
+from faustbot.communication.Connection import Connection
 from faustbot.Modules.PrivMsgObserverPrototype import PrivMsgObserverPrototype
 
 
@@ -28,7 +28,7 @@ class MathObserver(PrivMsgObserverPrototype):
             try:
                 lösung = ""
                 lösung = subprocess.run(
-                    ["python", "faustbot/Modules/MathSupplementary.py"],
+                    ["python", "FaustBot/Modules/MathSupplementary.py"],
                     capture_output=True,
                     text=True,
                     input=formel[1],

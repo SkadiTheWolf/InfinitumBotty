@@ -7,15 +7,15 @@ import os.path
 
 from threading import Condition
 
-from faustbot.Communication.JoinObservable import JoinObservable
-from faustbot.Communication.KickObservable import KickObservable
-from faustbot.Communication.LeaveObservable import LeaveObservable
-from faustbot.Communication.MagicNumberObservable import MagicNumberObservable
-from faustbot.Communication.NickChangeObservable import NickChangeObservable
-from faustbot.Communication.NoticeObservable import NoticeObservable
-from faustbot.Communication.PingObservable import PingObservable
-from faustbot.Communication.PongObservable import PongObservable
-from faustbot.Communication.PrivmsgObservable import PrivmsgObservable
+from faustbot.communication.JoinObservable import JoinObservable
+from faustbot.communication.KickObservable import KickObservable
+from faustbot.communication.LeaveObservable import LeaveObservable
+from faustbot.communication.MagicNumberObservable import MagicNumberObservable
+from faustbot.communication.NickChangeObservable import NickChangeObservable
+from faustbot.communication.NoticeObservable import NoticeObservable
+from faustbot.communication.PingObservable import PingObservable
+from faustbot.communication.PongObservable import PongObservable
+from faustbot.communication.PrivmsgObservable import PrivmsgObservable
 from faustbot.Model.ConnectionDetails import ConnectionDetails
 from faustbot.StringBuffer import StringBuffer
 from faustbot import logger

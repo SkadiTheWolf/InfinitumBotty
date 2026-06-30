@@ -1,4 +1,4 @@
-from faustbot.Communication.Connection import Connection
+from faustbot.communication.Connection import Connection
 from faustbot.Model.Config import Config
 from faustbot.Model.ConnectionDetails import ConnectionDetails
 from faustbot.Modules import (

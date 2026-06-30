@@ -1,6 +1,6 @@
 from time import sleep
 from wikipedia import wikipedia
-from faustbot.Communication import Connection
+from faustbot.communication import Connection
 from faustbot.Modules.PrivMsgObserverPrototype import PrivMsgObserverPrototype
 
 wikipedia.set_user_agent("User-Agent: InfinitumBotty/0.1 (https://github.com/ctx77/InfinitumBotty) python-via-wikipedia-module/1.4.0")

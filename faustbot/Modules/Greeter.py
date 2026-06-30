@@ -1,4 +1,4 @@
-from faustbot.Communication.Connection import Connection
+from faustbot.communication.Connection import Connection
 from faustbot.Modules.JoinObserverPrototype import JoinObserverPrototype
 from faustbot.Model.UserProvider import UserProvider
 import time

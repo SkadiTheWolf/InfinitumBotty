@@ -1,6 +1,6 @@
 import random
 import time
-from faustbot.Communication import Connection
+from faustbot.communication import Connection
 from faustbot.Modules.PrivMsgObserverPrototype import PrivMsgObserverPrototype
 
 jokes = [

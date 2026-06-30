@@ -1,6 +1,6 @@
 import datetime
 
-from faustbot.Communication.Connection import Connection
+from faustbot.communication.Connection import Connection
 from faustbot.Model.UserProvider import UserProvider
 from faustbot.Modules.PrivMsgObserverPrototype import PrivMsgObserverPrototype
 

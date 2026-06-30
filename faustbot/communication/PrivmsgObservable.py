@@ -1,6 +1,6 @@
 import _thread
 import copy
-from faustbot.Communication.Observable import Observable
+from faustbot.communication.Observable import Observable
 from faustbot.Model.BlockedUsers import BlockProvider
 
 

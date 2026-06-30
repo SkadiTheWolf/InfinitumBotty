@@ -1,6 +1,6 @@
 import _thread
 
-from faustbot.Communication.Observable import Observable
+from faustbot.communication.Observable import Observable
 
 
 class JoinObservable(Observable):
