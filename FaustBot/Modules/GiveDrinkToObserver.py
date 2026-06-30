@@ -3,12 +3,12 @@ import random
 from FaustBot.Communication.Connection import Connection
 from FaustBot.Modules.PrivMsgObserverPrototype import PrivMsgObserverPrototype
 from getraenkeOnlyGoodOnes import getraenkegoodones
-from getraenke import getraenke
-from essen import essen
-from icecreamlist import icecream
-from extras import giveextras
-from snacks import snacks
-from kekse import kekseGoodOnes
+from FaustBot.extras.getraenke import getraenke
+from FaustBot.extras.essen import essen
+from FaustBot.extras.icecreamlist import icecream
+from FaustBot.extras.extras import giveextras
+from FaustBot.extras.snacks import snacks
+from FaustBot.extras.kekse import kekseGoodOnes
 
 
 def _servier(receiver, item, requester):

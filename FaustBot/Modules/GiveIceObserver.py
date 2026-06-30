@@ -2,7 +2,7 @@ import random
 
 from FaustBot.Communication.Connection import Connection
 from FaustBot.Modules.PrivMsgObserverPrototype import PrivMsgObserverPrototype
-from icecreamlist import icecream
+from FaustBot.extras.icecreamlist import icecream
 
 
 class GiveIceObserver(PrivMsgObserverPrototype):

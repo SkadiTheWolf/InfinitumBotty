@@ -4,9 +4,9 @@ import time
 from FaustBot.Communication.Connection import Connection
 from FaustBot.Model.UserProvider import UserProvider
 from FaustBot.Modules.UserList import UserList
-from getraenke import getraenke
-from essen import essen
-from icecreamlist import icecream
+from FaustBot.extras.getraenke import getraenke
+from FaustBot.extras.essen import essen
+from FaustBot.extras.icecreamlist import icecream
 
 from FaustBot.Modules.PingObserverPrototype import PingObserverPrototype
 from FaustBot.Modules.PongObserverPrototype import PongObserverPrototype

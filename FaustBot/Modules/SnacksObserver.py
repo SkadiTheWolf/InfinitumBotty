@@ -2,7 +2,7 @@ import random
 
 from FaustBot.Communication.Connection import Connection
 from FaustBot.Modules.PrivMsgObserverPrototype import PrivMsgObserverPrototype
-from snacks import snacks
+from FaustBot.extras.snacks import snacks
 
 
 class SnacksObserver(PrivMsgObserverPrototype):

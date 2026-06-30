@@ -10,7 +10,6 @@ kekseGoodOnes = [
     "einen Butterkeks",
     "einen Keks mit Pistaziencreme",
 ]
-
 kekse = [
     "einen Schokoladenkeks",
     "einen Vanillekeks",
