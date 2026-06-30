@@ -1,14 +1,14 @@
-# faustbot/Modules/ComicObserver.py: 3
-# faustbot/Modules/ComicScraper.py: 3
-# faustbot/Modules/RainObserver.py: 10
-# faustbot/Modules/UrbanObserver.py: 10
-# faustbot/Modules/PubmedObserver.py: 10
-# faustbot/Modules/OeisObsever.py: 10
-# faustbot/Modules/WeatherObserver.py: 9
+# faustbot/modules/ComicObserver.py: 3
+# faustbot/modules/ComicScraper.py: 3
+# faustbot/modules/RainObserver.py: 10
+# faustbot/modules/UrbanObserver.py: 10
+# faustbot/modules/PubmedObserver.py: 10
+# faustbot/modules/OeisObsever.py: 10
+# faustbot/modules/WeatherObserver.py: 9
 requests == 2.32.5
 
-# faustbot/Modules/WikiObserver.py: 1
+# faustbot/modules/WikiObserver.py: 1
 wikipedia == 1.4.0
 
-# faustbot/Modules/MathSupplementary.py
+# faustbot/modules/MathSupplementary.py
 cython == 3.2.4

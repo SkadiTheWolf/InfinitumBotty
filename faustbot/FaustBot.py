@@ -1,7 +1,7 @@
 from faustbot.communication.Connection import Connection
 from faustbot.model.Config import Config
 from faustbot.model.ConnectionDetails import ConnectionDetails
-from faustbot.Modules import (
+from faustbot.modules import (
     ActivityObserver,
     AllSeenObserver,
     BaseObserver,
@@ -52,7 +52,7 @@ from faustbot.Modules import (
     WikiObserver,
     WordRunObserver,
 )
-from faustbot.Modules.CustomUserModules import (
+from faustbot.modules.CustomUserModules import (
     GlossaryModule,
     ICDObserver,
     ModmailObserver,

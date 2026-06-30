@@ -1,0 +1,36 @@
+from faustbot.communication.Connection import Connection
+from faustbot.model.UserProvider import UserProvider
+from faustbot.modules.JoinObserverPrototype import JoinObserverPrototype
+from faustbot.modules.NickChangeObserverPrototype import NickChangeObserverPrototype
+from faustbot.modules.PrivMsgObserverPrototype import PrivMsgObserverPrototype
+
+
+class ActivityObserver(
+    PrivMsgObserverPrototype, JoinObserverPrototype, NickChangeObserverPrototype
+):
+    """
+    A Class only reacting to pings
+    """
+
+    @staticmethod
+    def cmd():
+        return None
+
+    @staticmethod
+    def help():
+        return None
+
+    def update_on_join(self, data, connection: Connection):
+        users = UserProvider()
+        if data["channel"] == connection.details.get_channel():
+            users.set_active(data["nick"])
+
+    def update_on_priv_msg(self, data, connection: Connection):
+        users = UserProvider()
+        if data["channel"] == connection.details.get_channel():
+            users.set_active(data["nick"])
+            users.add_characters(data["nick"], len(data["message"]))
+
+    def update_on_nick_change(self, data, connection: Connection):
+        users = UserProvider()
+        users.set_active(data["new_nick"])

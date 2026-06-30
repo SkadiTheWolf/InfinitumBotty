@@ -1,0 +1,22 @@
+from faustbot.communication.Connection import Connection
+from faustbot.modules.ModulePrototype import ModulePrototype
+
+
+class PongObserverPrototype(ModulePrototype):
+    """
+    The Prototype of a Class who can react to every action
+    """
+
+    @staticmethod
+    def cmd():
+        raise NotImplementedError()
+
+    @staticmethod
+    def help():
+        raise NotImplementedError("Need sto be implemented by subclasses!")
+
+    def __init__(self):
+        super().__init__()
+
+    def update_on_pong(self, data, connection: Connection):
+        raise NotImplementedError("Some module doesn't do anything")

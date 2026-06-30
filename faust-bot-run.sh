@@ -58,10 +58,10 @@ start() {
       exit
     fi
      echo "[=== checking if badquotes.txt exists"
-    if [ -f "faustbot/Modules/txtfiles/badquotes.txt" ]; then
+    if [ -f "faustbot/modules/txtfiles/badquotes.txt" ]; then
       echo "[=== badquotes.txt exists, continuing"
     else
-      touch "faustbot/Modules/txtfiles/badquotes.txt"
+      touch "faustbot/modules/txtfiles/badquotes.txt"
       echo "[=== badquotes.txt created"
     fi
     echo "[=== starting faust-bot "

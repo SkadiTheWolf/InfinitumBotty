@@ -73,7 +73,7 @@ config.txt
 out.txt
 faust_bot.db
 /venv/
-faustbot/Modules/txtfiles/WolframAlphaAPIKey.txt
+faustbot/modules/txtfiles/WolframAlphaAPIKey.txt
 test.py
 /shell.nix
-faustbot/Modules/txtfiles/badquotes.txt
+faustbot/modules/txtfiles/badquotes.txt

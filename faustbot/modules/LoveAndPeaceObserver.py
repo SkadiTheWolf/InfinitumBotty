@@ -1,0 +1,20 @@
+from faustbot.communication import Connection
+from faustbot.modules.PrivMsgObserverPrototype import PrivMsgObserverPrototype
+
+
+class LoveAndPeaceObserver(PrivMsgObserverPrototype):
+    @staticmethod
+    def cmd():
+        return [".peace"]
+
+    @staticmethod
+    def help():
+        return ".peace - sorgt für Frieden"
+
+    def update_on_priv_msg(self, data: dict, connection: Connection):
+        if data["message"].startswith(".peace"):
+            connection.send_back(
+                '\001ACTION hüpft durch den Raum, schmeißt Blumen um sich und singt: "Love and '
+                'Peace, wir haben uns alle lieb..!".\001',
+                data,
+            )
