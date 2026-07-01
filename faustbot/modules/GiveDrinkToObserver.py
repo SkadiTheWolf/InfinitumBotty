@@ -2,7 +2,7 @@ import random
 
 from faustbot.communication.Connection import Connection
 from faustbot.modules.PrivMsgObserverPrototype import PrivMsgObserverPrototype
-from getraenkeOnlyGoodOnes import getraenkegoodones
+from faustbot.extras.getraenkeOnlyGoodOnes import getraenkegoodones
 from faustbot.extras.getraenke import getraenke
 from faustbot.extras.essen import essen
 from faustbot.extras.icecreamlist import icecream
