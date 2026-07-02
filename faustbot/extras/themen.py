@@ -1,8 +1,8 @@
 from random import choice
 
-class Getraenke(list):
+class Themen(list):
     def __init__(self):
-        with open("faustbot/modules/txtfiles/getraenke.txt") as txt:
+        with open("faustbot/modules/txtfiles/themen.txt") as txt:
             super().__init__(line.strip() for line in txt.readlines())
     def reload(self):
         self.__init__()

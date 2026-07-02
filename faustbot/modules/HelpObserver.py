@@ -41,6 +41,7 @@ class HelpObserver(PrivMsgObserverPrototype):
         if data["channel"] == connection.details.get_channel():
             all_cmd = []
             all_cmd = self.collect_commands(connection)
+            all_cmd.sort()
             msg = ", ".join(all_cmd)
             msg = "Bekannte Befehle: " + msg
             connection.send_back(msg, data)

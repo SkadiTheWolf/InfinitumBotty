@@ -58,7 +58,7 @@ from faustbot.modules.CustomUserModules import (
     ModmailObserver,
 )
 from faustbot import logger
-
+from faustbot.extras import bbb
 
 class FaustBot(object):
     def __init__(self, config_path: str):
@@ -127,6 +127,7 @@ class FaustBot(object):
         self.add_module(BaseObserver.BaseObserver())
         self.add_module(ConvertObserver.ConvertObserver())
         self.add_module(FortuneObserver.FortuneObserver())
+        self.add_module(bbb)
 
     def run(self):
         self._setup()

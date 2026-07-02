@@ -9,6 +9,7 @@ September 2025, Skadi Wiesemann
 import random
 from faustbot.communication.Connection import Connection
 from faustbot.modules.PrivMsgObserverPrototype import PrivMsgObserverPrototype
+from faustbot.extras import themen
 
 
 class ThemaObserver(PrivMsgObserverPrototype):
@@ -24,8 +25,4 @@ class ThemaObserver(PrivMsgObserverPrototype):
         if data["message"].startswith(".thema"):
             anfang = ["Gerade geht es um", "Wir reden über", "Das Thema ist"]
 
-            with open("faustbot/modules/txtfiles/themen.txt") as themen:
-                thema = random.choice(themen.readlines())
-                themen.close()
-
-            connection.send_back(f"{random.choice(anfang)} {thema}", data)
+            connection.send_back(f"{random.choice(anfang)} {themen.get_random()}", data)

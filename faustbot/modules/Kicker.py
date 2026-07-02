@@ -4,7 +4,7 @@ import time
 from faustbot.communication.Connection import Connection
 from faustbot.model.UserProvider import UserProvider
 from faustbot.modules.UserList import UserList
-from faustbot.extras.getraenke import getraenke
+from faustbot.extras import getraenke
 from faustbot.extras.essen import essen
 from faustbot.extras.icecreamlist import icecream
 
