@@ -64,7 +64,7 @@ target/
 *.iml
 .idea/misc.xml
 *.xml
-Model/ConnectionDetails.py
+model/ConnectionDetails.py
 FaustBotVEnv/
 
 # Custom
