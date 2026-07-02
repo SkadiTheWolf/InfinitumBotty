@@ -65,7 +65,7 @@ class MathObserver(PrivMsgObserverPrototype):
                         result_string = f"Die Lösung für {formel} ist {result}"
                     except ValueError:
                         result_string = f"Die Lösung für {formel} ist zu lang, aber hier sind die letzten 9 Stellen ...{result%1000000000}"
-                    connection.send_back(f"Die Lösung für {formel} ist {result_string}", data)
+                    connection.send_back(result_string, data)
                 else:
                     connection.send_back(
                         "Das konnte ich nicht schnell genug für dich berechnen. :/", data
