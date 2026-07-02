@@ -13,10 +13,16 @@ from multiprocessing import Process, Manager
 
 from faustbot.communication.Connection import Connection
 from faustbot.modules.PrivMsgObserverPrototype import PrivMsgObserverPrototype
-
+from faustbot import logger
 
 def eval_with_result(formel, _result_dict):
-    _result_dict["eval_result"] = eval(formel)
+    try:
+        _eval_result = eval(formel)
+    except Exception as e:
+        logger.error(e)
+        _eval_result = 'ERROR'
+
+    _result_dict["eval_result"] = _eval_result
 
 
 def eval_with_mp(formel):
