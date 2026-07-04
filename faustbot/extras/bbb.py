@@ -44,9 +44,6 @@ class BBB(list):
         return data["nick"] in connection.details.get_mods() and connection.is_idented(data["nick"])
 
     def update_on_priv_msg(self, data: dict, connection: Connection):
-        if "send_back" not in connection.__dir__():
-            logger.error("This Module is Broken!")
-            return
         if data["message"].startswith(".bbb"):
             if data["message"].startswith(".bbb reload") and self._is_idented_mod(data, connection):
                 _old_bean_count = len(self)
