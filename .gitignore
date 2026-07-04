@@ -77,3 +77,4 @@ faustbot/modules/txtfiles/WolframAlphaAPIKey.txt
 test.py
 /shell.nix
 faustbot/modules/txtfiles/badquotes.txt
+logs/*
