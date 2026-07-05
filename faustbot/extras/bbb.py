@@ -57,7 +57,7 @@ class BBB(list):
 
             _response_bean_list = self
             if data["message"].startswith(".bbb "):
-                _color = str(data["message"].split(" ", 1)[1]).replace('ü', 'ue').replace('ä', 'ae').replace('ö', 'oe').lower()
+                _color = str(data["message"].split(" ", 1)[1]).replace('ü', 'ue').replace('ä', 'ae').replace('ö', 'oe').replace('ß', 'ss').lower()
                 for available_color in self.bbb_normal.keys():
                     if _color.startswith(available_color):
                         _response_bean_list = self.bbb_normal[available_color]
