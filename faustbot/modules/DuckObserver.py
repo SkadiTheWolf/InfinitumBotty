@@ -27,7 +27,7 @@ class DuckObserver(PrivMsgObserverPrototype, PongObserverPrototype):
 
     def update_on_priv_msg(self, data, connection: Connection):
         messageLower = data["message"].lower()
-        if messageLower.find(".starthunt") != -1:
+        if messageLower.startswith(".starthunt"):
             if not self._is_idented_mod(data, connection):
                 connection.send_back(
                     f"Dir fehlen leider die Rechte zum Starten der Jagd, {data['nick']}.",
@@ -42,7 +42,7 @@ class DuckObserver(PrivMsgObserverPrototype, PongObserverPrototype):
                 connection.send_channel("Jagt ist eröffnet. Bitte benutze zuerst .stophunt")
                 return
 
-        if messageLower.find(".stophunt") != -1:
+        elif messageLower.startswith(".stophunt"):
             if not self._is_idented_mod(data, connection):
                 connection.send_back(
                     f"Dir fehlen leider die Rechte zum Stoppen der Jagd, {data['nick']}.",
@@ -57,13 +57,19 @@ class DuckObserver(PrivMsgObserverPrototype, PongObserverPrototype):
             else:
                 connection.send_channel("Jagt ist nicht eröffnet. Benutze zuerst .starthunt")
                 return
+        
 
-        if messageLower.find(".ducks") != -1:
+        elif messageLower.startswith(".ducks") != -1:
             connection.send_channel(self.build_duck_string(data["nick"]))
-        if messageLower.find(".freunde") != -1:
+        elif messageLower.startswith(".freunde") != -1:
             self.befriend(data, connection)
-        if messageLower.find(".schiessen") != -1:
+        elif messageLower.startswith(".schiessen") != -1:
             self.shoot(data, connection)
+        elif messageLower.startswith("."):
+            return
+        
+        else:
+            return
 
     def befriend(self, data, connection):
         if self.duck_alive == 1:
