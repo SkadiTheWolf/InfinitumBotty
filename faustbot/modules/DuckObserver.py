@@ -34,9 +34,14 @@ class DuckObserver(PrivMsgObserverPrototype, PongObserverPrototype):
                     data,
                 )
                 return
-            self.active = 1
-            connection.send_channel("Jagd eröffnet")
-            return
+            if self.active == 0:
+                self.active = 1
+                connection.send_channel("Jagd eröffnet")
+                return
+            else:
+                connection.send_channel("Jagt ist eröffnet. Bitte benutze zuerst .stophunt")
+                return
+
         if messageLower.find(".stophunt") != -1:
             if not self._is_idented_mod(data, connection):
                 connection.send_back(
@@ -44,10 +49,15 @@ class DuckObserver(PrivMsgObserverPrototype, PongObserverPrototype):
                     data,
                 )
                 return
-            self.active = 0
-            self.duck_alive = 0
-            connection.send_channel("Jagd beendet")
-            return
+            if self.active == 1:
+                self.active = 0
+                self.duck_alive = 0
+                connection.send_channel("Jagd beendet")
+                return
+            else:
+                connection.send_channel("Jagt ist nicht eröffnet. Benutze zuerst .starthunt")
+                return
+
         if messageLower.find(".ducks") != -1:
             connection.send_channel(self.build_duck_string(data["nick"]))
         if messageLower.find(".freunde") != -1:
