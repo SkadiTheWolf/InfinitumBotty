@@ -49,6 +49,7 @@ class ModuleReloader(object):
                 "comic": "<class 'faustbot.modules.ComicObserver.ComicObserver'>",
                 "urban": "<class 'faustbot.modules.UrbanObserver.UrbanObserver'>",
                 "title": "<class 'faustbot.modules.TitleObserver.TitleObserver'>",
+                "ducks": "<class 'faustbot.modules.DuckObserver.DuckObserver'>",
             }
 
             if _cmd == "list" or _cmd == "ls":
@@ -131,6 +132,14 @@ class ModuleReloader(object):
                             _new_mod = reload(_new_mod)
                             connection.priv_msg_observable._observers.append(
                                 _new_mod.TitleObserver()
+                            )
+
+                        case "ducks":
+                            import faustbot.modules.DuckObserver as _new_mod
+
+                            _new_mod = reload(_new_mod)
+                            connection.priv_msg_observable._observers.append(
+                                _new_mod.DuckObserver()
                             )
 
                         case _:
