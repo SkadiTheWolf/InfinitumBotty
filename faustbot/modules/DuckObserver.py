@@ -27,7 +27,7 @@ class DuckObserver(PrivMsgObserverPrototype, PongObserverPrototype):
 
     def update_on_priv_msg(self, data, connection: Connection):
         messageLower = data["message"].lower()
-        if messageLower.startswith(".starthunt"):
+        if messageLower.find(".starthunt") != -1:
             if not self._is_idented_mod(data, connection):
                 connection.send_back(
                     f"Dir fehlen leider die Rechte zum Starten der Jagd, {data['nick']}.",
@@ -42,7 +42,7 @@ class DuckObserver(PrivMsgObserverPrototype, PongObserverPrototype):
                 connection.send_channel("Jagt ist eröffnet. Bitte benutze zuerst .stophunt")
                 return
 
-        elif messageLower.startswith(".stophunt"):
+        if messageLower.find(".stophunt") != -1:
             if not self._is_idented_mod(data, connection):
                 connection.send_back(
                     f"Dir fehlen leider die Rechte zum Stoppen der Jagd, {data['nick']}.",
@@ -55,19 +55,20 @@ class DuckObserver(PrivMsgObserverPrototype, PongObserverPrototype):
                 connection.send_channel("Jagd beendet")
                 return
             else:
-                connection.send_channel("Jagt ist nicht eröffnet. Benutze zuerst .starthunt")
+                connection.send_channel(
+                    "Jagt ist nicht eröffnet. Benutze zuerst .starthunt"
+                )
                 return
-        
 
-        elif messageLower.startswith(".ducks") != -1:
+        if messageLower.startswith(".ducks"):
             connection.send_channel(self.build_duck_string(data["nick"]))
-        elif messageLower.startswith(".freunde") != -1:
+        elif messageLower.startswith(".freunde"):
             self.befriend(data, connection)
-        elif messageLower.startswith(".schiessen") != -1:
+        elif messageLower.startswith(".schiessen"):
             self.shoot(data, connection)
-        elif messageLower.startswith("."):
-            return
-        
+        elif messageLower.startswith(".transferducks"):
+            self.giveducks(messageLower, data, connection)
+
         else:
             return
 
@@ -261,3 +262,63 @@ class DuckObserver(PrivMsgObserverPrototype, PongObserverPrototype):
             connection.send_channel(f"{nick} hat nicht aufhaltbar")
         elif self.streak == 15:
             connection.send_channel(f"{nick} spielt wohl allein")
+
+    def giveducks(self, message, data, connection):
+        '''
+        i chose to only allow to trade living ducks, everything
+        else would have a weird feeling
+        '''
+        # extract nick from message
+        messageSplit = message.split(" ", -1)
+        toNick = messageSplit[1]
+
+        # extract count of ducks to transfer
+        if len(messageSplit) == 3:
+            number = int(messageSplit[2])
+            notAll = True
+        else:
+            number = None
+            notAll = False
+
+        # refuse ducktransfer if nick == recipient
+        if toNick == data["nick"].lower():
+            connection.send_channel("Daran hab ich auch gedacht")
+            connection.send_channel("Ententransfer abgelehnt")
+            return
+
+        # check if nick exists in table
+        ducks_provider = DucksProvider()
+        count = ducks_provider.get_nick(toNick)[0]
+
+        # get senders duckcount
+        sender = data['nick'].lower()
+        duckData = ducks_provider.get_ducks(sender)
+        friends = duckData[1]
+       
+
+        if number == 0:
+            connection.send_channel("Haha sehr lustig")
+            return
+
+        if number is not None and friends < number:
+            connection.send_channel("Du hast nicht ausreichend Enten um diesen Transfer durchzufuehren")
+            return 
+
+
+        match count:
+            case 0:
+                connection.send_channel("Nick existiert nicht im Spiel")
+                return
+            case 1:
+                if number is not None:
+                    ducks_provider.transfer_ducks(data, toNick, number, notAll)
+                    connection.send_channel(
+                        f"Es wurden {number} Enten von {data['nick']} an {toNick} verschenkt"
+                    )
+                else:
+                    ducks_provider.transfer_ducks(data, toNick, friends, notAll)
+                    connection.send_channel(
+                        f"Es wurden alle {friends} Enten von {data['nick']} an {toNick} verschenkt"
+                    )
+            case _:
+                connection.send_channel("Es gibt mehrere Records mit diesem Nick")
