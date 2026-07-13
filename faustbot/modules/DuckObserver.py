@@ -349,6 +349,7 @@ class DuckObserver(PrivMsgObserverPrototype, PongObserverPrototype):
         
         elif randint(1, 100) > 80:
             connection.send_channel("Mit einem Puff verschwindet die Ente in einer Rauchwolke und es passiert nichts")
+            self.writeDucks(data['nick'].lower(), self.getLiving(data['nick'].lower()), self.getDead(data['nick'].lower())-1)
             return
 
         elif deadDucks == 0:
