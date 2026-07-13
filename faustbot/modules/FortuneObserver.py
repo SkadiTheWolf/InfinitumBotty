@@ -106,13 +106,13 @@ class FortuneObserver(PrivMsgObserverPrototype):
             if data["nick"] in self._config.mods and connection.is_idented(data["nick"]):
                 laenge = num_badquotes()
                 connection.send_back(
-                    f"Die Anzahl der Zitate auf der Blacklist betraegt {laenge}", data
+                    f"Die Anzahl der Zitate auf der Blocklist betraegt {laenge}", data
                 )
 
         elif data["message"] == ".bad":
             with open("faustbot/modules/txtfiles/badquotes.txt", "at") as f:
                 f.write(f"{lastQuote}\n")
-                connection.send_back("Zitat zur Blacklist hinzugefuegt", data)
+                connection.send_back("Zitat zur Blocklist hinzugefuegt", data)
             f.close()
             return
 
