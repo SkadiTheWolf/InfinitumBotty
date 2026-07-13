@@ -25,8 +25,14 @@ class DuckObserver(PrivMsgObserverPrototype, PongObserverPrototype):
         self.streak = 0
         self.streakname = ""
 
+        self.satan_active = False
+        self.pray_count = 0
+        self.satan_name = ""
+        self.pray_names = []
+
     def update_on_priv_msg(self, data, connection: Connection):
         messageLower = data["message"].lower()
+
         if messageLower.find(".starthunt") != -1:
             if not self._is_idented_mod(data, connection):
                 connection.send_back(
@@ -68,7 +74,10 @@ class DuckObserver(PrivMsgObserverPrototype, PongObserverPrototype):
             self.shoot(data, connection)
         elif messageLower.startswith(".transferducks"):
             self.giveducks(messageLower, data, connection)
-
+        elif messageLower.startswith(".satan"):
+            self.reviveDuckStart(data, connection)
+        elif messageLower.startswith(".pray"):
+            self.prayDucks(data, connection)
         else:
             return
 
@@ -322,3 +331,74 @@ class DuckObserver(PrivMsgObserverPrototype, PongObserverPrototype):
                     )
             case _:
                 connection.send_channel("Es gibt mehrere Records mit diesem Nick")
+
+    def reviveDuckStart(self, data, connection):
+ 
+        ducks_provider = DucksProvider()
+        
+        ducks = ducks_provider.get_ducks(data['nick'].lower())
+        if ducks is not None:
+            deadDucks = ducks[2]
+        else: 
+            connection.send_channel("Du hast noch nicht mitgespielt")
+            return
+
+        if self.duck_alive > 0: 
+            connection.send_channel("Jetzt eine Ente wiederzubeleben würde die lebende erschrecken") 
+            return
+        
+        elif randint(1, 100) > 80:
+            connection.send_channel("Mit einem Puff verschwindet die Ente in einer Rauchwolke und es passiert nichts")
+            return
+
+        elif deadDucks == 0:
+            connection.send_channel("Du hast keine Enten zum wiederbeleben")
+            return
+
+        elif self.satan_active:
+            connection.send_channel("Es ist noch ein Ritual aktiv. Tippe '.pray' um zu helfen")
+            return
+        
+        else:
+            # set satan_name to nick if all checks happened 
+            self.satan_name = data['nick'].lower()
+            # set satan_active to 1
+            self.satan_active = True
+            connection.send_channel("Du zeichnest ein Pentagramm auf den Boden und Legst die Ente in die Mitte")
+            return
+
+    def prayDucks(self, data, connection):
+        
+        if self.pray_count > 3:
+            self.writeDucks(self.satan_name, self.getLiving(self.satan_name), self.getDead(self.satan_name)-1)
+            connection.send_channel("Das Ritual war erfolgreich! Die Ente steht auf und...")
+            connection.send_channel("*. *. *. * <<w°)> *. *. * B-Braiiins... *hust* Quack!")
+            self.satan_active = True
+            self.satan_name = ""
+            self.pray_count = 0
+            self.pray_names = []
+            self.duck_alive = 1
+            return
+
+
+        # elif data['nick'].lower in self.pray_names: doesnt work for some reason 
+
+        elif any(x == data['nick'].lower() for x in self.pray_names):
+            connection.send_channel("Du verstärkst deine Bemühungen irgend eine Gottheit zu erreichen")
+            connection.send_channel(f"Ihr braucht noch {4-self.pray_count} Gebete um das Ritual durchzuführen")
+            return
+
+        elif data['nick'].lower() == self.satan_name:
+            connection.send_channel("Durch deine Anstrengungen das Ritual zu leiten sind deine Betfähigkeiten begrenzt")
+            return 
+            
+        else:
+            connection.send_channel("Du fängst an zu beten, zu deiner favorisierten Gottheit, in einer Position die sich für dich gut anfühlt")
+            connection.send_channel("Das Pentagramm mit der Ente in der Mitte glüht etwas stärker Rot")
+            self.pray_names.append(data['nick'].lower())
+            self.pray_count += 1
+            return
+
+
+
+        
