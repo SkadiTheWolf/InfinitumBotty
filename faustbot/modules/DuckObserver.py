@@ -15,6 +15,7 @@ class DuckObserver(PrivMsgObserverPrototype, PongObserverPrototype):
         return (
             "Entenjagd. An einem zufälligen Zeitpunkt watschelt eine Ente durch den Chat. "
             + "Diese kann mit .schiessen getötet oder mit .freunde angefreundet werden. Mit .ducks wird abgefragt, wie viele Enten man schon hat. "
+            + "Mit .satan wird eine tote Ente wiederbelebt und mit .pray wird das Ritual unterstützt"
             + "Starten und stoppen können nur Moderatoren."
         )
 
