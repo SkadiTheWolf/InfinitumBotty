@@ -68,10 +68,12 @@ model/ConnectionDetails.py
 FaustBotVEnv/
 
 # Custom
+.secrets/
 config.txt
 .pid
 out.txt
 faust_bot.db
+faust_bot.db-journal
 /venv/
 faustbot/modules/txtfiles/WolframAlphaAPIKey.txt
 test.py

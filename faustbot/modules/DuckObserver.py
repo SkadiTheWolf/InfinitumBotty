@@ -15,6 +15,7 @@ class DuckObserver(PrivMsgObserverPrototype, PongObserverPrototype):
         return (
             "Entenjagd. An einem zufälligen Zeitpunkt watschelt eine Ente durch den Chat. "
             + "Diese kann mit .schiessen getötet oder mit .freunde angefreundet werden. Mit .ducks wird abgefragt, wie viele Enten man schon hat. "
+            + "Mit .satan wird eine tote Ente wiederbelebt und mit .pray wird das Ritual unterstützt"
             + "Starten und stoppen können nur Moderatoren."
         )
 
@@ -25,8 +26,14 @@ class DuckObserver(PrivMsgObserverPrototype, PongObserverPrototype):
         self.streak = 0
         self.streakname = ""
 
+        self.satan_active = False
+        self.pray_count = 0
+        self.satan_name = ""
+        self.pray_names = []
+
     def update_on_priv_msg(self, data, connection: Connection):
         messageLower = data["message"].lower()
+
         if messageLower.find(".starthunt") != -1:
             if not self._is_idented_mod(data, connection):
                 connection.send_back(
@@ -34,9 +41,14 @@ class DuckObserver(PrivMsgObserverPrototype, PongObserverPrototype):
                     data,
                 )
                 return
-            self.active = 1
-            connection.send_channel("Jagd eröffnet")
-            return
+            if self.active == 0:
+                self.active = 1
+                connection.send_channel("Jagd eröffnet")
+                return
+            else:
+                connection.send_channel("Jagt ist eröffnet. Bitte benutze zuerst .stophunt")
+                return
+
         if messageLower.find(".stophunt") != -1:
             if not self._is_idented_mod(data, connection):
                 connection.send_back(
@@ -44,16 +56,31 @@ class DuckObserver(PrivMsgObserverPrototype, PongObserverPrototype):
                     data,
                 )
                 return
-            self.active = 0
-            self.duck_alive = 0
-            connection.send_channel("Jagd beendet")
-            return
-        if messageLower.find(".ducks") != -1:
+            if self.active == 1:
+                self.active = 0
+                self.duck_alive = 0
+                connection.send_channel("Jagd beendet")
+                return
+            else:
+                connection.send_channel(
+                    "Jagt ist nicht eröffnet. Benutze zuerst .starthunt"
+                )
+                return
+
+        if messageLower.startswith(".ducks"):
             connection.send_channel(self.build_duck_string(data["nick"]))
-        if messageLower.find(".freunde") != -1:
+        elif messageLower.startswith(".freunde"):
             self.befriend(data, connection)
-        if messageLower.find(".schiessen") != -1:
+        elif messageLower.startswith(".schiessen"):
             self.shoot(data, connection)
+        elif messageLower.startswith(".transferducks"):
+            self.giveducks(messageLower, data, connection)
+        elif messageLower.startswith(".satan"):
+            self.reviveDuckStart(data, connection)
+        elif messageLower.startswith(".pray"):
+            self.prayDucks(data, connection)
+        else:
+            return
 
     def befriend(self, data, connection):
         if self.duck_alive == 1:
@@ -245,3 +272,135 @@ class DuckObserver(PrivMsgObserverPrototype, PongObserverPrototype):
             connection.send_channel(f"{nick} hat nicht aufhaltbar")
         elif self.streak == 15:
             connection.send_channel(f"{nick} spielt wohl allein")
+
+    def giveducks(self, message, data, connection):
+        '''
+        i chose to only allow to trade living ducks, everything
+        else would have a weird feeling
+        '''
+        # extract nick from message
+        messageSplit = message.split(" ", -1)
+        toNick = messageSplit[1]
+
+        # extract count of ducks to transfer
+        if len(messageSplit) == 3:
+            number = int(messageSplit[2])
+            notAll = True
+        else:
+            number = None
+            notAll = False
+
+        # refuse ducktransfer if nick == recipient
+        if toNick == data["nick"].lower():
+            connection.send_channel("Daran hab ich auch gedacht")
+            connection.send_channel("Ententransfer abgelehnt")
+            return
+
+        # check if nick exists in table
+        ducks_provider = DucksProvider()
+        count = ducks_provider.get_nick(toNick)[0]
+
+        # get senders duckcount
+        sender = data['nick'].lower()
+        duckData = ducks_provider.get_ducks(sender)
+        friends = duckData[1]
+       
+
+        if number == 0:
+            connection.send_channel("Haha sehr lustig")
+            return
+
+        if number is not None and friends < number:
+            connection.send_channel("Du hast nicht ausreichend Enten um diesen Transfer durchzufuehren")
+            return 
+
+
+        match count:
+            case 0:
+                connection.send_channel("Nick existiert nicht im Spiel")
+                return
+            case 1:
+                if number is not None:
+                    ducks_provider.transfer_ducks(data, toNick, number, notAll)
+                    connection.send_channel(
+                        f"Es wurden {number} Enten von {data['nick']} an {toNick} verschenkt"
+                    )
+                else:
+                    ducks_provider.transfer_ducks(data, toNick, friends, notAll)
+                    connection.send_channel(
+                        f"Es wurden alle {friends} Enten von {data['nick']} an {toNick} verschenkt"
+                    )
+            case _:
+                connection.send_channel("Es gibt mehrere Records mit diesem Nick")
+
+    def reviveDuckStart(self, data, connection):
+ 
+        ducks_provider = DucksProvider()
+        
+        ducks = ducks_provider.get_ducks(data['nick'].lower())
+        if ducks is not None:
+            deadDucks = ducks[2]
+        else: 
+            connection.send_channel("Du hast noch nicht mitgespielt")
+            return
+
+        if self.duck_alive > 0: 
+            connection.send_channel("Jetzt eine Ente wiederzubeleben würde die lebende erschrecken") 
+            return
+        
+        elif randint(1, 100) > 80:
+            connection.send_channel("Mit einem Puff verschwindet die Ente in einer Rauchwolke und es passiert nichts")
+            self.writeDucks(data['nick'].lower(), self.getLiving(data['nick'].lower()), self.getDead(data['nick'].lower())-1)
+            return
+
+        elif deadDucks == 0:
+            connection.send_channel("Du hast keine Enten zum wiederbeleben")
+            return
+
+        elif self.satan_active:
+            connection.send_channel("Es ist noch ein Ritual aktiv. Tippe '.pray' um zu helfen")
+            return
+        
+        else:
+            # set satan_name to nick if all checks happened 
+            self.satan_name = data['nick'].lower()
+            # set satan_active to 1
+            self.satan_active = True
+            connection.send_channel("Du zeichnest ein Pentagramm auf den Boden und Legst die Ente in die Mitte")
+            return
+
+    def prayDucks(self, data, connection):
+        
+        if self.pray_count > 3:
+            self.writeDucks(self.satan_name, self.getLiving(self.satan_name), self.getDead(self.satan_name)-1)
+            connection.send_channel("Das Ritual war erfolgreich! Die Ente steht auf und...")
+            connection.send_channel("*. *. *. * <<w°)> *. *. * B-Braiiins... *hust* Quack!")
+            self.satan_active = True
+            self.satan_name = ""
+            self.pray_count = 0
+            self.pray_names = []
+            self.duck_alive = 1
+            return
+
+
+        # elif data['nick'].lower in self.pray_names: doesnt work for some reason 
+
+        elif any(x == data['nick'].lower() for x in self.pray_names):
+            connection.send_channel("Du verstärkst deine Bemühungen irgend eine Gottheit zu erreichen")
+            connection.send_channel(f"Ihr braucht noch {4-self.pray_count} Gebete um das Ritual durchzuführen")
+            return
+
+        elif data['nick'].lower() == self.satan_name:
+            connection.send_channel("Durch deine Anstrengungen das Ritual zu leiten sind deine Betfähigkeiten begrenzt")
+            return 
+            
+        else:
+            connection.send_channel("Du fängst an zu beten, zu deiner favorisierten Gottheit, in einer Position die sich für dich gut anfühlt")
+            connection.send_channel("Das Pentagramm mit der Ente in der Mitte glüht etwas stärker Rot")
+            self.pray_names.append(data['nick'].lower())
+            self.pray_count += 1
+            return
+
+
+
+        
