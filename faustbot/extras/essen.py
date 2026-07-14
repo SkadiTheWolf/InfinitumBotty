@@ -670,7 +670,7 @@ essen = [
     "einen Flatschen unterwürztes Porree-Porridge",
 #Kuchen/Puddings/Süßspeisen die nicht Hauptspeise, Kekse, Eiscreme oder Snacks sind:
     "viel zu viele Waffeln",
-    "ein Stück von Tante Mathildas Kirschkuchen"
+    "ein Stück von Tante Mathildas Kirschkuchen",
     "dreizehn üppige Zimtschnecken",
     "aufgetauten Kuchen vom letzten Jahr",
     "ein Lebkuchenhaus mit eingestürztem Dach",
