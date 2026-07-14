@@ -68,6 +68,7 @@ model/ConnectionDetails.py
 FaustBotVEnv/
 
 # Custom
+.secrets/
 config.txt
 .pid
 out.txt
