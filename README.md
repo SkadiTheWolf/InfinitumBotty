@@ -38,7 +38,7 @@ chmod u+x ./faust-bot-run.sh
 >  -e  exits/stops the bot
 >  -r  restarts the bot
 >  -u  updates the bots code
->  -d  restarts the bot with Stdout to console and out.txt
+>  -d  restarts the bot and tails out.txt
 # Start the bot.
 # The script creates an virtualenv, installs all pip dependencies and starts the Bot in the background
 # The pid of the Bot-process is saved in .pid.
