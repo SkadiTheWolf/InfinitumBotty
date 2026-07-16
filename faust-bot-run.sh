@@ -23,7 +23,7 @@ help() {
   echo "  -e  exits/stops the bot"
   echo "  -r  restarts the bot"
   echo "  -u  updates the bots code"
-  echo "  -d  activates tailing of out.txt for quick debugging"
+  echo "  -d  restarts the bot and activates tailing of out.txt for quick debugging"
 }
 
 start() {
