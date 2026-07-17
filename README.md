@@ -21,7 +21,7 @@ pip install -r requirements.txt
 # Per default german is used. If you want another language you need to 
 # add an language file and modify the script.
 # Later it will be refactored, so it uses arguments
-python ReadInternationalization.py
+python python/ReadInternationalization.py
 # Create a configuration file by having a look at config-example.txt
 # Start the bot using the given config file.
 python Main.py --config ./config.txt

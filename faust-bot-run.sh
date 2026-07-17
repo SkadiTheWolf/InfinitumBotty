@@ -47,7 +47,7 @@ start() {
     else
       echo "[=== no database "
       echo "[=== preparing database "
-      python ReadInternationalization.py
+      python python/ReadInternationalization.py
     fi
     echo "[=== checking if config.txt exits"
     if [ -f "config.txt" ]; then
