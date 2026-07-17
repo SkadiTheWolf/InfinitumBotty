@@ -45,6 +45,10 @@ chmod u+x ./faust-bot-run.sh
 # Stdout is redirected to out.txt 
 ./script -s
 ```
+Using [nix-bot-run.sh](/nix-bot-run.sh). This script uses nix-shell and creates **no** virtualenv. 
+Arguments are the same as with [faust-bot-run.sh](/faust-bot-run.sh). The only difference is the use of nix-shell. 
+You wont need a shell.nix or a default.nix. nix-shell is used as a #! interpreter as per [Use a #!-interpreter](https://nix.dev/manual/nix/2.22/command-ref/nix-shell#use-as-a--interpreter).  
+
 
 ## Contribution
 Have a look into our issues. Some are explicitly marked as `help wanted` or `For Beginners`. If you're new to programming the last one would be a good point to begin with. Of course you're also free to choose your own issue or task to work on.
