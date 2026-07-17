@@ -29,7 +29,7 @@ help() {
 start() {
   venv
   echo "[=== checking if bot is already running "
-  if [ -f ".pid" ]; then
+  if [ -f "logs/.pid" ]; then
     echo "[=== bot is already running "
     echo "[=== aborting start "
   else
@@ -68,20 +68,20 @@ start() {
     echo "[=== redirecting output to nohup.out "
     nohup python -u Main.py --config config.txt > logs/out.txt &
     echo "[=== pid of bot process can be found in .pid "
-    echo $! > .pid 
+    echo $! > logs/.pid 
   fi
 }
 
 stop() {
   echo "[=== checking if bot is running "
-  if [ ! -f ".pid" ]; then
+  if [ ! -f "logs/.pid" ]; then
     echo "[=== bot is not running "
   else
     echo "[=== bot is running "
     echo "[=== killing bot process "
-    kill "$(cat .pid)"
+    kill "$(cat logs/.pid)"
     echo "[=== removing .pid file "
-    rm .pid
+    rm logs/.pid
   fi
 }
 
