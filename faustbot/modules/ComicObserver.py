@@ -2,15 +2,13 @@ import random
 import urllib
 import urllib.request
 import requests
-import html
 import re
-import json
 
 from faustbot.communication.Connection import Connection
 from faustbot.modules.PrivMsgObserverPrototype import PrivMsgObserverPrototype
 from faustbot.modules.TitleObserver import TitleObserver
 
-from comics import *
+from faustbot.extras.comics import *
 
 
 # Comic scraper scrapes comics from urls that have no website based random functionality. Comic URLs have to be in comics.py
