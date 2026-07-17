@@ -82,3 +82,4 @@ test.py
 .direnv/
 faustbot/modules/txtfiles/badquotes.txt
 logs/*
+_config.yml
