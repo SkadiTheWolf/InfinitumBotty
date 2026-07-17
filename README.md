@@ -49,8 +49,10 @@ Using [nix-bot-run.sh](/nix-bot-run.sh). This script uses nix-shell and creates 
 Arguments are the same as with [faust-bot-run.sh](/faust-bot-run.sh). The only difference is the use of nix-shell. 
 You wont need a shell.nix or a default.nix. nix-shell is used as a #! interpreter as per [Use a #!-interpreter](https://nix.dev/manual/nix/2.22/command-ref/nix-shell#use-as-a--interpreter).  
 ```bash
+# Make the script executable
 chmod u+x ./nix-bot-run.sh
-./nix-bot-run.sh $ARG
+# Display all possible options
+./nix-bot-run.sh -h
 ```
 
 ## Contribution
