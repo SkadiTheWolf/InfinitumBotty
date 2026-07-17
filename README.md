@@ -24,7 +24,7 @@ pip install -r python/requirements.txt
 python python/ReadInternationalization.py
 # Create a configuration file by having a look at config-example.txt
 # Start the bot using the given config file.
-python Main.py --config ./config.txt
+python Main.py --config ./config/config.txt
 ``` 
 Using [faust-bot-run.sh](/faust-bot-run.sh). This script creates and uses a virtual environment, therefore the optional requirement virtualenv is required
 ```bash

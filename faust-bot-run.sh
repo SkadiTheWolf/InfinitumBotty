@@ -49,8 +49,8 @@ start() {
       echo "[=== preparing database "
       python python/ReadInternationalization.py
     fi
-    echo "[=== checking if config.txt exits"
-    if [ -f "config.txt" ]; then
+    echo "[=== checking if config/config.txt exits"
+    if [ -f "config/config.txt" ]; then
       echo "[=== config.txt exists"
     else
       echo "[=== no config.txt"
@@ -66,7 +66,7 @@ start() {
     fi
     echo "[=== starting faust-bot "
     echo "[=== redirecting output to nohup.out "
-    nohup python -u Main.py --config config.txt > logs/out.txt &
+    nohup python -u Main.py --config ./config/config.txt > logs/out.txt &
     echo "[=== pid of bot process can be found in .pid "
     echo $! > logs/.pid 
   fi
