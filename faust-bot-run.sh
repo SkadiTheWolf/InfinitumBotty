@@ -9,7 +9,7 @@ venv() {
     echo "[=== activating virtual environment "
     source $VENV/bin/activate
     echo "[=== installing dependencies "
-    pip install -r requirements.txt
+    pip install -r python/requirements.txt
   else
     echo "[=== activating virtual environment "
     source $VENV/bin/activate

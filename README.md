@@ -16,7 +16,7 @@ Designed for non-technical channels
 The direct way:
 ```bash
 # Install all dependencies
-pip install -r requirements.txt
+pip install -r python/requirements.txt
 # First load all needed strings into the database
 # Per default german is used. If you want another language you need to 
 # add an language file and modify the script.
